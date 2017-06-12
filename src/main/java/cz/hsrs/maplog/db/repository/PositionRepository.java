@@ -14,7 +14,7 @@ public interface PositionRepository extends CrudRepository<PositionEntity, Long>
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
-    
+
     /* --- Commons  --- */
 }
 
