@@ -1,7 +1,5 @@
 package cz.hsrs.maplog.db.entity;
 
-
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,6 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "position")
 @SequenceGenerator(name="seq_position", sequenceName = "seq_position")
+@NamedQuery(name="PositionEntity.findAll", query="SELECT a FROM PositionEntity a")
 public class PositionEntity {
 
     @Id
@@ -100,5 +99,3 @@ public class PositionEntity {
     }
     /* --- Commons  --- */
 }
-
-

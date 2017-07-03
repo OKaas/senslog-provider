@@ -7,16 +7,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.TimeZone;
+
 /**
  * Created by OK on 6/9/2017.
  */
 @SpringBootApplication
-@PropertySource("senslog-app.properties")
 @ComponentScan("cz.hsrs.maplog")
 @EntityScan("cz.hsrs.maplog.db.entity")
+// TODO probably not necessary
 @EnableJpaRepositories("cz.hsrs.maplog.db")
+@PropertySource("senslog-app.properties")
 public class Application {
     public static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Etc/UCT"));
         SpringApplication.run(Application.class, args);
     }
 }

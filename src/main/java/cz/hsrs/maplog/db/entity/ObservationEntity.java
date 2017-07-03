@@ -1,69 +1,107 @@
 package cz.hsrs.maplog.db.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 /**
- * Created by OK on 6/9/2017.
+ * The persistent class for the observations database table.
+ * 
  */
 @Entity
-@Table(name = "observation")
-@SequenceGenerator(name="seq_observation", sequenceName = "seq_observation")
-public class ObservationEntity {
+@Table(name="observations")
+@NamedQuery(name="ObservationEntity.findAll", query="SELECT o FROM ObservationEntity o")
+public class ObservationEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Integer observationId;
+	private double observedValue;
+	private Timestamp timeReceived;
+	private Timestamp timeStamp;
+	private SensorEntity sensor;
+	private UnitEntity unit;
+	private UnitsPositionEntity unitsPosition;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_observation")
-    private Long id;
+	public ObservationEntity() {
+	}
 
-    private Long unitId;
-    private double value;
-    private Long sensorId;
-    private Date date;
 
-    /* --- Collaborates --- */
+	@Id
+	@SequenceGenerator(name="OBSERVATIONS_OBSERVATIONID_GENERATOR", sequenceName="SEQ_OBSERVATIONS")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVATIONS_OBSERVATIONID_GENERATOR")
+	@Column(name="observation_id")
+	public Integer getObservationId() {
+		return this.observationId;
+	}
 
-    /* --- Getters / Setters --- */
+	public void setObservationId(Integer observationId) {
+		this.observationId = observationId;
+	}
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column(name="observed_value")
+	public double getObservedValue() {
+		return this.observedValue;
+	}
 
-    public Long getUnitId() {
-        return unitId;
-    }
+	public void setObservedValue(double observedValue) {
+		this.observedValue = observedValue;
+	}
 
-    public void setUnitId(Long unitId) {
-        this.unitId = unitId;
-    }
 
-    public double getValue() {
-        return value;
-    }
+	@Column(name="time_received")
+	public Timestamp getTimeReceived() {
+		return this.timeReceived;
+	}
 
-    public void setValue(double value) {
-        this.value = value;
-    }
+	public void setTimeReceived(Timestamp timeReceived) {
+		this.timeReceived = timeReceived;
+	}
 
-    public Long getSensorId() {
-        return sensorId;
-    }
 
-    public void setSensorId(Long sensorId) {
-        this.sensorId = sensorId;
-    }
+	@Column(name="time_stamp")
+	public Timestamp getTimeStamp() {
+		return this.timeStamp;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public void setTimeStamp(Timestamp timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    /* --- Commons  --- */
+
+	//bi-directional many-to-one association to SensorEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="sensor_id")
+	public SensorEntity getSensor() {
+		return this.sensor;
+	}
+
+	public void setSensor(SensorEntity sensor) {
+		this.sensor = sensor;
+	}
+
+
+	//bi-directional many-to-one association to UnitEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="unit_id")
+	public UnitEntity getUnit() {
+		return this.unit;
+	}
+
+	public void setUnit(UnitEntity unit) {
+		this.unit = unit;
+	}
+
+
+	//bi-directional many-to-one association to UnitsPositionEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="gid")
+	public UnitsPositionEntity getUnitsPosition() {
+		return this.unitsPosition;
+	}
+
+	public void setUnitsPosition(UnitsPositionEntity unitsPosition) {
+		this.unitsPosition = unitsPosition;
+	}
+
 }
-
-

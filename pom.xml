@@ -26,8 +26,12 @@
         <version.slf4j>1.7.21</version.slf4j>
         <version.logback>1.1.7</version.logback>
 
+        <!-- Database -->
+        <version.postgresql.jdbc>9.1-901-1.jdbc4</version.postgresql.jdbc>
+
         <!-- Spring -->
         <version.spring-starter>1.5.3.RELEASE</version.spring-starter>
+        <version.model.mapper>0.7.4</version.model.mapper>
     </properties>
 
     <dependencies>
@@ -56,12 +60,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${version.model.mapper}</version>
+        </dependency>
 
         <!-- Database -->
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <version>${version.postgresql.jdbc}</version>
         </dependency>
 
     </dependencies>

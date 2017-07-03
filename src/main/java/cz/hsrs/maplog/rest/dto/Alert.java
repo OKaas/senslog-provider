@@ -46,7 +46,7 @@ public class Alert {
 
     @Override
     public String toString() {
-        return "Alert{" +
+        return "AlertEntity{" +
                 "alertId=" + alertId +
                 ", unitId=" + unitId +
                 ", date=" + date +

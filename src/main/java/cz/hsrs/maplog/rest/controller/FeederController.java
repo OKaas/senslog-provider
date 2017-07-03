@@ -42,13 +42,13 @@ public class FeederController {
         LOGGER.info(" request {}", observation.toString());
 
         // TODO: create some automatic transform (some ObjectMapper)
-        ObservationEntity entity = new ObservationEntity();
-        entity.setDate(observation.getDate());
-        entity.setSensorId(observation.getSensorId());
-        entity.setUnitId(observation.getUnitId());
-        entity.setValue(observation.getValue());
+//        ObservationEntity entity = new ObservationEntity();
+//        entity.setDate(observation.getDate());
+//        entity.setSensorId(observation.getSensorId());
+//        entity.setUnitId(observation.getUnitId());
+//        entity.setValue(observation.getValue());
 
-        observationRepository.save(entity);
+//        observationRepository.save(entity);
 
         return HttpStatus.OK;
     }
@@ -81,9 +81,9 @@ public class FeederController {
 
         // TODO: create some automatic transform (some ObjectMapper)
         AlertEntity entity = new AlertEntity();
-        entity.setAlertId(alert.getAlertId());
-        entity.setDate(alert.getDate());
-        entity.setUnitId(alert.getUnitId());
+//        entity.setAlertId(alert.getAlertId());
+//        entity.setDate(alert.getDate());
+//        entity.setUnitId(alert.getUnitId());
 
         alertRepository.save(entity);
 

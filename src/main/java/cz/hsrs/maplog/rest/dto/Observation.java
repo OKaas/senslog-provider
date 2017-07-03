@@ -59,7 +59,7 @@ public class Observation {
 
     @Override
     public String toString() {
-        return "Observation{" +
+        return "ObservationEntity{" +
                 "value=" + value +
                 ", unitId=" + unitId +
                 ", sensorId=" + sensorId +

@@ -1,61 +1,72 @@
 package cz.hsrs.maplog.db.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
+
 
 /**
- * Created by OK on 6/12/2017.
+ * The persistent class for the alerts database table.
+ * 
  */
 @Entity
-@Table(name = "alert")
-@SequenceGenerator(name="seq_alert", sequenceName = "seq_alert")
-public class AlertEntity {
+@Table(name="alerts")
+@NamedQuery(name="AlertEntity.findAll", query="SELECT a FROM AlertEntity a")
+public class AlertEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Integer alertId;
+	private String alertDescription;
+	private List<AlertEventsEntity> alertEvents;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_alert")
-    private Long id;
+	public AlertEntity() {
+	}
 
-    private Long unitId;
-    private Long alertId;
-    private Date date;
 
-    /* --- Collaborates --- */
+	@Id
+	@SequenceGenerator(name="ALERTS_ALERTID_GENERATOR", sequenceName="SEQ_ALERTS")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERTS_ALERTID_GENERATOR")
+	@Column(name="alert_id")
+	public Integer getAlertId() {
+		return this.alertId;
+	}
 
-    /* --- Getters / Setters --- */
+	public void setAlertId(Integer alertId) {
+		this.alertId = alertId;
+	}
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column(name="alert_description")
+	public String getAlertDescription() {
+		return this.alertDescription;
+	}
 
-    public Long getAlertId() {
-        return alertId;
-    }
+	public void setAlertDescription(String alertDescription) {
+		this.alertDescription = alertDescription;
+	}
 
-    public void setAlertId(Long alertId) {
-        this.alertId = alertId;
-    }
 
-    public Long getUnitId() {
-        return unitId;
-    }
+	//bi-directional many-to-one association to AlertEventsEntity
+	@OneToMany(mappedBy="alert")
+	public List<AlertEventsEntity> getAlertEvents() {
+		return this.alertEvents;
+	}
 
-    public void setUnitId(Long unitId) {
-        this.unitId = unitId;
-    }
+	public void setAlertEvents(List<AlertEventsEntity> alertEvents) {
+		this.alertEvents = alertEvents;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public AlertEventsEntity addAlertEvent(AlertEventsEntity alertEvent) {
+		getAlertEvents().add(alertEvent);
+		alertEvent.setAlert(this);
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+		return alertEvent;
+	}
 
-    /* --- Commons  --- */
+	public AlertEventsEntity removeAlertEvent(AlertEventsEntity alertEvent) {
+		getAlertEvents().remove(alertEvent);
+		alertEvent.setAlert(null);
+
+		return alertEvent;
+	}
+
 }
-
-

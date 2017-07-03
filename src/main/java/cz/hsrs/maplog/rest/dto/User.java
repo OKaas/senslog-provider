@@ -1,31 +1,26 @@
 package cz.hsrs.maplog.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
- * Created by OK on 6/9/2017.
+ * Created by OK on 7/3/2017.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
-    private String user;
+    private String userName;
 
-    /* --- Collaborates --- */
+    public User() {
+    }
 
     /* --- Getters / Setters --- */
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    /* --- Commons  --- */
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "user='" + user + '\'' +
-                '}';
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
 
