@@ -6,36 +6,35 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the observations database table.
+ * The persistent class for the observation database table.
  * 
  */
 @Entity
-@Table(name="observations")
+@Table(name="observation")
 @NamedQuery(name="ObservationEntity.findAll", query="SELECT o FROM ObservationEntity o")
 public class ObservationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer observationId;
+	private Integer id;
 	private double observedValue;
 	private Timestamp timeReceived;
 	private Timestamp timeStamp;
 	private SensorEntity sensor;
 	private UnitEntity unit;
-	private UnitsPositionEntity unitsPosition;
+	private UnitPositionEntity unitsPosition;
 
 	public ObservationEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="OBSERVATIONS_OBSERVATIONID_GENERATOR", sequenceName="SEQ_OBSERVATIONS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVATIONS_OBSERVATIONID_GENERATOR")
-	@Column(name="observation_id")
-	public Integer getObservationId() {
-		return this.observationId;
+	@SequenceGenerator(name="OBSERVATION_ID_GENERATOR", sequenceName="SEQ_OBSERVATION")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVATION_ID_GENERATOR")
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setObservationId(Integer observationId) {
-		this.observationId = observationId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
@@ -71,7 +70,6 @@ public class ObservationEntity implements Serializable {
 
 	//bi-directional many-to-one association to SensorEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="sensor_id")
 	public SensorEntity getSensor() {
 		return this.sensor;
 	}
@@ -83,7 +81,6 @@ public class ObservationEntity implements Serializable {
 
 	//bi-directional many-to-one association to UnitEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="unit_id")
 	public UnitEntity getUnit() {
 		return this.unit;
 	}
@@ -93,14 +90,14 @@ public class ObservationEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to UnitsPositionEntity
+	//bi-directional many-to-one association to UnitPositionEntity
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="gid")
-	public UnitsPositionEntity getUnitsPosition() {
+	public UnitPositionEntity getUnitsPosition() {
 		return this.unitsPosition;
 	}
 
-	public void setUnitsPosition(UnitsPositionEntity unitsPosition) {
+	public void setUnitsPosition(UnitPositionEntity unitsPosition) {
 		this.unitsPosition = unitsPosition;
 	}
 

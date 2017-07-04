@@ -6,44 +6,34 @@ import java.util.List;
 
 
 /**
- * The persistent class for the groups database table.
+ * The persistent class for the user_group database table.
  * 
  */
 @Entity
-@Table(name="groups")
+@Table(name="user_group")
 @NamedQuery(name="UserGroupEntity.findAll", query="SELECT u FROM UserGroupEntity u")
 public class UserGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private String groupName;
 	private Boolean hasChildren;
-	private UserGroupEntity group;
-	private List<UserGroupEntity> groups;
-	private List<UserEntity> systemUsers;
+	private String name;
+	private List<UserEntity> users;
+	private UserGroupEntity userGroup;
+	private List<UserGroupEntity> userGroups;
 
 	public UserGroupEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="GROUPS_ID_GENERATOR", sequenceName="SEQ_GROUPS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GROUPS_ID_GENERATOR")
+	@SequenceGenerator(name="USER_GROUP_ID_GENERATOR", sequenceName="SEQ_USER_GROUP")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USER_GROUP_ID_GENERATOR")
 	public Integer getId() {
 		return this.id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-
-	@Column(name="group_name")
-	public String getGroupName() {
-		return this.groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 
@@ -57,65 +47,74 @@ public class UserGroupEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to UserGroupEntity
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="parent_group_id")
-	public UserGroupEntity getGroup() {
-		return this.group;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setGroup(UserGroupEntity group) {
-		this.group = group;
-	}
-
-
-	//bi-directional many-to-one association to UserGroupEntity
-	@OneToMany(mappedBy="group")
-	public List<UserGroupEntity> getGroups() {
-		return this.groups;
-	}
-
-	public void setGroups(List<UserGroupEntity> groups) {
-		this.groups = groups;
-	}
-
-	public UserGroupEntity addGroup(UserGroupEntity group) {
-		getGroups().add(group);
-		group.setGroup(this);
-
-		return group;
-	}
-
-	public UserGroupEntity removeGroup(UserGroupEntity group) {
-		getGroups().remove(group);
-		group.setGroup(null);
-
-		return group;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
 	//bi-directional many-to-one association to UserEntity
-	@OneToMany(mappedBy="group")
-	public List<UserEntity> getSystemUsers() {
-		return this.systemUsers;
+	@OneToMany(mappedBy="userGroup")
+	public List<UserEntity> getUsers() {
+		return this.users;
 	}
 
-	public void setSystemUsers(List<UserEntity> systemUsers) {
-		this.systemUsers = systemUsers;
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
 	}
 
-	public UserEntity addSystemUser(UserEntity systemUser) {
-		getSystemUsers().add(systemUser);
-		systemUser.setGroup(this);
+	public UserEntity addUser(UserEntity user) {
+		getUsers().add(user);
+		user.setUserGroup(this);
 
-		return systemUser;
+		return user;
 	}
 
-	public UserEntity removeSystemUser(UserEntity systemUser) {
-		getSystemUsers().remove(systemUser);
-		systemUser.setGroup(null);
+	public UserEntity removeUser(UserEntity user) {
+		getUsers().remove(user);
+		user.setUserGroup(null);
 
-		return systemUser;
+		return user;
+	}
+
+
+	//bi-directional many-to-one association to UserGroupEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="parent_group_id")
+	public UserGroupEntity getUserGroup() {
+		return this.userGroup;
+	}
+
+	public void setUserGroup(UserGroupEntity userGroup) {
+		this.userGroup = userGroup;
+	}
+
+
+	//bi-directional many-to-one association to UserGroupEntity
+	@OneToMany(mappedBy="userGroup")
+	public List<UserGroupEntity> getUserGroups() {
+		return this.userGroups;
+	}
+
+	public void setUserGroups(List<UserGroupEntity> userGroups) {
+		this.userGroups = userGroups;
+	}
+
+	public UserGroupEntity addUserGroup(UserGroupEntity userGroup) {
+		getUserGroups().add(userGroup);
+		userGroup.setUserGroup(this);
+
+		return userGroup;
+	}
+
+	public UserGroupEntity removeUserGroup(UserGroupEntity userGroup) {
+		getUserGroups().remove(userGroup);
+		userGroup.setUserGroup(null);
+
+		return userGroup;
 	}
 
 }

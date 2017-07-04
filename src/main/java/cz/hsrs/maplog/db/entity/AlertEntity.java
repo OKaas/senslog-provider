@@ -2,71 +2,54 @@ package cz.hsrs.maplog.db.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the alerts database table.
+ * The persistent class for the alert database table.
  * 
  */
 @Entity
-@Table(name="alerts")
+@Table(name="alert")
 @NamedQuery(name="AlertEntity.findAll", query="SELECT a FROM AlertEntity a")
 public class AlertEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer alertId;
-	private String alertDescription;
-	private List<AlertEventsEntity> alertEvents;
+	private Integer id;
+	private String description;
+	private AlertEventEntity alertEvent;
 
 	public AlertEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="ALERTS_ALERTID_GENERATOR", sequenceName="SEQ_ALERTS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERTS_ALERTID_GENERATOR")
-	@Column(name="alert_id")
-	public Integer getAlertId() {
-		return this.alertId;
+	@SequenceGenerator(name="ALERT_ID_GENERATOR", sequenceName="SEQ_ALERT")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERT_ID_GENERATOR")
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setAlertId(Integer alertId) {
-		this.alertId = alertId;
-	}
-
-
-	@Column(name="alert_description")
-	public String getAlertDescription() {
-		return this.alertDescription;
-	}
-
-	public void setAlertDescription(String alertDescription) {
-		this.alertDescription = alertDescription;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
-	//bi-directional many-to-one association to AlertEventsEntity
-	@OneToMany(mappedBy="alert")
-	public List<AlertEventsEntity> getAlertEvents() {
-		return this.alertEvents;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setAlertEvents(List<AlertEventsEntity> alertEvents) {
-		this.alertEvents = alertEvents;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public AlertEventsEntity addAlertEvent(AlertEventsEntity alertEvent) {
-		getAlertEvents().add(alertEvent);
-		alertEvent.setAlert(this);
 
-		return alertEvent;
+	//bi-directional one-to-one association to AlertEventEntity
+	@OneToOne(mappedBy="alert", fetch=FetchType.LAZY)
+	public AlertEventEntity getAlertEvent() {
+		return this.alertEvent;
 	}
 
-	public AlertEventsEntity removeAlertEvent(AlertEventsEntity alertEvent) {
-		getAlertEvents().remove(alertEvent);
-		alertEvent.setAlert(null);
-
-		return alertEvent;
+	public void setAlertEvent(AlertEventEntity alertEvent) {
+		this.alertEvent = alertEvent;
 	}
 
 }

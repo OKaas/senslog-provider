@@ -1,7 +1,6 @@
 package cz.hsrs.maplog.rest.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
@@ -14,7 +13,6 @@ public class Position {
     private double lat;
     private double lon;
     private long unitId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

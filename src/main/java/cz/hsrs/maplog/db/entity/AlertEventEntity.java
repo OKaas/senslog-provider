@@ -6,36 +6,47 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the alert_events database table.
+ * The persistent class for the alert_event database table.
  * 
  */
 @Entity
-@Table(name="alert_events")
-@NamedQuery(name="AlertEventsEntity.findAll", query="SELECT a FROM AlertEventsEntity a")
-public class AlertEventsEntity implements Serializable {
+@Table(name="alert_event")
+@NamedQuery(name="AlertEventEntity.findAll", query="SELECT a FROM AlertEventEntity a")
+public class AlertEventEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer alertEventId;
+	private Integer id;
+	private Integer alertId;
 	private Integer gid;
 	private Boolean solved;
 	private Boolean solving;
 	private Timestamp timeStamp;
+	private Long unitId;
 	private AlertEntity alert;
 	private UnitEntity unit;
 
-	public AlertEventsEntity() {
+	public AlertEventEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="ALERT_EVENTS_ALERTEVENTID_GENERATOR", sequenceName="SEQ_ALERT_EVENTS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERT_EVENTS_ALERTEVENTID_GENERATOR")
-	@Column(name="alert_event_id")
-	public Integer getAlertEventId() {
-		return this.alertEventId;
+	@SequenceGenerator(name="ALERT_EVENT_ID_GENERATOR", sequenceName="SEQ_ALERT_EVENT")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERT_EVENT_ID_GENERATOR")
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setAlertEventId(Integer alertEventId) {
-		this.alertEventId = alertEventId;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	@Column(name="alert_id")
+	public Integer getAlertId() {
+		return this.alertId;
+	}
+
+	public void setAlertId(Integer alertId) {
+		this.alertId = alertId;
 	}
 
 
@@ -76,9 +87,19 @@ public class AlertEventsEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to AlertEntity
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="alert_id")
+	@Column(name="unit_id")
+	public Long getUnitId() {
+		return this.unitId;
+	}
+
+	public void setUnitId(Long unitId) {
+		this.unitId = unitId;
+	}
+
+
+	//bi-directional one-to-one association to AlertEntity
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id")
 	public AlertEntity getAlert() {
 		return this.alert;
 	}
@@ -88,9 +109,9 @@ public class AlertEventsEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to UnitEntity
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="unit_id")
+	//bi-directional one-to-one association to UnitEntity
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id")
 	public UnitEntity getUnit() {
 		return this.unit;
 	}

@@ -5,39 +5,38 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the system_users database table.
+ * The persistent class for the user database table.
  * 
  */
 @Entity
-@Table(name="system_users")
+@Table(name="\"user\"")
 @NamedQuery(name="UserEntity.findAll", query="SELECT u FROM UserEntity u")
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer userId;
+	private Integer id;
 	private Boolean audio;
 	private String lang;
 	private Boolean moduleAdministrator;
 	private Boolean moduleLogBook;
+	private String name;
+	private String password;
+	private String realName;
 	private Integer rightsId;
-	private String userName;
-	private String userPassword;
-	private String userRealName;
-	private UserGroupEntity group;
+	private UserGroupEntity userGroup;
 
 	public UserEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="SYSTEM_USERS_USERID_GENERATOR", sequenceName="SEQ_SYSTEM_USERS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SYSTEM_USERS_USERID_GENERATOR")
-	@Column(name="user_id")
-	public Integer getUserId() {
-		return this.userId;
+	@SequenceGenerator(name="USER_ID_GENERATOR", sequenceName="SEQ_USER")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
@@ -79,6 +78,34 @@ public class UserEntity implements Serializable {
 	}
 
 
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	@Column(name="real_name")
+	public String getRealName() {
+		return this.realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+
 	@Column(name="rights_id")
 	public Integer getRightsId() {
 		return this.rightsId;
@@ -89,44 +116,14 @@ public class UserEntity implements Serializable {
 	}
 
 
-	@Column(name="user_name")
-	public String getUserName() {
-		return this.userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-
-	@Column(name="user_password")
-	public String getUserPassword() {
-		return this.userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-
-	@Column(name="user_real_name")
-	public String getUserRealName() {
-		return this.userRealName;
-	}
-
-	public void setUserRealName(String userRealName) {
-		this.userRealName = userRealName;
-	}
-
-
 	//bi-directional many-to-one association to UserGroupEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	public UserGroupEntity getGroup() {
-		return this.group;
+	@JoinColumn(name="group_id")
+	public UserGroupEntity getUserGroup() {
+		return this.userGroup;
 	}
 
-	public void setGroup(UserGroupEntity group) {
-		this.group = group;
+	public void setUserGroup(UserGroupEntity userGroup) {
+		this.userGroup = userGroup;
 	}
-
 }

@@ -1,6 +1,7 @@
 package cz.hsrs.maplog.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import cz.hsrs.maplog.db.entity.AlertEventEntity;
 
 import java.util.Date;
 
@@ -10,48 +11,38 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Alert {
 
-    private long alertId;
-    private long unitId;
-    private Date date;
-
+    private Integer id;
+    private String description;
+    private AlertEvent alertEvent;
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
 
-    public long getAlertId() {
-        return alertId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAlertId(long alertId) {
-        this.alertId = alertId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public long getUnitId() {
-        return unitId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUnitId(long unitId) {
-        this.unitId = unitId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public AlertEvent getAlertEvent() {
+        return alertEvent;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setAlertEvent(AlertEvent alertEvent) {
+        this.alertEvent = alertEvent;
     }
-
     /* --- Commons  --- */
 
-    @Override
-    public String toString() {
-        return "AlertEntity{" +
-                "alertId=" + alertId +
-                ", unitId=" + unitId +
-                ", date=" + date +
-                '}';
-    }
 }
 
 

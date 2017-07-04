@@ -6,17 +6,17 @@ import java.util.List;
 
 
 /**
- * The persistent class for the sensors database table.
+ * The persistent class for the sensor database table.
  * 
  */
 @Entity
-@Table(name="sensors")
+@Table(name="sensor")
 @NamedQuery(name="SensorEntity.findAll", query="SELECT s FROM SensorEntity s")
 public class SensorEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Long sensorId;
-	private String sensorName;
-	private String sensorType;
+	private Long id;
+	private String name;
+	private String type;
 	private List<ObservationEntity> observations;
 	private PhenomenonEntity phenomenon;
 
@@ -25,35 +25,32 @@ public class SensorEntity implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="SENSORS_SENSORID_GENERATOR", sequenceName="SEQ_SENSORS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SENSORS_SENSORID_GENERATOR")
-	@Column(name="sensor_id")
-	public Long getSensorId() {
-		return this.sensorId;
+	@SequenceGenerator(name="SENSOR_ID_GENERATOR", sequenceName="SEQ_SENSOR")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SENSOR_ID_GENERATOR")
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setSensorId(Long sensorId) {
-		this.sensorId = sensorId;
-	}
-
-
-	@Column(name="sensor_name")
-	public String getSensorName() {
-		return this.sensorName;
-	}
-
-	public void setSensorName(String sensorName) {
-		this.sensorName = sensorName;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 
-	@Column(name="sensor_type")
-	public String getSensorType() {
-		return this.sensorType;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setSensorType(String sensorType) {
-		this.sensorType = sensorType;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 
@@ -84,7 +81,6 @@ public class SensorEntity implements Serializable {
 
 	//bi-directional many-to-one association to PhenomenonEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="phenomenon_id")
 	public PhenomenonEntity getPhenomenon() {
 		return this.phenomenon;
 	}

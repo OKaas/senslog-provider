@@ -6,16 +6,16 @@ import java.util.List;
 
 
 /**
- * The persistent class for the phenomenons database table.
+ * The persistent class for the phenomenon database table.
  * 
  */
 @Entity
-@Table(name="phenomenons")
+@Table(name="phenomenon")
 @NamedQuery(name="PhenomenonEntity.findAll", query="SELECT p FROM PhenomenonEntity p")
 public class PhenomenonEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String phenomenonId;
-	private String phenomenonName;
+	private String id;
+	private String name;
 	private String unit;
 	private List<SensorEntity> sensors;
 
@@ -24,25 +24,23 @@ public class PhenomenonEntity implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="PHENOMENONS_PHENOMENONID_GENERATOR", sequenceName="SEQ_PHENOMENONS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PHENOMENONS_PHENOMENONID_GENERATOR")
-	@Column(name="phenomenon_id")
-	public String getPhenomenonId() {
-		return this.phenomenonId;
+	@SequenceGenerator(name="PHENOMENON_ID_GENERATOR", sequenceName="SEQ_PHENOMENON")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PHENOMENON_ID_GENERATOR")
+	public String getId() {
+		return this.id;
 	}
 
-	public void setPhenomenonId(String phenomenonId) {
-		this.phenomenonId = phenomenonId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 
-	@Column(name="phenomenon_name")
-	public String getPhenomenonName() {
-		return this.phenomenonName;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setPhenomenonName(String phenomenonName) {
-		this.phenomenonName = phenomenonName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 

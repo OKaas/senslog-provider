@@ -7,13 +7,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the units_positions database table.
+ * The persistent class for the units_position database table.
  * 
  */
 @Entity
-@Table(name="units_positions")
-@NamedQuery(name="UnitsPositionEntity.findAll", query="SELECT u FROM UnitsPositionEntity u")
-public class UnitsPositionEntity implements Serializable {
+@Table(name="units_position")
+@NamedQuery(name="UnitPositionEntity.findAll", query="SELECT u FROM UnitPositionEntity u")
+public class UnitPositionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer gid;
 	private double altitude;
@@ -25,13 +25,13 @@ public class UnitsPositionEntity implements Serializable {
 	private List<ObservationEntity> observations;
 	private UnitEntity unit;
 
-	public UnitsPositionEntity() {
+	public UnitPositionEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="UNITS_POSITIONS_GID_GENERATOR", sequenceName="SEQ_UNITS_POSITIONS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UNITS_POSITIONS_GID_GENERATOR")
+	@SequenceGenerator(name="UNITS_POSITION_GID_GENERATOR", sequenceName="SEQ_UNITS_POSITION")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UNITS_POSITION_GID_GENERATOR")
 	public Integer getGid() {
 		return this.gid;
 	}
@@ -125,7 +125,6 @@ public class UnitsPositionEntity implements Serializable {
 
 	//bi-directional many-to-one association to UnitEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="unit_id")
 	public UnitEntity getUnit() {
 		return this.unit;
 	}

@@ -1,12 +1,14 @@
 package cz.hsrs.maplog.rest.controller;
 
-import cz.hsrs.maplog.db.repository.GroupsRepository;
-import cz.hsrs.maplog.rest.dto.User;
+import cz.hsrs.maplog.db.repository.UserGroupRepository;
+import cz.hsrs.maplog.rest.dto.UserGroup;
+import cz.hsrs.maplog.util.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by OK on 7/3/2017.
@@ -14,46 +16,40 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class GroupController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroupController.class);
+
     private static final String PREFIX_CONTROLLER = "/group";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FeederController.class);
-
-
     @Autowired
-    private GroupsRepository groupsRepository;
+    private Mapper objectMapper;
+
+    // TODO for now without service layer -> controller use repository directly
+    @Autowired
+    private UserGroupRepository userGroupRepository;
 
     /* --- REST calls --- */
-    @RequestMapping(value = "/group/all", method = RequestMethod.GET)
-    public HttpStatus getAllGroup(@RequestParam("userName") String userName) {
-
-        LOGGER.info(" request {}", userName);
-
-        // TODO: create some automatic transform (some ObjectMapper)
-        groupsRepository.findBySystemUsers_UserName(userName);
-
-        return HttpStatus.OK;
+    @ResponseBody
+    @RequestMapping(value = PREFIX_CONTROLLER+"/all", method = RequestMethod.GET)
+    public List<UserGroup> getAllGroup(@RequestParam("userName") String userName) {
+        LOGGER.info(" request:  {}", userName);
+        return objectMapper.convertToDto(userGroupRepository.findByUsers_Name(userName));
     }
 
+    @ResponseBody
     @RequestMapping(value = PREFIX_CONTROLLER+"/parent", method = RequestMethod.GET)
-    public HttpStatus getParentGroup(@RequestParam("userName") String userName) {
+    public UserGroup getParentGroup(@RequestParam("nameGroup") String nameGroup) {
 
-        LOGGER.info(" request {}", userName);
-
-        // TODO: create some automatic transform (some ObjectMapper)
-        groupsRepository.findBySystemUsers_UserName(userName);
-
-        return HttpStatus.OK;
+        LOGGER.info(" request: {}", nameGroup);
+        return objectMapper.convertToDto(userGroupRepository.findParentUserGroupByName(nameGroup));
     }
 
+    @ResponseBody
     @RequestMapping(value = PREFIX_CONTROLLER+"/child", method = RequestMethod.GET)
-    public HttpStatus getChildGroup(@RequestParam("userName") String userName) {
+    public List<UserGroup> getChildGroup(@RequestParam("nameGroup") String nameGroup) {
 
-        LOGGER.info(" request {}", userName);
+        LOGGER.info(" request: {}", nameGroup);
 
-        // TODO: create some automatic transform (some ObjectMapper)
-        groupsRepository.findBySystemUsers_UserName(userName);
-
-        return HttpStatus.OK;
+        return objectMapper.convertToDto(userGroupRepository.findChildUserGroupByName(nameGroup));
     }
 
     /* --- Collaborates --- */

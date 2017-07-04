@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NamedQuery(name="RightEntity.findAll", query="SELECT r FROM RightEntity r")
 public class RightEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer rightsId;
+	private Integer id;
 	private String noteCz;
 	private String userRole;
 
@@ -22,15 +22,14 @@ public class RightEntity implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="RIGHTS_RIGHTSID_GENERATOR", sequenceName="SEQ_RIGHTS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RIGHTS_RIGHTSID_GENERATOR")
-	@Column(name="rights_id")
-	public Integer getRightsId() {
-		return this.rightsId;
+	@SequenceGenerator(name="RIGHTS_ID_GENERATOR", sequenceName="SEQ_RIGHTS")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RIGHTS_ID_GENERATOR")
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setRightsId(Integer rightsId) {
-		this.rightsId = rightsId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

@@ -2,41 +2,39 @@ package cz.hsrs.maplog.db.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the unit_holders database table.
+ * The persistent class for the unit_holder database table.
  * 
  */
 @Entity
-@Table(name="unit_holders")
+@Table(name="unit_holder")
 @NamedQuery(name="UnitHolderEntity.findAll", query="SELECT u FROM UnitHolderEntity u")
 public class UnitHolderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer holderId;
+	private Integer id;
 	private String address;
 	private String email;
-	private String holderName;
 	private Integer iconId;
+	private String name;
 	private String phone;
 	private String www;
-	private List<UnitEntity> units;
+	private UnitEntity unit;
 
 	public UnitHolderEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="UNIT_HOLDERS_HOLDERID_GENERATOR", sequenceName="SEQ_UNIT_HOLDERS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UNIT_HOLDERS_HOLDERID_GENERATOR")
-	@Column(name="holder_id")
-	public Integer getHolderId() {
-		return this.holderId;
+	@SequenceGenerator(name="UNIT_HOLDER_ID_GENERATOR", sequenceName="SEQ_UNIT_HOLDER")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UNIT_HOLDER_ID_GENERATOR")
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setHolderId(Integer holderId) {
-		this.holderId = holderId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
@@ -58,16 +56,6 @@ public class UnitHolderEntity implements Serializable {
 	}
 
 
-	@Column(name="holder_name")
-	public String getHolderName() {
-		return this.holderName;
-	}
-
-	public void setHolderName(String holderName) {
-		this.holderName = holderName;
-	}
-
-
 	@Column(name="icon_id")
 	public Integer getIconId() {
 		return this.iconId;
@@ -75,6 +63,15 @@ public class UnitHolderEntity implements Serializable {
 
 	public void setIconId(Integer iconId) {
 		this.iconId = iconId;
+	}
+
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
@@ -96,28 +93,14 @@ public class UnitHolderEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to UnitEntity
-	@OneToMany(mappedBy="unitHolder")
-	public List<UnitEntity> getUnits() {
-		return this.units;
+	//bi-directional one-to-one association to UnitEntity
+	@OneToOne(mappedBy="unitHolder", fetch=FetchType.LAZY)
+	public UnitEntity getUnit() {
+		return this.unit;
 	}
 
-	public void setUnits(List<UnitEntity> units) {
-		this.units = units;
-	}
-
-	public UnitEntity addUnit(UnitEntity unit) {
-		getUnits().add(unit);
-		unit.setUnitHolder(this);
-
-		return unit;
-	}
-
-	public UnitEntity removeUnit(UnitEntity unit) {
-		getUnits().remove(unit);
-		unit.setUnitHolder(null);
-
-		return unit;
+	public void setUnit(UnitEntity unit) {
+		this.unit = unit;
 	}
 
 }
