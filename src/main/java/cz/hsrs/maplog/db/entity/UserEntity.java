@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NamedQuery(name="UserEntity.findAll", query="SELECT u FROM UserEntity u")
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
 	private Boolean audio;
 	private String lang;
 	private Boolean moduleAdministrator;
@@ -21,7 +21,7 @@ public class UserEntity implements Serializable {
 	private String name;
 	private String password;
 	private String realName;
-	private Integer rightsId;
+	private Long rightsId;
 	private UserGroupEntity userGroup;
 
 	public UserEntity() {
@@ -31,11 +31,11 @@ public class UserEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="USER_ID_GENERATOR", sequenceName="SEQ_USER")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -107,11 +107,11 @@ public class UserEntity implements Serializable {
 
 
 	@Column(name="rights_id")
-	public Integer getRightsId() {
+	public Long getRightsId() {
 		return this.rightsId;
 	}
 
-	public void setRightsId(Integer rightsId) {
+	public void setRightsId(Long rightsId) {
 		this.rightsId = rightsId;
 	}
 
@@ -126,4 +126,5 @@ public class UserEntity implements Serializable {
 	public void setUserGroup(UserGroupEntity userGroup) {
 		this.userGroup = userGroup;
 	}
+
 }

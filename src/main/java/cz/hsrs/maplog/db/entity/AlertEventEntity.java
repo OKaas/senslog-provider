@@ -14,9 +14,9 @@ import java.sql.Timestamp;
 @NamedQuery(name="AlertEventEntity.findAll", query="SELECT a FROM AlertEventEntity a")
 public class AlertEventEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
-	private Integer alertId;
-	private Integer gid;
+	private Long id;
+	private Long alertId;
+	private Long gid;
 	private Boolean solved;
 	private Boolean solving;
 	private Timestamp timeStamp;
@@ -31,30 +31,30 @@ public class AlertEventEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="ALERT_EVENT_ID_GENERATOR", sequenceName="SEQ_ALERT_EVENT")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERT_EVENT_ID_GENERATOR")
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 
 	@Column(name="alert_id")
-	public Integer getAlertId() {
+	public Long getAlertId() {
 		return this.alertId;
 	}
 
-	public void setAlertId(Integer alertId) {
+	public void setAlertId(Long alertId) {
 		this.alertId = alertId;
 	}
 
 
-	public Integer getGid() {
+	public Long getGid() {
 		return this.gid;
 	}
 
-	public void setGid(Integer gid) {
+	public void setGid(Long gid) {
 		this.gid = gid;
 	}
 

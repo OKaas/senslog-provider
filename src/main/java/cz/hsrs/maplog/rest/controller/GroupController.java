@@ -14,7 +14,7 @@ import java.util.List;
  * Created by OK on 7/3/2017.
  */
 @RestController
-public class GroupController {
+public class GroupController extends RestMapping {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GroupController.class);
 
@@ -29,27 +29,29 @@ public class GroupController {
 
     /* --- REST calls --- */
     @ResponseBody
-    @RequestMapping(value = PREFIX_CONTROLLER+"/all", method = RequestMethod.GET)
-    public List<UserGroup> getAllGroup(@RequestParam("userName") String userName) {
-        LOGGER.info(" request:  {}", userName);
-        return objectMapper.convertToDto(userGroupRepository.findByUsers_Name(userName));
+    @RequestMapping(value = PATH_CLIENT_ID +PREFIX_CONTROLLER+"/all", method = RequestMethod.GET)
+    public List<UserGroup> getAllGroup(@PathVariable(CLIENT_ID) String clientId) {
+        LOGGER.info(" request:  {}", clientId);
+        return null;
+        //return objectMapper.toUserGroup(userGroupRepository.findByUsers_Name(userName));
     }
 
     @ResponseBody
-    @RequestMapping(value = PREFIX_CONTROLLER+"/parent", method = RequestMethod.GET)
-    public UserGroup getParentGroup(@RequestParam("nameGroup") String nameGroup) {
+    @RequestMapping(value = PATH_CLIENT_ID +PREFIX_CONTROLLER+"/parent", method = RequestMethod.GET)
+    public UserGroup getParentGroup(@PathVariable String clientId) {
 
-        LOGGER.info(" request: {}", nameGroup);
-        return objectMapper.convertToDto(userGroupRepository.findParentUserGroupByName(nameGroup));
+        LOGGER.info(" request: {}", clientId);
+        return null;
+//        return objectMapper.toUserGroup(userGroupRepository.findParentUserGroupByName(nameGroup));
     }
 
     @ResponseBody
-    @RequestMapping(value = PREFIX_CONTROLLER+"/child", method = RequestMethod.GET)
-    public List<UserGroup> getChildGroup(@RequestParam("nameGroup") String nameGroup) {
+    @RequestMapping(value = PATH_CLIENT_ID +PREFIX_CONTROLLER+"/child", method = RequestMethod.GET)
+    public List<UserGroup> getChildGroup(@PathVariable String clientId) {
 
-        LOGGER.info(" request: {}", nameGroup);
-
-        return objectMapper.convertToDto(userGroupRepository.findChildUserGroupByName(nameGroup));
+        LOGGER.info(" request: {}", clientId);
+        return null;
+//        return objectMapper.toUserGroup(userGroupRepository.findChildUserGroupByName(nameGroup));
     }
 
     /* --- Collaborates --- */

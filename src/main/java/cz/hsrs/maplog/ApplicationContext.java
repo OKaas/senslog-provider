@@ -15,7 +15,9 @@ public class ApplicationContext {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper mapper = new ModelMapper();
+        // mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return mapper;
     }
 }
 

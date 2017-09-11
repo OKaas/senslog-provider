@@ -13,10 +13,10 @@ import javax.persistence.*;
 @NamedQuery(name="UnitHolderEntity.findAll", query="SELECT u FROM UnitHolderEntity u")
 public class UnitHolderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
 	private String address;
 	private String email;
-	private Integer iconId;
+	private Long iconId;
 	private String name;
 	private String phone;
 	private String www;
@@ -29,11 +29,11 @@ public class UnitHolderEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="UNIT_HOLDER_ID_GENERATOR", sequenceName="SEQ_UNIT_HOLDER")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UNIT_HOLDER_ID_GENERATOR")
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -57,11 +57,11 @@ public class UnitHolderEntity implements Serializable {
 
 
 	@Column(name="icon_id")
-	public Integer getIconId() {
+	public Long getIconId() {
 		return this.iconId;
 	}
 
-	public void setIconId(Integer iconId) {
+	public void setIconId(Long iconId) {
 		this.iconId = iconId;
 	}
 

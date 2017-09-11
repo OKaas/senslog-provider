@@ -2,7 +2,8 @@ package cz.hsrs.maplog.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 /**
  * Created by OK on 6/9/2017.
@@ -14,7 +15,7 @@ public class Observation {
     private long sensorId;
     // TODO: should be defined in properties or system env
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date date;
+    private Timestamp timestamp;
 
     public Observation() {
     }
@@ -35,8 +36,8 @@ public class Observation {
         return unitId;
     }
 
-    public void setUnitId(long unitId) {
-        this.unitId = unitId;
+    public void setUnitId(long unit) {
+        this.unitId = unit;
     }
 
     public long getSensorId() {
@@ -47,12 +48,12 @@ public class Observation {
         this.sensorId = sensorId;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     /* --- Commons  --- */
@@ -63,7 +64,7 @@ public class Observation {
                 "value=" + value +
                 ", unitId=" + unitId +
                 ", sensorId=" + sensorId +
-                ", date=" + date +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }

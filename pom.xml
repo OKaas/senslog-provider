@@ -31,6 +31,7 @@
 
         <!-- Spring -->
         <version.spring-starter>1.5.3.RELEASE</version.spring-starter>
+        <version.spring-security-web>4.2.3.RELEASE</version.spring-security-web>
         <version.model.mapper>0.7.4</version.model.mapper>
     </properties>
 
@@ -65,6 +66,18 @@
             <artifactId>modelmapper</artifactId>
             <version>${version.model.mapper}</version>
         </dependency>
+
+        <!-- Spring Security -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-web</artifactId>-->
+            <!--<version>${version.spring-security-web}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-config</artifactId>-->
+            <!--<version>${version.spring-security-web}</version>-->
+        <!--</dependency>-->
 
         <!-- Database -->
         <dependency>

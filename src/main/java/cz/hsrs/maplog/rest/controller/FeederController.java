@@ -43,7 +43,7 @@ public class FeederController {
 
         // TODO: create some automatic transform (some ObjectMapper)
 //        ObservationEntity entity = new ObservationEntity();
-//        entity.setDate(observation.getDate());
+//        entity.setTimestamp(observation.getTimestamp());
 //        entity.setSensorId(observation.getSensorId());
 //        entity.setUnitId(observation.getUnitId());
 //        entity.setValue(observation.getValue());
@@ -82,7 +82,7 @@ public class FeederController {
         // TODO: create some automatic transform (some ObjectMapper)
         AlertEntity entity = new AlertEntity();
 //        entity.setAlertId(alert.getAlertId());
-//        entity.setDate(alert.getDate());
+//        entity.setTimestamp(alert.getTimestamp());
 //        entity.setUnitId(alert.getUnitId());
 
         alertRepository.save(entity);

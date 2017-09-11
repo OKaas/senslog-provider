@@ -14,10 +14,9 @@ import java.sql.Timestamp;
 @NamedQuery(name="ObservationEntity.findAll", query="SELECT o FROM ObservationEntity o")
 public class ObservationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
 	private double observedValue;
 	private Timestamp timeReceived;
-	private Timestamp timeStamp;
 	private SensorEntity sensor;
 	private UnitEntity unit;
 	private UnitPositionEntity unitsPosition;
@@ -29,11 +28,11 @@ public class ObservationEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="OBSERVATION_ID_GENERATOR", sequenceName="SEQ_OBSERVATION")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVATION_ID_GENERATOR")
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -57,17 +56,6 @@ public class ObservationEntity implements Serializable {
 		this.timeReceived = timeReceived;
 	}
 
-
-	@Column(name="time_stamp")
-	public Timestamp getTimeStamp() {
-		return this.timeStamp;
-	}
-
-	public void setTimeStamp(Timestamp timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-
 	//bi-directional many-to-one association to SensorEntity
 	@ManyToOne(fetch=FetchType.LAZY)
 	public SensorEntity getSensor() {
@@ -90,9 +78,9 @@ public class ObservationEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to UnitPositionEntity
+	//bi-directional many-to-one association to UnitsPositionEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="gid")
+	@JoinColumn(name="unit_position_id")
 	public UnitPositionEntity getUnitsPosition() {
 		return this.unitsPosition;
 	}

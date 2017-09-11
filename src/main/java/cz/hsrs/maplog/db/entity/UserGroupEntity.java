@@ -14,9 +14,10 @@ import java.util.List;
 @NamedQuery(name="UserGroupEntity.findAll", query="SELECT u FROM UserGroupEntity u")
 public class UserGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
 	private Boolean hasChildren;
 	private String name;
+	private List<UnitToGroupEntity> unitToGroups;
 	private List<UserEntity> users;
 	private UserGroupEntity userGroup;
 	private List<UserGroupEntity> userGroups;
@@ -28,11 +29,11 @@ public class UserGroupEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="USER_GROUP_ID_GENERATOR", sequenceName="SEQ_USER_GROUP")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USER_GROUP_ID_GENERATOR")
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -53,6 +54,31 @@ public class UserGroupEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	//bi-directional many-to-one association to UnitToGroupEntity
+	@OneToMany(mappedBy="userGroup")
+	public List<UnitToGroupEntity> getUnitToGroups() {
+		return this.unitToGroups;
+	}
+
+	public void setUnitToGroups(List<UnitToGroupEntity> unitToGroups) {
+		this.unitToGroups = unitToGroups;
+	}
+
+	public UnitToGroupEntity addUnitToGroup(UnitToGroupEntity unitToGroup) {
+		getUnitToGroups().add(unitToGroup);
+		unitToGroup.setUserGroup(this);
+
+		return unitToGroup;
+	}
+
+	public UnitToGroupEntity removeUnitToGroup(UnitToGroupEntity unitToGroup) {
+		getUnitToGroups().remove(unitToGroup);
+		unitToGroup.setUserGroup(null);
+
+		return unitToGroup;
 	}
 
 

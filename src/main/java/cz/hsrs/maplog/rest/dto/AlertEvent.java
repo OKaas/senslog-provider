@@ -1,8 +1,5 @@
 package cz.hsrs.maplog.rest.dto;
 
-import cz.hsrs.maplog.db.entity.AlertEntity;
-import cz.hsrs.maplog.db.entity.UnitEntity;
-
 import java.sql.Timestamp;
 
 /**

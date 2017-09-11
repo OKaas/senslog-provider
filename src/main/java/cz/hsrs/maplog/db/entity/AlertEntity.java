@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NamedQuery(name="AlertEntity.findAll", query="SELECT a FROM AlertEntity a")
 public class AlertEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
 	private String description;
 	private AlertEventEntity alertEvent;
 
@@ -24,11 +24,11 @@ public class AlertEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="ALERT_ID_GENERATOR", sequenceName="SEQ_ALERT")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ALERT_ID_GENERATOR")
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

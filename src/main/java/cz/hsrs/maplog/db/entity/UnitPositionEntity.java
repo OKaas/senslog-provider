@@ -11,11 +11,11 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="units_position")
+@Table(name="unit_position")
 @NamedQuery(name="UnitPositionEntity.findAll", query="SELECT u FROM UnitPositionEntity u")
 public class UnitPositionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer gid;
+	private Long id;
 	private double altitude;
 	private double dop;
 	private Timestamp firstTimeStamp;
@@ -32,12 +32,12 @@ public class UnitPositionEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="UNITS_POSITION_GID_GENERATOR", sequenceName="SEQ_UNITS_POSITION")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UNITS_POSITION_GID_GENERATOR")
-	public Integer getGid() {
-		return this.gid;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setGid(Integer gid) {
-		this.gid = gid;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 

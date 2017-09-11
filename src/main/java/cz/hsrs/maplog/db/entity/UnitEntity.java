@@ -16,16 +16,15 @@ public class UnitEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String description;
-	private Integer holderId;
 	private Boolean isMobile;
+	private UnitHolderEntity unitHolder;
 	private AlertEventEntity alertEvent;
 	private List<ObservationEntity> observations;
-	private UnitHolderEntity unitHolder;
+	private List<UnitToGroupEntity> unitToGroups;
 	private List<UnitPositionEntity> unitsPositions;
 
 	public UnitEntity() {
 	}
-
 
 	@Id
 	@SequenceGenerator(name="UNIT_ID_GENERATOR", sequenceName="SEQ_UNIT")
@@ -46,17 +45,6 @@ public class UnitEntity implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-	@Column(name="holder_id")
-	public Integer getHolderId() {
-		return this.holderId;
-	}
-
-	public void setHolderId(Integer holderId) {
-		this.holderId = holderId;
-	}
-
 
 	@Column(name="is_mobile")
 	public Boolean getIsMobile() {
@@ -113,6 +101,31 @@ public class UnitEntity implements Serializable {
 
 	public void setUnitHolder(UnitHolderEntity unitHolder) {
 		this.unitHolder = unitHolder;
+	}
+
+
+	//bi-directional many-to-one association to UnitToGroupEntity
+	@OneToMany(mappedBy="unit")
+	public List<UnitToGroupEntity> getUnitToGroups() {
+		return this.unitToGroups;
+	}
+
+	public void setUnitToGroups(List<UnitToGroupEntity> unitToGroups) {
+		this.unitToGroups = unitToGroups;
+	}
+
+	public UnitToGroupEntity addUnitToGroup(UnitToGroupEntity unitToGroup) {
+		getUnitToGroups().add(unitToGroup);
+		unitToGroup.setUnit(this);
+
+		return unitToGroup;
+	}
+
+	public UnitToGroupEntity removeUnitToGroup(UnitToGroupEntity unitToGroup) {
+		getUnitToGroups().remove(unitToGroup);
+		unitToGroup.setUnit(null);
+
+		return unitToGroup;
 	}
 
 

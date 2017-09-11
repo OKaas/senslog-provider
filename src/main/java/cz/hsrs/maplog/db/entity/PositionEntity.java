@@ -1,101 +1,105 @@
 package cz.hsrs.maplog.db.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
+
 /**
- * Created by OK on 6/12/2017.
+ * The persistent class for the position database table.
+ * 
  */
 @Entity
-@Table(name = "position")
-@SequenceGenerator(name="seq_position", sequenceName = "seq_position")
-@NamedQuery(name="PositionEntity.findAll", query="SELECT a FROM PositionEntity a")
-public class PositionEntity {
+@Table(name="position")
+@NamedQuery(name="PositionEntity.findAll", query="SELECT p FROM PositionEntity p")
+public class PositionEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Long id;
+	private double alt;
+	private Date date;
+	private Long dop;
+	private double lat;
+	private double lon;
+	private double speed;
+	private Long unitId;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_position")
-    private Long id;
-
-    private Long unitId;
-    private double lat;
-    private double lon;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+	public PositionEntity() {
+	}
 
 
-    @Column(nullable = true)
-    private double alt;
-    @Column(nullable = true)
-    private double speed;
-    @Column(nullable = true)
-    private Long dop;
+	@Id
+	@SequenceGenerator(name="POSITION_ID_GENERATOR", sequenceName="SEQ_POSITION")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="POSITION_ID_GENERATOR")
+	public Long getId() {
+		return this.id;
+	}
 
-    /* --- Collaborates --- */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /* --- Getters / Setters --- */
 
-    public Long getId() {
-        return id;
-    }
+	public double getAlt() {
+		return this.alt;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setAlt(double alt) {
+		this.alt = alt;
+	}
 
-    public Long getUnitId() {
-        return unitId;
-    }
 
-    public void setUnitId(Long unitId) {
-        this.unitId = unitId;
-    }
+	public Date getDate() {
+		return this.date;
+	}
 
-    public double getLat() {
-        return lat;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
 
-    public double getLon() {
-        return lon;
-    }
+	public Long getDop() {
+		return this.dop;
+	}
 
-    public void setLon(double lon) {
-        this.lon = lon;
-    }
+	public void setDop(Long dop) {
+		this.dop = dop;
+	}
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public double getLat() {
+		return this.lat;
+	}
 
-    public double getAlt() {
-        return alt;
-    }
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
 
-    public void setAlt(double alt) {
-        this.alt = alt;
-    }
 
-    public double getSpeed() {
-        return speed;
-    }
+	public double getLon() {
+		return this.lon;
+	}
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
 
-    public Long getDop() {
-        return dop;
-    }
 
-    public void setDop(Long dop) {
-        this.dop = dop;
-    }
-    /* --- Commons  --- */
+	public double getSpeed() {
+		return this.speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+
+	@Column(name="unit_id")
+	public Long getUnitId() {
+		return this.unitId;
+	}
+
+	public void setUnitId(Long unitId) {
+		this.unitId = unitId;
+	}
+
 }
