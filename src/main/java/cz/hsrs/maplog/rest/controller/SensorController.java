@@ -37,19 +37,16 @@ public class SensorController {
     }
 
     /***
-     * /{client-id}/sensor/value?unitId={unitId}&sort={sort}
-     *
-     * @param clientId
-     * @param unitId
-     * @param sort - sort type
-     * @return
+     * /{client-id}/sensor/value?unitId={unitId}&sensorId={sensorId}&sort={last}&time={fromTime, toTime}
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_VALUE, method = RequestMethod.GET)
-    public String getSensorDataByUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                      @RequestParam(value = RestMapping.UNIT_ID) String unitId,
-                                      @RequestParam(value = RestMapping.SORT, required = false) String sort ){
+    public String getSensorValue(@PathVariable(RestMapping.CLIENT_ID) String clientId,
+                                 @RequestParam(value = RestMapping.UNIT_ID) String unitId,
+                                 @RequestParam(value = RestMapping.SENSOR_ID) String sensorId,
+                                 @RequestParam(value = RestMapping.SORT, required = false) String sort,
+                                 @RequestParam(value = RestMapping.TIME, required = false) String time){
 
-        LOGGER.info("> clientId {}, unitId {}, sort {}", clientId, unitId, sort);
+        LOGGER.info("> clientId {},  unitId {}, sensorId {}, sort {}, time {}", clientId, unitId, sensorId, sort, time);
         return null;
     }
 
@@ -78,6 +75,7 @@ public class SensorController {
      * @return
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
+    @ResponseBody
     public Sensor getSensor(@PathVariable(RestMapping.CLIENT_ID) String clientId,
                             @RequestParam(value = RestMapping.SENSOR_ID) String sensorId){
 
@@ -85,16 +83,7 @@ public class SensorController {
         return null;
     }
 
-    /***
-     * /{client-id}/sensor/value?unitId={unitId}&sensorId={sensorId}&sort={fromTime, toTime}
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.POST)
-    public String getSensorValue(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                            @RequestParam(value = RestMapping.SENSOR_ID) String sensorId){
 
-        LOGGER.info("> clientId {},  sensorId {}", clientId, sensorId);
-        return null;
-    }
 
     /* --- Collaborates --- */
 

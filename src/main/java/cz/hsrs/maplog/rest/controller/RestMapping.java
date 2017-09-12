@@ -12,6 +12,7 @@ public class RestMapping {
     protected static final String PATH_VALUE = "/value";
 
     protected static final String SORT = "sort";
+    protected static final String TIME = "time";
 
 
     protected static final String CLIENT_ID = "clientId";
@@ -23,9 +24,21 @@ public class RestMapping {
     protected static final String SENSOR_ID = "sensorId";
     protected static final String PATH_SENSOR_ID = "/{"+SENSOR_ID+"}";
 
+    protected static final String POSITION_ID = "positionId";
+    protected static final String PATH_POSITION_ID = "/{"+POSITION_ID+"}";
+
+    protected static final String PHENOMENON_ID = "phenomenonId";
+    protected static final String PATH_PHENOMENON_ID = "/{"+PHENOMENON_ID+"}";
+
+    protected static final String PHENOMENON_NAME = "phenomenonName";
+    protected static final String PATH_PHENOMENON_NAME = "/{"+PHENOMENON_NAME+"}";
+
+    protected static final String ALERT_ID = "alertId";
+    protected static final String PATH_ALERT_ID = "/{"+ALERT_ID+"}";
 
     /* --- HTTP STATUS --- */
     protected static final HttpStatus STATUS_CREATED = HttpStatus.CREATED;
+
 
     /* --- Collaborates --- */
 
