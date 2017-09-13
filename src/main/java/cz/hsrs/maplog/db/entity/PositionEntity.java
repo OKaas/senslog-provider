@@ -2,6 +2,7 @@ package cz.hsrs.maplog.db.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -16,7 +17,7 @@ public class PositionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private double alt;
-	private Date date;
+	private Timestamp date;
 	private Long dop;
 	private double lat;
 	private double lon;
@@ -52,7 +53,7 @@ public class PositionEntity implements Serializable {
 		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 

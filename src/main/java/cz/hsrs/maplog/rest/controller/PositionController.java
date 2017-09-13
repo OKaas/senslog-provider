@@ -1,8 +1,14 @@
 package cz.hsrs.maplog.rest.controller;
 
+import cz.hsrs.maplog.db.entity.PositionEntity;
+import cz.hsrs.maplog.db.repository.PositionRepository;
 import cz.hsrs.maplog.rest.dto.Position;
+import cz.hsrs.maplog.util.Mapper;
+import org.modelmapper.MappingException;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,36 +24,31 @@ public class PositionController {
 
     private static final String PREFIX_CONTROLLER = "/position";
 
-    /***
-     * /{client-id}/position?unitId={unitId}
-     *
-     * @param clientId
-     * @param unitId
-     * @return
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
-    @ResponseBody
-    public List<Position> getPosition(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                      @RequestParam(value = RestMapping.UNIT_ID) String unitId){
+    @Autowired
+    private PositionRepository positionRepository;
 
-        LOGGER.info("> clientId {}, unitId {}", clientId, unitId);
-        return null;
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
     /***
-     * /{client-id}/position/insert?unitId={unitId}
+     * /{client-id}/position/insert
      *
      * @param clientId
-     * @param unitId
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.GET)
+    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insertPosition(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                     @RequestParam(value = RestMapping.UNIT_ID) String unitId,
                                      @RequestBody Position position){
 
-        LOGGER.info("> clientId {}, unitId {}, position {}", clientId, unitId, position);
-        return RestMapping.STATUS_CREATED;
+        LOGGER.info("> clientId {}, position {}", clientId, position);
+
+        try {
+
+            positionRepository.save(modelMapper.map(position, PositionEntity.class));
+            return RestMapping.STATUS_CREATED;
+        } catch (MappingException e){
+            return RestMapping.STATUS_BAD_REQUEST;
+        }
     }
 
     /***

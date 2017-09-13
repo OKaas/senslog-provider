@@ -38,6 +38,7 @@ public class RestMapping {
 
     /* --- HTTP STATUS --- */
     protected static final HttpStatus STATUS_CREATED = HttpStatus.CREATED;
+    protected static final HttpStatus STATUS_BAD_REQUEST = HttpStatus.BAD_REQUEST;
 
 
     /* --- Collaborates --- */

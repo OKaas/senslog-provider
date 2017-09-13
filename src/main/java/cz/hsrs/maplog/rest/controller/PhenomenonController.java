@@ -50,27 +50,11 @@ public class PhenomenonController {
     }
 
     /***
-     * /{client-id}/phenomenon?unitId={unitId}
-     * /{client-id}/phenomenon?phenomenonId={phenomenonId}&unitId={unitId}
-     *
-     * @return
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
-    @ResponseBody
-    public List<Phenomenon> getPhenomenonByName(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                          @RequestParam( value = RestMapping.UNIT_ID) String unitId,
-                                          @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId){
-
-        LOGGER.info("> clientId {}, unitId {}, phenomenonId {} ", clientId, unitId, phenomenonId);
-        return null;
-    }
-
-    /***
      * /{client-id}/phenomenon/insert
      *
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.GET)
+    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insertSensor(@PathVariable(RestMapping.CLIENT_ID) String clientId,
                                    @RequestParam( value = RestMapping.UNIT_ID) String unitId,
                                    @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId){

@@ -27,10 +27,10 @@ public class ObservationController {
      * @param unitId
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.GET)
+    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insertObservation(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                        @RequestParam(value = RestMapping.UNIT_ID) String unitId,
-                                        @RequestParam(value = RestMapping.SENSOR_ID) String sensorId,
+                                        @RequestParam(value = RestMapping.UNIT_ID, required = false) String unitId,
+                                        @RequestParam(value = RestMapping.SENSOR_ID, required = false) String sensorId,
                                         @RequestBody Observation observation){
 
         LOGGER.info("> clientId {}, unitId {}, sensorId {}, observation {}", clientId, unitId, sensorId, observation);

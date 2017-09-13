@@ -13,22 +13,32 @@ import java.util.Date;
  */
 public class Position {
 
-    private double lat;
-    private double lon;
-    private long unitId;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long id;
+    private Double lat;
+    private Double lon;
+    private Long unitId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp date;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private double alt;
+    private Double alt;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private double speed;
+    private Double speed;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private long dop;
+    private Long dop;
 
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public long getUnitId() {
         return unitId;
@@ -62,7 +72,7 @@ public class Position {
         this.lon = lon;
     }
 
-    public double getAlt() {
+    public Double getAlt() {
         return alt;
     }
 
@@ -70,19 +80,19 @@ public class Position {
         this.alt = alt;
     }
 
-    public double getSpeed() {
+    public Double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(Double speed) {
         this.speed = speed;
     }
 
-    public long getDop() {
+    public Long getDop() {
         return dop;
     }
 
-    public void setDop(int dop) {
+    public void setDop(Long dop) {
         this.dop = dop;
     }
 

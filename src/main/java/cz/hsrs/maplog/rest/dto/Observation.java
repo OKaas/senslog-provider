@@ -1,6 +1,9 @@
 package cz.hsrs.maplog.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import cz.hsrs.maplog.db.entity.SensorEntity;
+import cz.hsrs.maplog.db.entity.UnitEntity;
+import cz.hsrs.maplog.db.entity.UnitPositionEntity;
 
 import java.sql.Timestamp;
 
@@ -10,12 +13,17 @@ import java.sql.Timestamp;
  */
 public class Observation {
 
-    private double value;
+    private Long id;
+    private Double observedValue;
     private long unitId;
     private long sensorId;
     // TODO: should be defined in properties or system env
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp timestamp;
+    private Timestamp timeReceived;
+
+    private SensorEntity sensor;
+    private UnitEntity unit;
+    private UnitPositionEntity unitsPosition;
 
     public Observation() {
     }
@@ -24,12 +32,12 @@ public class Observation {
 
     /* --- Getters / Setters --- */
 
-    public double getValue() {
-        return value;
+    public Double getValue() {
+        return observedValue;
     }
 
     public void setValue(double value) {
-        this.value = value;
+        this.observedValue = value;
     }
 
     public long getUnitId() {
@@ -49,11 +57,11 @@ public class Observation {
     }
 
     public Timestamp getTimestamp() {
-        return timestamp;
+        return timeReceived;
     }
 
     public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+        this.timeReceived = timestamp;
     }
 
     /* --- Commons  --- */
@@ -61,10 +69,10 @@ public class Observation {
     @Override
     public String toString() {
         return "ObservationEntity{" +
-                "value=" + value +
+                "value=" + observedValue +
                 ", unitId=" + unitId +
                 ", sensorId=" + sensorId +
-                ", timestamp=" + timestamp +
+                ", timestamp=" + timeReceived +
                 '}';
     }
 }
