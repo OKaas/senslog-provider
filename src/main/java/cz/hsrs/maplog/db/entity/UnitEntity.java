@@ -17,14 +17,15 @@ public class UnitEntity implements Serializable {
 	private Long id;
 	private String description;
 	private Boolean isMobile;
-	private UnitHolderEntity unitHolder;
 	private AlertEventEntity alertEvent;
-	private List<ObservationEntity> observations;
+	private List<AlertEventEntity> alertEvents;
+	private List<PositionEntity> positions;
+	private List<SensorEntity> sensors;
 	private List<UnitToGroupEntity> unitToGroups;
-	private List<UnitPositionEntity> unitsPositions;
 
 	public UnitEntity() {
 	}
+
 
 	@Id
 	@SequenceGenerator(name="UNIT_ID_GENERATOR", sequenceName="SEQ_UNIT")
@@ -46,6 +47,7 @@ public class UnitEntity implements Serializable {
 		this.description = description;
 	}
 
+
 	@Column(name="is_mobile")
 	public Boolean getIsMobile() {
 		return this.isMobile;
@@ -56,8 +58,9 @@ public class UnitEntity implements Serializable {
 	}
 
 
-	//bi-directional one-to-one association to AlertEventEntity
-	@OneToOne(mappedBy="unit", fetch=FetchType.LAZY)
+	//uni-directional one-to-one association to AlertEventEntity
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id")
 	public AlertEventEntity getAlertEvent() {
 		return this.alertEvent;
 	}
@@ -67,40 +70,78 @@ public class UnitEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to ObservationEntity
+	//bi-directional many-to-one association to AlertEventEntity
 	@OneToMany(mappedBy="unit")
-	public List<ObservationEntity> getObservations() {
-		return this.observations;
+	public List<AlertEventEntity> getAlertEvents() {
+		return this.alertEvents;
 	}
 
-	public void setObservations(List<ObservationEntity> observations) {
-		this.observations = observations;
+	public void setAlertEvents(List<AlertEventEntity> alertEvents) {
+		this.alertEvents = alertEvents;
 	}
 
-	public ObservationEntity addObservation(ObservationEntity observation) {
-		getObservations().add(observation);
-		observation.setUnit(this);
+	public AlertEventEntity addAlertEvent(AlertEventEntity alertEvent) {
+		getAlertEvents().add(alertEvent);
+		alertEvent.setUnit(this);
 
-		return observation;
+		return alertEvent;
 	}
 
-	public ObservationEntity removeObservation(ObservationEntity observation) {
-		getObservations().remove(observation);
-		observation.setUnit(null);
+	public AlertEventEntity removeAlertEvent(AlertEventEntity alertEvent) {
+		getAlertEvents().remove(alertEvent);
+		alertEvent.setUnit(null);
 
-		return observation;
+		return alertEvent;
 	}
 
 
-	//bi-directional one-to-one association to UnitHolderEntity
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id")
-	public UnitHolderEntity getUnitHolder() {
-		return this.unitHolder;
+	//bi-directional many-to-one association to PositionEntity
+	@OneToMany(mappedBy="unit")
+	public List<PositionEntity> getPositions() {
+		return this.positions;
 	}
 
-	public void setUnitHolder(UnitHolderEntity unitHolder) {
-		this.unitHolder = unitHolder;
+	public void setPositions(List<PositionEntity> positions) {
+		this.positions = positions;
+	}
+
+	public PositionEntity addPosition(PositionEntity position) {
+		getPositions().add(position);
+		position.setUnit(this);
+
+		return position;
+	}
+
+	public PositionEntity removePosition(PositionEntity position) {
+		getPositions().remove(position);
+		position.setUnit(null);
+
+		return position;
+	}
+
+
+	//bi-directional many-to-one association to SensorEntity
+	@OneToMany(mappedBy="unit")
+	public List<SensorEntity> getSensors() {
+		return this.sensors;
+	}
+
+	public void setSensors(List<SensorEntity> sensors) {
+		this.sensors = sensors;
+	}
+
+	public SensorEntity addSensor(SensorEntity sensor) {
+		getSensors().add(sensor);
+		sensor.setUnit(this);
+
+		return sensor;
+	}
+
+	public SensorEntity removeSensor(SensorEntity sensor) {
+		getSensors().remove(sensor);
+		sensor.setUnit(null);
+
+		return sensor;
 	}
 
 
@@ -126,31 +167,6 @@ public class UnitEntity implements Serializable {
 		unitToGroup.setUnit(null);
 
 		return unitToGroup;
-	}
-
-
-	//bi-directional many-to-one association to UnitPositionEntity
-	@OneToMany(mappedBy="unit")
-	public List<UnitPositionEntity> getUnitsPositions() {
-		return this.unitsPositions;
-	}
-
-	public void setUnitsPositions(List<UnitPositionEntity> unitsPositions) {
-		this.unitsPositions = unitsPositions;
-	}
-
-	public UnitPositionEntity addUnitsPosition(UnitPositionEntity unitsPosition) {
-		getUnitsPositions().add(unitsPosition);
-		unitsPosition.setUnit(this);
-
-		return unitsPosition;
-	}
-
-	public UnitPositionEntity removeUnitsPosition(UnitPositionEntity unitsPosition) {
-		getUnitsPositions().remove(unitsPosition);
-		unitsPosition.setUnit(null);
-
-		return unitsPosition;
 	}
 
 }

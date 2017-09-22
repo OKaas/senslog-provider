@@ -16,12 +16,9 @@ public class AlertEventEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long alertId;
-	private Long gid;
-	private Boolean solved;
-	private Boolean solving;
 	private Timestamp timeStamp;
-	private Long unitId;
 	private AlertEntity alert;
+	private EnumItemEntity enumItem;
 	private UnitEntity unit;
 
 	public AlertEventEntity() {
@@ -50,33 +47,6 @@ public class AlertEventEntity implements Serializable {
 	}
 
 
-	public Long getGid() {
-		return this.gid;
-	}
-
-	public void setGid(Long gid) {
-		this.gid = gid;
-	}
-
-
-	public Boolean getSolved() {
-		return this.solved;
-	}
-
-	public void setSolved(Boolean solved) {
-		this.solved = solved;
-	}
-
-
-	public Boolean getSolving() {
-		return this.solving;
-	}
-
-	public void setSolving(Boolean solving) {
-		this.solving = solving;
-	}
-
-
 	@Column(name="time_stamp")
 	public Timestamp getTimeStamp() {
 		return this.timeStamp;
@@ -84,16 +54,6 @@ public class AlertEventEntity implements Serializable {
 
 	public void setTimeStamp(Timestamp timeStamp) {
 		this.timeStamp = timeStamp;
-	}
-
-
-	@Column(name="unit_id")
-	public Long getUnitId() {
-		return this.unitId;
-	}
-
-	public void setUnitId(Long unitId) {
-		this.unitId = unitId;
 	}
 
 
@@ -109,9 +69,20 @@ public class AlertEventEntity implements Serializable {
 	}
 
 
-	//bi-directional one-to-one association to UnitEntity
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id")
+	//bi-directional many-to-one association to EnumItemEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="enum_item_id")
+	public EnumItemEntity getEnumItem() {
+		return this.enumItem;
+	}
+
+	public void setEnumItem(EnumItemEntity enumItem) {
+		this.enumItem = enumItem;
+	}
+
+
+	//bi-directional many-to-one association to UnitEntity
+	@ManyToOne(fetch=FetchType.LAZY)
 	public UnitEntity getUnit() {
 		return this.unit;
 	}

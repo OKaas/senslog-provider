@@ -21,7 +21,6 @@ public class UserEntity implements Serializable {
 	private String name;
 	private String password;
 	private String realName;
-	private Long rightsId;
 	private UserGroupEntity userGroup;
 
 	public UserEntity() {
@@ -103,16 +102,6 @@ public class UserEntity implements Serializable {
 
 	public void setRealName(String realName) {
 		this.realName = realName;
-	}
-
-
-	@Column(name="rights_id")
-	public Long getRightsId() {
-		return this.rightsId;
-	}
-
-	public void setRightsId(Long rightsId) {
-		this.rightsId = rightsId;
 	}
 
 

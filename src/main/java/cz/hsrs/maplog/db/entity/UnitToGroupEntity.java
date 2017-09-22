@@ -46,7 +46,7 @@ public class UnitToGroupEntity implements Serializable {
 
 	//bi-directional many-to-one association to UserGroupEntity
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="group_id")
+	@JoinColumn(name="user_group_id")
 	public UserGroupEntity getUserGroup() {
 		return this.userGroup;
 	}

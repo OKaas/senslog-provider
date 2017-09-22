@@ -1,6 +1,7 @@
 package cz.hsrs.maplog;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +19,7 @@ import java.util.TimeZone;
 // TODO probably not necessary
 @EnableJpaRepositories("cz.hsrs.maplog.db")
 @PropertySource("senslog-app.properties")
+@EnableAutoConfiguration
 public class Application {
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone("Etc/UCT"));

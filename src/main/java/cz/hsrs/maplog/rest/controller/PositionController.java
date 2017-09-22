@@ -2,8 +2,8 @@ package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.entity.PositionEntity;
 import cz.hsrs.maplog.db.repository.PositionRepository;
-import cz.hsrs.maplog.rest.dto.Position;
-import cz.hsrs.maplog.util.Mapper;
+import cz.hsrs.maplog.rest.dto.UnitPosition;
+import cz.hsrs.maplog.rest.dto.receive.Position;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -31,20 +31,19 @@ public class PositionController {
     private ModelMapper modelMapper;
 
     /***
-     * /{client-id}/position/insert
+     * /{client-id}/unitPosition/insert
      *
      * @param clientId
      * @return
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insertPosition(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                     @RequestBody Position position){
+                                     @RequestBody Position unitPosition){
 
-        LOGGER.info("> clientId {}, position {}", clientId, position);
+        LOGGER.info("> clientId {}, unitPosition {}", clientId, unitPosition);
 
         try {
-
-            positionRepository.save(modelMapper.map(position, PositionEntity.class));
+            positionRepository.save(modelMapper.map(unitPosition, PositionEntity.class));
             return RestMapping.STATUS_CREATED;
         } catch (MappingException e){
             return RestMapping.STATUS_BAD_REQUEST;
@@ -58,10 +57,10 @@ public class PositionController {
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
-    public List<Position> getPositionByUnitPosition(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                              @RequestParam(value = RestMapping.UNIT_ID) String unitId,
-                                              @RequestParam(value = RestMapping.POSITION_ID, required = false) String positionId,
-                                              @RequestParam(value = RestMapping.SORT, required = false) String sort){
+    public List<UnitPosition> getPositionByUnitPosition(@PathVariable(RestMapping.CLIENT_ID) String clientId,
+                                                        @RequestParam(value = RestMapping.UNIT_ID) String unitId,
+                                                        @RequestParam(value = RestMapping.POSITION_ID, required = false) String positionId,
+                                                        @RequestParam(value = RestMapping.SORT, required = false) String sort){
 
         LOGGER.info("> clientId {}, unitId {}, position {}, sort {}", clientId, unitId, positionId, sort);
         return null;

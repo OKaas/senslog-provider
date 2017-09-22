@@ -5,25 +5,25 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the rights database table.
+ * The persistent class for the privilages database table.
  * 
  */
 @Entity
-@Table(name="rights")
-@NamedQuery(name="RightEntity.findAll", query="SELECT r FROM RightEntity r")
-public class RightEntity implements Serializable {
+@Table(name="privilages")
+@NamedQuery(name="PrivilageEntity.findAll", query="SELECT p FROM PrivilageEntity p")
+public class PrivilageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String noteCz;
 	private String userRole;
 
-	public RightEntity() {
+	public PrivilageEntity() {
 	}
 
 
 	@Id
-	@SequenceGenerator(name="RIGHTS_ID_GENERATOR", sequenceName="SEQ_RIGHTS")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RIGHTS_ID_GENERATOR")
+	@SequenceGenerator(name="PRIVILAGES_ID_GENERATOR", sequenceName="SEQ_PRIVILAGES")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRIVILAGES_ID_GENERATOR")
 	public Long getId() {
 		return this.id;
 	}

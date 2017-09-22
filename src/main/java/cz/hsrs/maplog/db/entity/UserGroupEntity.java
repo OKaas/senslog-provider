@@ -1,5 +1,8 @@
 package cz.hsrs.maplog.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -15,11 +18,12 @@ import java.util.List;
 public class UserGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Boolean hasChildren;
 	private String name;
 	private List<UnitToGroupEntity> unitToGroups;
 	private List<UserEntity> users;
+	@JsonBackReference
 	private UserGroupEntity userGroup;
+	@JsonManagedReference
 	private List<UserGroupEntity> userGroups;
 
 	public UserGroupEntity() {
@@ -35,16 +39,6 @@ public class UserGroupEntity implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-
-	@Column(name="has_children")
-	public Boolean getHasChildren() {
-		return this.hasChildren;
-	}
-
-	public void setHasChildren(Boolean hasChildren) {
-		this.hasChildren = hasChildren;
 	}
 
 
@@ -139,7 +133,6 @@ public class UserGroupEntity implements Serializable {
 	public UserGroupEntity removeUserGroup(UserGroupEntity userGroup) {
 		getUserGroups().remove(userGroup);
 		userGroup.setUserGroup(null);
-
 		return userGroup;
 	}
 

@@ -3,7 +3,6 @@ package cz.hsrs.maplog.db.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 
 /**
@@ -16,13 +15,12 @@ import java.util.Date;
 public class PositionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private double alt;
-	private Timestamp date;
-	private Long dop;
-	private double lat;
-	private double lon;
+	private double altitude;
+	private double dop;
 	private double speed;
-	private Long unitId;
+	private Timestamp timeReceived;
+	private Timestamp timeStamp;
+	private UnitEntity unit;
 
 	public PositionEntity() {
 	}
@@ -40,48 +38,21 @@ public class PositionEntity implements Serializable {
 	}
 
 
-	public double getAlt() {
-		return this.alt;
+	public double getAltitude() {
+		return this.altitude;
 	}
 
-	public void setAlt(double alt) {
-		this.alt = alt;
-	}
-
-
-	public Date getDate() {
-		return this.date;
-	}
-
-	public void setDate(Timestamp date) {
-		this.date = date;
+	public void setAltitude(double altitude) {
+		this.altitude = altitude;
 	}
 
 
-	public Long getDop() {
+	public double getDop() {
 		return this.dop;
 	}
 
-	public void setDop(Long dop) {
+	public void setDop(double dop) {
 		this.dop = dop;
-	}
-
-
-	public double getLat() {
-		return this.lat;
-	}
-
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-
-	public double getLon() {
-		return this.lon;
-	}
-
-	public void setLon(double lon) {
-		this.lon = lon;
 	}
 
 
@@ -94,13 +65,34 @@ public class PositionEntity implements Serializable {
 	}
 
 
-	@Column(name="unit_id")
-	public Long getUnitId() {
-		return this.unitId;
+	@Column(name="time_received")
+	public Timestamp getTimeReceived() {
+		return this.timeReceived;
 	}
 
-	public void setUnitId(Long unitId) {
-		this.unitId = unitId;
+	public void setTimeReceived(Timestamp timeReceived) {
+		this.timeReceived = timeReceived;
+	}
+
+
+	@Column(name="time_stamp")
+	public Timestamp getTimeStamp() {
+		return this.timeStamp;
+	}
+
+	public void setTimeStamp(Timestamp timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+
+	//bi-directional many-to-one association to UnitEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	public UnitEntity getUnit() {
+		return this.unit;
+	}
+
+	public void setUnit(UnitEntity unit) {
+		this.unit = unit;
 	}
 
 }

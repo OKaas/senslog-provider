@@ -35,7 +35,7 @@ public class UnitController {
     @Autowired
     private ObservationRepository observationRepository;
 
-/* --- REST calls --- */
+    /* --- REST calls --- */
 
     /* --- GET calls --- */
 
@@ -87,51 +87,6 @@ public class UnitController {
         LOGGER.info("> clientId {}, units {}", clientId, unit);
         return RestMapping.STATUS_CREATED;
     }
-
-//    @RequestMapping(value = RestMapping.PATH_CLIENT_ID +PREFIX_CONTROLLER+"/insert/{id}", method = RequestMethod.POST)
-//    public HttpStatus insertUnit(@PathVariable(RestMapping.CLIENT_ID) long id, @RequestBody Unit unit) {
-//
-//        LOGGER.info(unit.toString());
-//
-//        UnitEntity entity = (UnitEntity) objectMapper.convertToEntity(unit, UnitEntity.class);
-//        entity.setId(id);
-//
-//        unitRepository.save(entity);
-//
-//        return HttpStatus.OK;
-//    }
-//
-//    @RequestMapping(value = RestMapping.PATH_CLIENT_ID +PREFIX_CONTROLLER+"/insert", method = RequestMethod.POST)
-//    public HttpStatus insertUnitList(@RequestBody List<Unit> unit) {
-//
-//        LOGGER.info(unit.toString());
-//
-//        List<UnitEntity> entity = objectMapper.toUnitEntity(unit);
-//
-//        unitRepository.save(entity);
-//
-//        return HttpStatus.OK;
-//    }
-//
-//    @RequestMapping(value = RestMapping.PATH_CLIENT_ID +PREFIX_CONTROLLER+"/insert/observation", method = RequestMethod.POST)
-//    public HttpStatus insertObservationToUnit(@RequestBody Observation observation) {
-//
-//        LOGGER.info(observation.toString());
-//
-//        observationRepository.save( objectMapper.toObservationEntity(observation) );
-//
-//        return HttpStatus.OK;
-//    }
-//
-//    @RequestMapping(value = RestMapping.PATH_CLIENT_ID +PREFIX_CONTROLLER+"/insert/position", method = RequestMethod.POST)
-//    public HttpStatus insertPositionToUnit(@RequestBody Position position) {
-//
-//        PositionEntity entity = (PositionEntity) objectMapper.convertToEntity(position, PositionEntity.class);
-//
-//        positionRepository.save(entity);
-//
-//        return HttpStatus.OK;
-//    }
 
     /* --- Collaborates --- */
 

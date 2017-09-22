@@ -19,6 +19,7 @@ public class SensorEntity implements Serializable {
 	private String type;
 	private List<ObservationEntity> observations;
 	private PhenomenonEntity phenomenon;
+	private UnitEntity unit;
 
 	public SensorEntity() {
 	}
@@ -87,6 +88,17 @@ public class SensorEntity implements Serializable {
 
 	public void setPhenomenon(PhenomenonEntity phenomenon) {
 		this.phenomenon = phenomenon;
+	}
+
+
+	//bi-directional many-to-one association to UnitEntity
+	@ManyToOne(fetch=FetchType.LAZY)
+	public UnitEntity getUnit() {
+		return this.unit;
+	}
+
+	public void setUnit(UnitEntity unit) {
+		this.unit = unit;
 	}
 
 }

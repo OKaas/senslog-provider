@@ -24,25 +24,6 @@ public class Mapper {
     /* --- Collaborates --- */
 
     /**
-     * Observation conversion
-     */
-    public ObservationEntity toObservationEntity(Observation observation){
-        SensorEntity sensorEntity = new SensorEntity();
-        sensorEntity.setId(observation.getSensorId());
-
-        UnitEntity unitEntity = new UnitEntity();
-        unitEntity.setId(observation.getUnitId());
-
-        ObservationEntity entity = new ObservationEntity();
-        entity.setObservedValue( observation.getValue() );
-        entity.setSensor(sensorEntity);
-        entity.setUnit(unitEntity);
-        entity.setTimeReceived(observation.getTimestamp());
-
-        return entity;
-    }
-
-    /**
      * Unit conversion
      */
     public List<Unit> toUnit(List<UnitEntity> entities){

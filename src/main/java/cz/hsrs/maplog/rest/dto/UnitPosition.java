@@ -4,24 +4,27 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * Created by OK on 7/4/2017.
+ * Created by OK on 6/9/2017.
  */
 public class UnitPosition {
 
     private Integer gid;
     private double altitude;
     private double dop;
-    private Timestamp firstTimeStamp;
     private double speed;
     private Timestamp timeReceived;
     private Timestamp timeStamp;
     private List<Observation> observations;
     private Unit unit;
 
+    public UnitPosition() {
+
+    }
+
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
-    
+
     /* --- Commons  --- */
 }
 

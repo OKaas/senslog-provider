@@ -17,9 +17,8 @@ public class ObservationEntity implements Serializable {
 	private Long id;
 	private double observedValue;
 	private Timestamp timeReceived;
+	private Timestamp timeStamp;
 	private SensorEntity sensor;
-	private UnitEntity unit;
-	private UnitPositionEntity unitsPosition;
 
 	public ObservationEntity() {
 	}
@@ -56,6 +55,17 @@ public class ObservationEntity implements Serializable {
 		this.timeReceived = timeReceived;
 	}
 
+
+	@Column(name="time_stamp")
+	public Timestamp getTimeStamp() {
+		return this.timeStamp;
+	}
+
+	public void setTimeStamp(Timestamp timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+
 	//bi-directional many-to-one association to SensorEntity
 	@ManyToOne(fetch=FetchType.LAZY)
 	public SensorEntity getSensor() {
@@ -64,29 +74,6 @@ public class ObservationEntity implements Serializable {
 
 	public void setSensor(SensorEntity sensor) {
 		this.sensor = sensor;
-	}
-
-
-	//bi-directional many-to-one association to UnitEntity
-	@ManyToOne(fetch=FetchType.LAZY)
-	public UnitEntity getUnit() {
-		return this.unit;
-	}
-
-	public void setUnit(UnitEntity unit) {
-		this.unit = unit;
-	}
-
-
-	//bi-directional many-to-one association to UnitsPositionEntity
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="unit_position_id")
-	public UnitPositionEntity getUnitsPosition() {
-		return this.unitsPosition;
-	}
-
-	public void setUnitsPosition(UnitPositionEntity unitsPosition) {
-		this.unitsPosition = unitsPosition;
 	}
 
 }

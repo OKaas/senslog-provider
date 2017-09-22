@@ -14,9 +14,9 @@ import java.util.List;
 @NamedQuery(name="PhenomenonEntity.findAll", query="SELECT p FROM PhenomenonEntity p")
 public class PhenomenonEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id;
+	private Long id;
 	private String name;
-	private String unit;
+	private String unitDesc;
 	private List<SensorEntity> sensors;
 
 	public PhenomenonEntity() {
@@ -26,11 +26,11 @@ public class PhenomenonEntity implements Serializable {
 	@Id
 	@SequenceGenerator(name="PHENOMENON_ID_GENERATOR", sequenceName="SEQ_PHENOMENON")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PHENOMENON_ID_GENERATOR")
-	public String getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -44,12 +44,13 @@ public class PhenomenonEntity implements Serializable {
 	}
 
 
-	public String getUnit() {
-		return this.unit;
+	@Column(name="unit_desc")
+	public String getUnitDesc() {
+		return this.unitDesc;
 	}
 
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public void setUnitDesc(String unitDesc) {
+		this.unitDesc = unitDesc;
 	}
 
 

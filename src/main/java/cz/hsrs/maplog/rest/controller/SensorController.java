@@ -1,8 +1,15 @@
 package cz.hsrs.maplog.rest.controller;
 
-import cz.hsrs.maplog.rest.dto.Sensor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.hsrs.maplog.db.entity.PhenomenonEntity;
+import cz.hsrs.maplog.db.entity.SensorEntity;
+import cz.hsrs.maplog.db.repository.SensorRepository;
+import cz.hsrs.maplog.rest.dto.receive.Sensor;
+import org.modelmapper.MappingException;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +25,11 @@ public class SensorController {
 
     private static final String PREFIX_CONTROLLER = "/sensor";
 
+    @Autowired
+    private SensorRepository sensorRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     /* --- REST calls --- */
     /***
@@ -51,6 +63,7 @@ public class SensorController {
     }
 
     /***
+     * /{client-id}/sensor/insert
      * /{client-id}/sensor/insert?unitId={unitId}
      *
      * @param clientId
@@ -60,11 +73,17 @@ public class SensorController {
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insertSensor(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                   @RequestParam(value = RestMapping.UNIT_ID) String unitId,
+                                   @RequestParam(value = RestMapping.UNIT_ID, required = false) String unitId,
                                    @RequestBody Sensor sensor){
 
         LOGGER.info("> clientId {},  unitId {}, sensor {}", clientId, unitId, sensor);
-        return RestMapping.STATUS_CREATED;
+
+        try {
+            sensorRepository.save(modelMapper.map(sensor, SensorEntity.class));
+            return RestMapping.STATUS_CREATED;
+        } catch (MappingException e){
+            return RestMapping.STATUS_BAD_REQUEST;
+        }
     }
 
     /***

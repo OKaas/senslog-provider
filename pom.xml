@@ -33,6 +33,11 @@
         <version.spring-starter>1.5.3.RELEASE</version.spring-starter>
         <version.spring-security-web>4.2.3.RELEASE</version.spring-security-web>
         <version.model.mapper>0.7.4</version.model.mapper>
+
+        <!-- Auth0 -->
+        <version.auth0>1.0.0</version.auth0>
+        <version.auth0.api>1.0.0-rc.2</version.auth0.api>
+
     </properties>
 
     <dependencies>
@@ -61,6 +66,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- Auth0 -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0</artifactId>
+            <version>${version.auth0}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0-spring-security-api</artifactId>
+            <version>${version.auth0.api}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>

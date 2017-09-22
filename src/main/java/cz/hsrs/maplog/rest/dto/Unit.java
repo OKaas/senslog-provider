@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.rest.dto;
 
+import cz.hsrs.maplog.rest.dto.receive.Position;
+import cz.hsrs.maplog.rest.dto.receive.Sensor;
 
 import java.util.List;
 
@@ -12,9 +14,10 @@ public class Unit {
     private String description;
     private Boolean isMobile;
     private AlertEvent alertEvent;
-    private List<Observation> observations;
-    private UnitHolder unitHolder;
-    private List<UnitPosition> unitsPositions;
+    private List<AlertEvent> alertEvents;
+    private List<Position> positions;
+    private List<Sensor> sensors;
+    private List<UnitToGroup> unitToGroups;
 
     public Unit() {
     }
@@ -55,28 +58,36 @@ public class Unit {
         this.alertEvent = alertEvent;
     }
 
-    public List<Observation> getObservations() {
-        return observations;
+    public List<AlertEvent> getAlertEvents() {
+        return alertEvents;
     }
 
-    public void setObservations(List<Observation> observations) {
-        this.observations = observations;
+    public void setAlertEvents(List<AlertEvent> alertEvents) {
+        this.alertEvents = alertEvents;
     }
 
-    public UnitHolder getUnitHolder() {
-        return unitHolder;
+    public List<Position> getPositions() {
+        return positions;
     }
 
-    public void setUnitHolder(UnitHolder unitHolder) {
-        this.unitHolder = unitHolder;
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
     }
 
-    public List<UnitPosition> getUnitsPositions() {
-        return unitsPositions;
+    public List<Sensor> getSensors() {
+        return sensors;
     }
 
-    public void setUnitsPositions(List<UnitPosition> unitsPositions) {
-        this.unitsPositions = unitsPositions;
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
+    }
+
+    public List<UnitToGroup> getUnitToGroups() {
+        return unitToGroups;
+    }
+
+    public void setUnitToGroups(List<UnitToGroup> unitToGroups) {
+        this.unitToGroups = unitToGroups;
     }
 
     /* --- Commons  --- */
@@ -88,9 +99,10 @@ public class Unit {
                 ", description='" + description + '\'' +
                 ", isMobile=" + isMobile +
                 ", alertEvent=" + alertEvent +
-                ", observations=" + observations +
-                ", unitHolder=" + unitHolder +
-                ", unitsPositions=" + unitsPositions +
+                ", alertEvents=" + alertEvents +
+                ", positions=" + positions +
+                ", sensors=" + sensors +
+                ", unitToGroups=" + unitToGroups +
                 '}';
     }
 }

@@ -1,9 +1,8 @@
 package cz.hsrs.maplog.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import cz.hsrs.maplog.db.entity.PositionEntity;
 import cz.hsrs.maplog.db.entity.SensorEntity;
 import cz.hsrs.maplog.db.entity.UnitEntity;
-import cz.hsrs.maplog.db.entity.UnitPositionEntity;
 
 import java.sql.Timestamp;
 
@@ -18,12 +17,11 @@ public class Observation {
     private long unitId;
     private long sensorId;
     // TODO: should be defined in properties or system env
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp timeReceived;
 
     private SensorEntity sensor;
     private UnitEntity unit;
-    private UnitPositionEntity unitsPosition;
+    private PositionEntity positionEntity;
 
     public Observation() {
     }
