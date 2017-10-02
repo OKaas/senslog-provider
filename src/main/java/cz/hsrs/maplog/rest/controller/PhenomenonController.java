@@ -46,17 +46,20 @@ public class PhenomenonController {
      * /{client-id}/phenomenon?unitId={unitId}
      * /{client-id}/phenomenon?phenomenonId={phenomenonId}&unitId={unitId}
      * /{client-id}/phenomenon?phenomenonName={phenomenonName}&unitId={unitId}
+     * /{client-id}/phenomenon?sensortId={sensorId}
      *
      * @return
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
     public List<Phenomenon> getPhenomenon(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                                  @RequestParam( value = RestMapping.UNIT_ID) String unitId,
-                                                  @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId,
-                                                    @RequestParam(value = RestMapping.PHENOMENON_NAME, required = false) String phenomenonName){
+                                          @RequestParam( value = RestMapping.UNIT_ID) String unitId,
+                                          @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId,
+                                          @RequestParam(value = RestMapping.PHENOMENON_NAME, required = false) String phenomenonName,
+                                          @RequestParam(value = RestMapping.SENSOR_ID, required = false) String sensorId){
 
         LOGGER.info("> clientId {}, unitId {}, phenomenonId {}, phenomenonName {} ", clientId, unitId, phenomenonId, phenomenonName);
+
         return null;
     }
 

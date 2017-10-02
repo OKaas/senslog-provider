@@ -4,13 +4,15 @@ import cz.hsrs.maplog.db.repository.ObservationRepository;
 import cz.hsrs.maplog.db.repository.PositionRepository;
 import cz.hsrs.maplog.db.repository.UnitRepository;
 import cz.hsrs.maplog.rest.dto.Unit;
-import cz.hsrs.maplog.util.Mapper;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ public class UnitController {
     private static final String PREFIX_CONTROLLER = "/unit";
 
     @Autowired
-    private Mapper objectMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
     private UnitRepository unitRepository;
@@ -34,6 +36,8 @@ public class UnitController {
 
     @Autowired
     private ObservationRepository observationRepository;
+
+    private final static Type TARGET_LIST = new TypeToken<List<Unit>>() {}.getType();
 
     /* --- REST calls --- */
 
@@ -51,10 +55,11 @@ public class UnitController {
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
     @ResponseBody
     public List<Unit> getAllUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                @RequestParam(value = RestMapping.SORT, required = false) String sort ){
+                                @RequestParam(value = RestMapping.MOBILE, required = false) Boolean sort ){
 
         LOGGER.info("> clientId {}, sort {}", clientId, sort);
-        return null;
+
+        return modelMapper.map(unitRepository.findAllUnitByUser(clientId, sort), TARGET_LIST);
     }
 
     /***
@@ -67,11 +72,13 @@ public class UnitController {
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
     public Unit getUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                        @RequestParam(value = RestMapping.PATH_UNIT_ID) String unitId ){
+                        @RequestParam(value = RestMapping.UNIT_ID) Long unitId ){
 
         LOGGER.info("> clientId {}, sort {}", clientId, unitId);
-        return null;
+        return modelMapper.map(unitRepository.findAllUnitById(unitId), Unit.class);
     }
+
+    /* --- POST CALLS --- */
 
     /***
      * /{client-id}/unit/insert

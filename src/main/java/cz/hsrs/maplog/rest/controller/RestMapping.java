@@ -12,6 +12,7 @@ public class RestMapping {
     protected static final String PATH_VALUE = "/value";
 
     protected static final String SORT = "sort";
+    protected static final String MOBILE = "mobile";
     protected static final String TIME = "time";
 
 

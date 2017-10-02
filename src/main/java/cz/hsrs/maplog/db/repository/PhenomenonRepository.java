@@ -3,6 +3,8 @@ package cz.hsrs.maplog.db.repository;
 import cz.hsrs.maplog.db.entity.PhenomenonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Created by OK on 9/14/2017.
  */

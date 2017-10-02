@@ -13,9 +13,32 @@ INSERT INTO user_group (id, name, parent_group_id ) VALUES
 INSERT INTO user_group (id, name, parent_group_id ) VALUES
 ( 4, 'testing_group_child_third',  2);
 
---INSERT INTO "user" (id, password, name, real_name, group_id ) VALUES
---( nextval('seq_user'), 'ADD_AES_SHA256_OR_SOMETHING!!!!', 'userQQ', 'userQQ', 2);
---
+INSERT INTO "user"(
+            id, audio, lang, module_administrator, module_log_book, name,
+            password, real_name, group_id)
+    VALUES ( 1, false, 'CZ', true, true, 'test', 'sha256', 'test real', 1);
+
+INSERT INTO unit(
+            id, description, is_mobile)
+    VALUES ( 1, 'unit test', false);
+
+INSERT INTO unit(
+            id, description, is_mobile)
+    VALUES ( 2, 'big unit', false);
+
+INSERT INTO unit_to_group(
+            id, unit_id, user_group_id)
+    VALUES (1, 1, 1);
+
+INSERT INTO "position"(
+            id, altitude, dop, speed, time_received, time_stamp, unit_id)
+    VALUES (1, 1.1, 1.2, 1.3, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
+
+INSERT INTO "position"(
+            id, altitude, dop, speed, time_received, time_stamp, unit_id)
+    VALUES (2, 1.6, 1.7, 1.8, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
+
+
 --INSERT INTO phenomenon(id, name, unit_desc)
 --    VALUES ( 1, 'speed', 'm/s');
 --

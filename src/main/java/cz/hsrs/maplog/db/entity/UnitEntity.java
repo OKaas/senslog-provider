@@ -1,5 +1,8 @@
 package cz.hsrs.maplog.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -17,10 +20,16 @@ public class UnitEntity implements Serializable {
 	private Long id;
 	private String description;
 	private Boolean isMobile;
+
+	@JsonBackReference
 	private AlertEventEntity alertEvent;
+	@JsonManagedReference
 	private List<AlertEventEntity> alertEvents;
+	@JsonManagedReference
 	private List<PositionEntity> positions;
+	@JsonManagedReference
 	private List<SensorEntity> sensors;
+	@JsonManagedReference
 	private List<UnitToGroupEntity> unitToGroups;
 
 	public UnitEntity() {

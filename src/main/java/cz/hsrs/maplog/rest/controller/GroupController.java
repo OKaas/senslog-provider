@@ -29,7 +29,7 @@ public class GroupController extends RestMapping {
     @Autowired
     private UserGroupRepository userGroupRepository;
 
-    private final static Type groupType = new TypeToken<List<UserGroup>>() {}.getType();
+    // private final static Type groupType = new TypeToken<List<UserGroup>>() {}.getType();
 
     /* --- REST calls --- */
     @ResponseBody

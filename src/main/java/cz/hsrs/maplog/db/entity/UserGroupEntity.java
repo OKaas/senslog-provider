@@ -19,12 +19,12 @@ public class UserGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
-	private List<UnitToGroupEntity> unitToGroups;
-	private List<UserEntity> users;
-	@JsonBackReference
-	private UserGroupEntity userGroup;
-	@JsonManagedReference
-	private List<UserGroupEntity> userGroups;
+
+	@JsonBackReference private UserGroupEntity userGroup;
+
+	@JsonManagedReference private List<UnitToGroupEntity> unitToGroups;
+	@JsonManagedReference private List<UserEntity> users;
+	@JsonManagedReference private List<UserGroupEntity> userGroups;
 
 	public UserGroupEntity() {
 	}
