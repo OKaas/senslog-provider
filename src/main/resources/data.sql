@@ -16,7 +16,12 @@ INSERT INTO user_group (id, name, parent_group_id ) VALUES
 INSERT INTO "user"(
             id, audio, lang, module_administrator, module_log_book, name,
             password, real_name, group_id)
-    VALUES ( 1, false, 'CZ', true, true, 'test', 'sha256', 'test real', 1);
+    VALUES ( 1, false, 'CZ', true, true, 'test', 'test', 'test real', 1);
+
+INSERT INTO "user"(
+            id, audio, lang, module_administrator, module_log_book, name,
+            password, real_name, group_id)
+    VALUES ( 2, false, 'CZ', true, true, 'test2', 'test', 'test real', 3);
 
 INSERT INTO unit(
             id, description, is_mobile)
@@ -30,6 +35,10 @@ INSERT INTO unit_to_group(
             id, unit_id, user_group_id)
     VALUES (1, 1, 1);
 
+INSERT INTO unit_to_group(
+            id, unit_id, user_group_id)
+    VALUES (2, 2, 1);
+
 INSERT INTO "position"(
             id, altitude, dop, speed, time_received, time_stamp, unit_id)
     VALUES (1, 1.1, 1.2, 1.3, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
@@ -39,13 +48,13 @@ INSERT INTO "position"(
     VALUES (2, 1.6, 1.7, 1.8, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
 
 
---INSERT INTO phenomenon(id, name, unit_desc)
+--INSERT INTO phenomenonReceive(id, username, unit_desc)
 --    VALUES ( 1, 'speed', 'm/s');
 --
---INSERT INTO sensor (id, name, type, phenomenon_id)
+--INSERT INTO sensorReceive (id, username, type, phenomenon_id)
 --    VALUES ( nextval('seq_sensor'), 'sensor1', 'test_sensor', 1);
 
---INSERT INTO unit_holder(id, address, email, icon_id, name, phone, www)
+--INSERT INTO unit_holder(id, address, email, icon_id, username, phone, www)
 --    VALUES ( 1, 'test', 'test', 0, 'test', 'test', 'test');
 
 --INSERT INTO unit (id, description, holder_id, is_mobile) values

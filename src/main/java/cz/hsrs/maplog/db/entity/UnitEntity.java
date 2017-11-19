@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -140,6 +141,11 @@ public class UnitEntity implements Serializable {
 	}
 
 	public SensorEntity addSensor(SensorEntity sensor) {
+
+		if( sensors == null ){
+			sensors = new ArrayList<>();
+		}
+
 		getSensors().add(sensor);
 		sensor.setUnit(this);
 
@@ -155,7 +161,7 @@ public class UnitEntity implements Serializable {
 
 
 	//bi-directional many-to-one association to UnitToGroupEntity
-	@OneToMany(mappedBy="unit")
+	@OneToMany(mappedBy="unit", cascade = CascadeType.ALL)
 	public List<UnitToGroupEntity> getUnitToGroups() {
 		return this.unitToGroups;
 	}
@@ -165,6 +171,11 @@ public class UnitEntity implements Serializable {
 	}
 
 	public UnitToGroupEntity addUnitToGroup(UnitToGroupEntity unitToGroup) {
+
+		if( unitToGroups == null ){
+			unitToGroups = new ArrayList<>();
+		}
+
 		getUnitToGroups().add(unitToGroup);
 		unitToGroup.setUnit(this);
 

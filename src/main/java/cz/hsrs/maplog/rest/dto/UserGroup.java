@@ -1,26 +1,24 @@
 package cz.hsrs.maplog.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import cz.hsrs.maplog.db.entity.UnitToGroupEntity;
-import cz.hsrs.maplog.db.entity.UserEntity;
-import cz.hsrs.maplog.db.entity.UserGroupEntity;
 
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * Created by OK on 7/3/2017.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserGroup {
 
+    @Id
+    @NotNull
     private Long id;
+
+    @NotNull
     private String name;
-    @JsonBackReference private UserGroupEntity userGroup;
-    @JsonManagedReference private List<UnitToGroupEntity> unitToGroups;
-    @JsonManagedReference private List<UserEntity> users;
-    @JsonManagedReference private List<UserGroupEntity> userGroups;
+
+    @JsonManagedReference private List<UserGroup> userGroups;
 
     /* --- Collaborates --- */
 
@@ -40,35 +38,11 @@ public class UserGroup {
         this.name = name;
     }
 
-    public List<UnitToGroupEntity> getUnitToGroups() {
-        return unitToGroups;
-    }
-
-    public void setUnitToGroups(List<UnitToGroupEntity> unitToGroups) {
-        this.unitToGroups = unitToGroups;
-    }
-
-    public List<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserEntity> users) {
-        this.users = users;
-    }
-
-    public UserGroupEntity getUserGroup() {
-        return userGroup;
-    }
-
-    public void setUserGroup(UserGroupEntity userGroup) {
-        this.userGroup = userGroup;
-    }
-
-    public List<UserGroupEntity> getUserGroups() {
+    public List<UserGroup> getUserGroups() {
         return userGroups;
     }
 
-    public void setUserGroups(List<UserGroupEntity> userGroups) {
+    public void setUserGroups(List<UserGroup> userGroups) {
         this.userGroups = userGroups;
     }
 

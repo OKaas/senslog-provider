@@ -3,13 +3,13 @@ package cz.hsrs.maplog.rest.dto.receive;
 /**
  * Created by OK on 8/4/2017.
  */
-public class Sensor {
+public class SensorReceive {
 
     private Long id;
     private String name;
     private String type;
 
-    public Sensor() {
+    public SensorReceive() {
     }
 
     /* --- Collaborates --- */
@@ -44,9 +44,9 @@ public class Sensor {
 
     @Override
     public String toString() {
-        return "Sensor{" +
+        return "SensorReceive{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + name + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }

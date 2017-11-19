@@ -1,24 +1,25 @@
-package cz.hsrs.maplog.rest.dto.receive;
+package cz.hsrs.maplog.rest.dto;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
 /**
- * DTO for receiving
- * Created by OK on 9/12/2017.
+ * Created by OK on 11/18/2017.
  */
 public class Phenomenon {
 
     private Long id;
     private String name;
-    private String unit;
-    private List<Sensor> sensors;
+    private String unitDesc;
 
-    public Phenomenon() {
-    }
+    @JsonManagedReference
+    private List<Sensor> sensors;
 
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
+
     public Long getId() {
         return id;
     }
@@ -35,12 +36,12 @@ public class Phenomenon {
         this.name = name;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getUnitDesc() {
+        return unitDesc;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setUnitDesc(String unitDesc) {
+        this.unitDesc = unitDesc;
     }
 
     public List<Sensor> getSensors() {
@@ -50,18 +51,7 @@ public class Phenomenon {
     public void setSensors(List<Sensor> sensors) {
         this.sensors = sensors;
     }
-
     /* --- Commons  --- */
-
-    @Override
-    public String toString() {
-        return "Phenomenon{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", unit='" + unit + '\'' +
-                ", sensors=" + sensors +
-                '}';
-    }
 }
 
 

@@ -1,8 +1,5 @@
 package cz.hsrs.maplog.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -20,11 +17,12 @@ public class UserGroupEntity implements Serializable {
 	private Long id;
 	private String name;
 
-	@JsonBackReference private UserGroupEntity userGroup;
+	private UserGroupEntity userGroup;
 
-	@JsonManagedReference private List<UnitToGroupEntity> unitToGroups;
-	@JsonManagedReference private List<UserEntity> users;
-	@JsonManagedReference private List<UserGroupEntity> userGroups;
+
+	private List<UnitToGroupEntity> unitToGroups;
+	private List<UserEntity> users;
+	private List<UserGroupEntity> userGroups;
 
 	public UserGroupEntity() {
 	}

@@ -2,7 +2,7 @@ package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.entity.PhenomenonEntity;
 import cz.hsrs.maplog.db.repository.PhenomenonRepository;
-import cz.hsrs.maplog.rest.dto.receive.Phenomenon;
+import cz.hsrs.maplog.rest.dto.receive.PhenomenonReceive;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class PhenomenonController {
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
     @ResponseBody
-    public List<Phenomenon> getPhenomenonAll(@PathVariable(RestMapping.CLIENT_ID) String clientId){
+    public List<PhenomenonReceive> getPhenomenonAll(@PathVariable(RestMapping.CLIENT_ID) String clientId){
 
         LOGGER.info("> clientId {} ", clientId);
         return null;
@@ -52,11 +52,11 @@ public class PhenomenonController {
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
-    public List<Phenomenon> getPhenomenon(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                          @RequestParam( value = RestMapping.UNIT_ID) String unitId,
-                                          @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId,
-                                          @RequestParam(value = RestMapping.PHENOMENON_NAME, required = false) String phenomenonName,
-                                          @RequestParam(value = RestMapping.SENSOR_ID, required = false) String sensorId){
+    public List<PhenomenonReceive> getPhenomenon(@PathVariable(RestMapping.CLIENT_ID) String clientId,
+                                                 @RequestParam( value = RestMapping.UNIT_ID) String unitId,
+                                                 @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId,
+                                                 @RequestParam(value = RestMapping.PHENOMENON_NAME, required = false) String phenomenonName,
+                                                 @RequestParam(value = RestMapping.SENSOR_ID, required = false) String sensorId){
 
         LOGGER.info("> clientId {}, unitId {}, phenomenonId {}, phenomenonName {} ", clientId, unitId, phenomenonId, phenomenonName);
 
@@ -64,20 +64,20 @@ public class PhenomenonController {
     }
 
     /***
-     * /{client-id}/phenomenon/insert
+     * /{client-id}/phenomenonReceive/insert
      *
      * @return
      */
     @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insertPhenomenon(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                       @RequestBody Phenomenon phenomenon){
+                                       @RequestBody PhenomenonReceive phenomenonReceive){
 
-        LOGGER.info("> clientId {}, phenomenonId {} ", clientId, phenomenon);
+        LOGGER.info("> clientId {}, phenomenonId {} ", clientId, phenomenonReceive);
 
         // TODO here update sensor phenomenonId
 
         try {
-            phenomenonRepository.save(modelMapper.map(phenomenon, PhenomenonEntity.class));
+            phenomenonRepository.save(modelMapper.map(phenomenonReceive, PhenomenonEntity.class));
             return RestMapping.STATUS_CREATED;
         } catch (MappingException e){
             return RestMapping.STATUS_BAD_REQUEST;

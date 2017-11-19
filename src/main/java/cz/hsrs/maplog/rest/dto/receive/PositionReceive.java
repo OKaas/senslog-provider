@@ -1,6 +1,9 @@
 package cz.hsrs.maplog.rest.dto.receive;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 /**
@@ -8,9 +11,13 @@ import java.sql.Timestamp;
  *
  * Created by OK on 9/14/2017.
  */
-public class Position {
+public class PositionReceive {
 
-    private Long unit;
+    @JsonIgnore
+    private Long id;
+
+    @NotNull
+    private Long unitId;
     private Timestamp timeStamp;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,18 +27,27 @@ public class Position {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long dop;
 
-    public Position() {
+    public PositionReceive() {
     }
 
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
-    public Long getUnit() {
-        return unit;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setUnit(Long unit) {
-        this.unit = unit;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
+
+    public Long getUnitId() {
+        return unitId;
     }
 
     public Double getAltitude() {
@@ -70,8 +86,8 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "unit=" + unit +
+        return "PositionReceive{" +
+                "unitId=" + unitId +
                 ", timeStamp=" + timeStamp +
                 ", altitude=" + altitude +
                 ", speed=" + speed +

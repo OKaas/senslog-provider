@@ -2,11 +2,13 @@ package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.repository.UserGroupRepository;
 import cz.hsrs.maplog.rest.dto.UserGroup;
-import org.modelmapper.ModelMapper;
+import cz.hsrs.maplog.security.UserToken;
+import cz.hsrs.maplog.util.Mapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -23,35 +25,51 @@ public class GroupController extends RestMapping {
     private static final String PREFIX_CONTROLLER = "/group";
 
     @Autowired
-    private ModelMapper modelMapper;
+    private Mapper modelMapper;
 
-    // TODO for now without service layer -> controller use repository directly
     @Autowired
     private UserGroupRepository userGroupRepository;
 
-    // private final static Type groupType = new TypeToken<List<UserGroup>>() {}.getType();
+    private final static Type LIST_DTO = new TypeToken<List<UserGroup>>() {}.getType();
 
     /* --- REST calls --- */
+
+    /**
+     * http://localhost:8080/group/all
+     *
+     * @param details
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = PATH_CLIENT_ID +PREFIX_CONTROLLER+"/all", method = RequestMethod.GET)
-    public UserGroup getAllGroup(@PathVariable(CLIENT_ID) String clientId) {
-        LOGGER.info(" request:  {}", clientId);
-        return modelMapper.map(userGroupRepository.findByName(clientId), UserGroup.class);
+    @RequestMapping(value = PREFIX_CONTROLLER+"/all", method = RequestMethod.GET)
+    public UserGroup getAllGroup(@AuthenticationPrincipal UserToken details){
+        LOGGER.info(" request:  {}", details.toString());
+        return modelMapper.map(details.getUserGroupEntity(), UserGroup.class);
     }
 
+    /**
+     * http://localhost:8080/group/parent
+     *
+     * @param details
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = PATH_CLIENT_ID +PREFIX_CONTROLLER+"/parent", method = RequestMethod.GET)
-    public UserGroup getParentGroup(@PathVariable String clientId) {
-
-        return modelMapper.map(userGroupRepository.findParentGroupByName(clientId), UserGroup.class);
+    @RequestMapping(value = PREFIX_CONTROLLER+"/parent", method = RequestMethod.GET)
+    public UserGroup getParentGroup(@AuthenticationPrincipal UserToken details) {
+        LOGGER.info(" request:  {}", details.toString());
+        return modelMapper.map(details.getUserGroupEntity().getUserGroup(), UserGroup.class);
     }
 
+    /**
+     * http://localhost:8080/group/child
+     *
+     * @param details
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = PATH_CLIENT_ID +PREFIX_CONTROLLER+"/child", method = RequestMethod.GET)
-    public List<UserGroup> getChildGroup(@PathVariable String clientId) {
-
-        // return modelMapper.map(userGroupRepository.findChildGroupsByName(clientId), groupType);
-        return null;
+    @RequestMapping(value = PREFIX_CONTROLLER+"/child", method = RequestMethod.GET)
+    public List<UserGroup> getChildGroup(@AuthenticationPrincipal UserToken details) {
+        return modelMapper.map(userGroupRepository.getChildUserGroupById(details.getUserGroupEntity().getId()), LIST_DTO);
     }
 
     /* --- Collaborates --- */

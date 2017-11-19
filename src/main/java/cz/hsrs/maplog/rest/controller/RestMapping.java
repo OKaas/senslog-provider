@@ -11,10 +11,9 @@ public class RestMapping {
     protected static final String PATH_ALL = "/all";
     protected static final String PATH_VALUE = "/value";
 
-    protected static final String SORT = "sort";
+    protected static final String SEARCH = "search";
     protected static final String MOBILE = "mobile";
     protected static final String TIME = "time";
-
 
     protected static final String CLIENT_ID = "clientId";
     protected static final String PATH_CLIENT_ID = "/{"+CLIENT_ID+"}";

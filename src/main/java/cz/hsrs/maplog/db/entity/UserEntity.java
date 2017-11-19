@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -21,6 +23,7 @@ public class UserEntity implements Serializable {
 	private String name;
 	private String password;
 	private String realName;
+
 	private UserGroupEntity userGroup;
 
 	public UserEntity() {

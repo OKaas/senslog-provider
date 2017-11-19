@@ -1,7 +1,7 @@
 package cz.hsrs.maplog.rest.dto;
 
-import cz.hsrs.maplog.rest.dto.receive.Position;
-import cz.hsrs.maplog.rest.dto.receive.Sensor;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -13,11 +13,9 @@ public class Unit {
     private Long id;
     private String description;
     private Boolean isMobile;
-    private AlertEvent alertEvent;
-    private List<AlertEvent> alertEvents;
-    private List<Position> positions;
+
+    @JsonManagedReference
     private List<Sensor> sensors;
-    private List<UnitToGroup> unitToGroups;
 
     public Unit() {
     }
@@ -50,59 +48,19 @@ public class Unit {
         isMobile = mobile;
     }
 
-    public AlertEvent getAlertEvent() {
-        return alertEvent;
-    }
-
-    public void setAlertEvent(AlertEvent alertEvent) {
-        this.alertEvent = alertEvent;
-    }
-
-    public List<AlertEvent> getAlertEvents() {
-        return alertEvents;
-    }
-
-    public void setAlertEvents(List<AlertEvent> alertEvents) {
-        this.alertEvents = alertEvents;
-    }
-
-    public List<Position> getPositions() {
-        return positions;
-    }
-
-    public void setPositions(List<Position> positions) {
-        this.positions = positions;
-    }
-
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
     public void setSensors(List<Sensor> sensors) {
         this.sensors = sensors;
-    }
-
-    public List<UnitToGroup> getUnitToGroups() {
-        return unitToGroups;
-    }
-
-    public void setUnitToGroups(List<UnitToGroup> unitToGroups) {
-        this.unitToGroups = unitToGroups;
     }
 
     /* --- Commons  --- */
 
     @Override
     public String toString() {
-        return "Unit{" +
+        return "UnitReceive{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", isMobile=" + isMobile +
-                ", alertEvent=" + alertEvent +
-                ", alertEvents=" + alertEvents +
-                ", positions=" + positions +
                 ", sensors=" + sensors +
-                ", unitToGroups=" + unitToGroups +
                 '}';
     }
 }

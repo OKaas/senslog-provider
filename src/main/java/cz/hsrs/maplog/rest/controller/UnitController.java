@@ -1,15 +1,21 @@
 package cz.hsrs.maplog.rest.controller;
 
+import cz.hsrs.maplog.db.entity.UnitEntity;
+import cz.hsrs.maplog.db.entity.UnitToGroupEntity;
 import cz.hsrs.maplog.db.repository.ObservationRepository;
 import cz.hsrs.maplog.db.repository.PositionRepository;
 import cz.hsrs.maplog.db.repository.UnitRepository;
 import cz.hsrs.maplog.rest.dto.Unit;
+import cz.hsrs.maplog.rest.dto.receive.UnitReceive;
+import cz.hsrs.maplog.security.UserToken;
+import cz.hsrs.maplog.util.Mapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -26,7 +32,7 @@ public class UnitController {
     private static final String PREFIX_CONTROLLER = "/unit";
 
     @Autowired
-    private ModelMapper modelMapper;
+    private Mapper modelMapper;
 
     @Autowired
     private UnitRepository unitRepository;
@@ -37,61 +43,69 @@ public class UnitController {
     @Autowired
     private ObservationRepository observationRepository;
 
-    private final static Type TARGET_LIST = new TypeToken<List<Unit>>() {}.getType();
 
-    /* --- REST calls --- */
+    private final static Type LIST_DTO = new TypeToken<List<Unit>>() {}.getType();
+
+    private final static Type LIST_ENTITY = new TypeToken<List<UnitEntity>>() {}.getType();
 
     /* --- GET calls --- */
 
     /***
-     * /{client-id}/unit/all
-     * /{client-id}/unit/all?sort={static}
-     * /{client-id}/unit/all?sort={mobile}
+     * /unit/all
+     * /unit/all?sort={static}
+     * /unit/all?sort={mobile}
      *
-     * @param clientId
-     * @param sort
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
+    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
     @ResponseBody
-    public List<Unit> getAllUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                @RequestParam(value = RestMapping.MOBILE, required = false) Boolean sort ){
+    public List<Unit> getAllUnit(@AuthenticationPrincipal UserToken details){
 
-        LOGGER.info("> clientId {}, sort {}", clientId, sort);
+        LOGGER.info("> userToken: {}", details);
 
-        return modelMapper.map(unitRepository.findAllUnitByUser(clientId, sort), TARGET_LIST);
+        return modelMapper.map(unitRepository.findAllByUnitToGroupsUserGroupId( details.getUserGroupEntity().getId() ), LIST_DTO);
     }
 
     /***
-     * /{client-id}/unit?unitId={unitId}
+     * /unit?unitId={unitId}
      *
-     * @param clientId
      * @param unitId
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
+    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
-    public Unit getUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
+    public Unit getUnit(@AuthenticationPrincipal UserToken details,
                         @RequestParam(value = RestMapping.UNIT_ID) Long unitId ){
-
-        LOGGER.info("> clientId {}, sort {}", clientId, unitId);
-        return modelMapper.map(unitRepository.findAllUnitById(unitId), Unit.class);
+        LOGGER.info("> clientId {} , filter: {}", details.toString(), unitId);
+        return modelMapper.map(unitRepository.findAllUnitByIdAndUnitToGroupsUserGroupIdIn( unitId, details.getGroup() ), Unit.class);
     }
 
     /* --- POST CALLS --- */
 
     /***
-     * /{client-id}/unit/insert
+     * /unit/insert
      *
-     * @param clientId
      * @param unit
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
-    public HttpStatus insertUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                 @RequestParam List<Unit> unit){
+    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
+    public HttpStatus insertUnit(@AuthenticationPrincipal UserToken details,
+                                 @RequestBody List<UnitReceive> unit){
 
-        LOGGER.info("> clientId {}, units {}", clientId, unit);
+        LOGGER.info("> request {}, units {}", details.toString(), unit);
+
+        List<UnitEntity> toSave = modelMapper.map(unit, LIST_ENTITY );
+
+        for(UnitEntity usrGrpEntity : toSave){
+            UnitToGroupEntity unitToGroupEntity = new UnitToGroupEntity();
+            unitToGroupEntity.setUnit(usrGrpEntity);
+            unitToGroupEntity.setUserGroup(details.getUserGroupEntity());
+
+            usrGrpEntity.addUnitToGroup( unitToGroupEntity);
+        }
+
+        unitRepository.save( toSave );
+
         return RestMapping.STATUS_CREATED;
     }
 
