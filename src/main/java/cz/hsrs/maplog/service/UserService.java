@@ -1,18 +1,23 @@
 package cz.hsrs.maplog.service;
 
-import cz.hsrs.maplog.db.entity.UserEntity;
-import cz.hsrs.maplog.db.entity.UserGroupEntity;
+import cz.hsrs.maplog.db.model.UserEntity;
+import cz.hsrs.maplog.db.model.UserGroupEntity;
 import cz.hsrs.maplog.db.repository.UserGroupRepository;
 import cz.hsrs.maplog.db.repository.UserRepository;
 import cz.hsrs.maplog.security.UserToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -26,6 +31,9 @@ public class UserService implements UserDetailsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -37,13 +45,34 @@ public class UserService implements UserDetailsService {
 
         LOGGER.info("Try login: {}", username);
 
-        UserEntity user = userRepository.findByNameEquals(username);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = auth == null ? null : auth.getName();
+        }
+
+        // get token
+        final String accessToken = request.getHeader("header-name");
+        UserToken userToken = null;
+        UserEntity user = null;
+
+        if (null != accessToken) {
+            //get and check whether token is valid ( from DB or file wherever you are storing the token)
+        }
+
+        user = userRepository.findByNameEquals(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("Username " + username + " not found");
         }
 
-        return new UserToken(user.getName(), user.getPassword(), user.getUserGroup(), getGroup(user), getGrantedAuthorities(username) );
+        userToken = new UserToken(user.getName(), user.getPassword(), user.getUserGroup(), getGroup(user), getGrantedAuthorities(username) );
+
+        // set to context
+        final UsernamePasswordAuthenticationToken authentication =
+            new UsernamePasswordAuthenticationToken(user, null, userToken.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return userToken;
     }
 
     /* --- Collaborates --- */

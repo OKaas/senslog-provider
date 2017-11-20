@@ -1,7 +1,7 @@
 package cz.hsrs.maplog.rest.controller;
 
-import cz.hsrs.maplog.db.entity.UnitEntity;
-import cz.hsrs.maplog.db.entity.UnitToGroupEntity;
+import cz.hsrs.maplog.db.model.UnitEntity;
+import cz.hsrs.maplog.db.model.UnitToGroupEntity;
 import cz.hsrs.maplog.db.repository.ObservationRepository;
 import cz.hsrs.maplog.db.repository.PositionRepository;
 import cz.hsrs.maplog.db.repository.UnitRepository;
@@ -9,7 +9,6 @@ import cz.hsrs.maplog.rest.dto.Unit;
 import cz.hsrs.maplog.rest.dto.receive.UnitReceive;
 import cz.hsrs.maplog.security.UserToken;
 import cz.hsrs.maplog.util.Mapper;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

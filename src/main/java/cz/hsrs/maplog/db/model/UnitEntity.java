@@ -1,4 +1,4 @@
-package cz.hsrs.maplog.db.entity;
+package cz.hsrs.maplog.db.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

@@ -1,9 +1,6 @@
 package cz.hsrs.maplog.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import cz.hsrs.maplog.db.entity.AlertEventEntity;
-
-import java.util.Date;
 
 /**
  * Created by OK on 6/12/2017.

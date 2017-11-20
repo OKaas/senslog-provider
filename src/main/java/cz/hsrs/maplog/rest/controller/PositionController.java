@@ -1,12 +1,11 @@
 package cz.hsrs.maplog.rest.controller;
 
-import cz.hsrs.maplog.db.entity.PositionEntity;
+import cz.hsrs.maplog.db.model.PositionEntity;
 import cz.hsrs.maplog.db.repository.PositionRepository;
 import cz.hsrs.maplog.rest.dto.Position;
 import cz.hsrs.maplog.rest.dto.receive.PositionReceive;
 import cz.hsrs.maplog.security.UserToken;
 import cz.hsrs.maplog.util.Mapper;
-import org.modelmapper.MappingException;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

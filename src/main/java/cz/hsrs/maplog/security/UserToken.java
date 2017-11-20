@@ -1,6 +1,6 @@
 package cz.hsrs.maplog.security;
 
-import cz.hsrs.maplog.db.entity.UserGroupEntity;
+import cz.hsrs.maplog.db.model.UserGroupEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

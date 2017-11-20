@@ -1,6 +1,4 @@
-package cz.hsrs.maplog.db.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package cz.hsrs.maplog.db.model;
 
 import java.io.Serializable;
 import javax.persistence.*;

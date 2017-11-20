@@ -1,4 +1,4 @@
-package cz.hsrs.maplog.db.entity;
+package cz.hsrs.maplog.db.model;
 
 import java.io.Serializable;
 import javax.persistence.*;

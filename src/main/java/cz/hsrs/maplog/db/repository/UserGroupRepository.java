@@ -1,6 +1,6 @@
 package cz.hsrs.maplog.db.repository;
 
-import cz.hsrs.maplog.db.entity.UserGroupEntity;
+import cz.hsrs.maplog.db.model.UserGroupEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

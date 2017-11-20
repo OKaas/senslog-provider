@@ -15,10 +15,10 @@ import java.util.TimeZone;
  */
 @SpringBootApplication
 @ComponentScan("cz.hsrs.maplog")
-@EntityScan("cz.hsrs.maplog.db.entity")
+@EntityScan("cz.hsrs.maplog.db.model")
 // TODO probably not necessary
 @EnableJpaRepositories("cz.hsrs.maplog.db")
-@PropertySource("senslog-app.properties")
+@PropertySource("application.yml")
 @EnableAutoConfiguration
 public class Application {
     public static void main(String[] args) {

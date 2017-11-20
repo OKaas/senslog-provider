@@ -2,6 +2,7 @@ package cz.hsrs.maplog.security;
 
 import cz.hsrs.maplog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * Created by OK on 9/20/2017.
  */
 @Configuration
-@EnableWebSecurity
+// @EnableWebSecurity
+@EnableOAuth2Sso
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -34,15 +36,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().fullyAuthenticated();
-        http.httpBasic();
-        http.csrf().disable();
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests().anyRequest().fullyAuthenticated();
+//        http.httpBasic();
+//        http.csrf().disable();
+//
+//        http.httpBasic().authenticationEntryPoint(authenticationEntryPoint());
+//        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
+//    }
 
-        http.httpBasic().authenticationEntryPoint(authenticationEntryPoint());
-        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.antMatcher("/**")
+                .authorizeRequests()
+                .antMatchers("/", "/login**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
     }
+
+
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
