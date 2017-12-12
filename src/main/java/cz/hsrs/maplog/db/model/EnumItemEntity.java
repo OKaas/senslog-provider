@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.db.model;
 
+import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="enum_item")
 @NamedQuery(name="EnumItemEntity.findAll", query="SELECT e FROM EnumItemEntity e")
-public class EnumItemEntity implements Serializable {
+public class EnumItemEntity extends EntityQueryable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;

@@ -34,6 +34,9 @@
         <version.spring-security-web>4.2.3.RELEASE</version.spring-security-web>
         <version.model.mapper>0.7.4</version.model.mapper>
 
+        <!-- Commons -->
+        <version.org.apache.commons-lang3>3.7</version.org.apache.commons-lang3>
+
         <!-- Auth0 -->
         <version.auth0>1.0.0</version.auth0>
         <version.auth0.api>1.0.0-rc.2</version.auth0.api>
@@ -70,14 +73,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security.oauth</groupId>-->
+            <!--<artifactId>spring-security-oauth2</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.modelmapper</groupId>
@@ -90,6 +93,13 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${version.postgresql.jdbc}</version>
+        </dependency>
+
+        <!-- Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version.org.apache.commons-lang3}</version>
         </dependency>
 
         <!-- Test -->

@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.db.model;
 
+import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
+
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="privilages")
 @NamedQuery(name="PrivilageEntity.findAll", query="SELECT p FROM PrivilageEntity p")
-public class PrivilageEntity implements Serializable {
+public class PrivilageEntity extends EntityQueryable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String noteCz;

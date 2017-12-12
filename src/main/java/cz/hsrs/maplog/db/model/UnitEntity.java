@@ -2,6 +2,7 @@ package cz.hsrs.maplog.db.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name="unit")
 @NamedQuery(name="UnitEntity.findAll", query="SELECT u FROM UnitEntity u")
-public class UnitEntity implements Serializable {
+public class UnitEntity extends EntityQueryable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String description;

@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.db.model;
 
+import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,7 +14,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="alert_event")
 @NamedQuery(name="AlertEventEntity.findAll", query="SELECT a FROM AlertEventEntity a")
-public class AlertEventEntity implements Serializable {
+public class AlertEventEntity extends EntityQueryable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long alertId;

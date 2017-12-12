@@ -28,17 +28,7 @@ server:
       cookie:
         name: UISESSION
 
-security:
-  basic:
-    enabled: false
-  oauth2:
-    client:
-      clientId: SampleClientId
-      clientSecret: secret
-      accessTokenUri: http://portal.sdi4apps.eu/view
-      userAuthorizationUri: http://portal.sdi4apps.eu/sso-portlet/service/sso/validate/{sessionId}
-    resource:
-      userInfoUri: http://portal.sdi4apps.eu/auth/user/me
+
 
 #spring.jpa.database=POSTGRESQL
 #spring.jpa.hibernate.ddl-auto=create-drop

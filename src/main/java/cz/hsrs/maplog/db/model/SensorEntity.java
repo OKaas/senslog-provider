@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.db.model;
 
+import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="sensor")
 @NamedQuery(name="SensorEntity.findAll", query="SELECT s FROM SensorEntity s")
-public class SensorEntity implements Serializable {
+public class SensorEntity extends EntityQueryable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
