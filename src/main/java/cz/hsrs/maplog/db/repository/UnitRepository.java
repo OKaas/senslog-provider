@@ -29,6 +29,8 @@ public interface UnitRepository extends JpaRepository<UnitEntity, Long>, JpaSpec
 
     List<UnitEntity> findAllByUnitToGroupsUserGroupId(Long userGroupId, Specification<EntityQueryable> spec);
 
+    List<UnitEntity> findAllByUnitToGroupsUserGroupId(Specification<EntityQueryable> spec);
+
     List<UnitEntity> findAllByUnitToGroupsUserGroupId(Long userGroupId);
 
     List<UnitEntity> findAllByUnitToGroupsUserGroupId(@Param("search") String search);

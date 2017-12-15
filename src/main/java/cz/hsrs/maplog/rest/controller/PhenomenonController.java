@@ -2,6 +2,7 @@ package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.model.PhenomenonEntity;
 import cz.hsrs.maplog.db.repository.PhenomenonRepository;
+import cz.hsrs.maplog.rest.RestMapping;
 import cz.hsrs.maplog.rest.dto.receive.PhenomenonReceive;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;

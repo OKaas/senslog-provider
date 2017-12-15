@@ -1,5 +1,6 @@
 package cz.hsrs.maplog.rest.controller;
 
+import cz.hsrs.maplog.rest.RestMapping;
 import cz.hsrs.maplog.rest.dto.AlertEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

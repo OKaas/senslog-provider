@@ -2,6 +2,7 @@ package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.model.SensorEntity;
 import cz.hsrs.maplog.db.repository.SensorRepository;
+import cz.hsrs.maplog.rest.RestMapping;
 import cz.hsrs.maplog.rest.dto.receive.SensorReceive;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;

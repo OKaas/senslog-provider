@@ -15,21 +15,31 @@ import java.util.regex.Pattern;
 @Component
 public class QueryBuilder {
 
+    private static final Pattern pattern;
+
+    static {
+        pattern = Pattern.compile("(\\w+?)(:|<|>|~)(\\w+?),");
+    }
+
     public static Specification<EntityQueryable> build(String search){
         QuerySpecificationBuilder builder = new QuerySpecificationBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>|~)(\\w+?),");
         Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
 
             // try parse value as boolean
             Object value = BooleanUtils.toBooleanObject(matcher.group(3));
             if( value == null ){
-                value = Long.valueOf(matcher.group(3));
+                // try parse as long
+                try {
+                    value = Long.valueOf(matcher.group(3));
+                } catch (NumberFormatException e){
+                    // just string
+                    value = matcher.group(3);
+                }
             }
 
             builder.with(matcher.group(1), matcher.group(2), value != null ? value : matcher.group(3));
         }
-        // LOGGER.info("> userToken: {}", details);
 
         return builder.build();
     }

@@ -1,6 +1,7 @@
 package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.repository.UserGroupRepository;
+import cz.hsrs.maplog.rest.RestMapping;
 import cz.hsrs.maplog.rest.dto.UserGroup;
 //import cz.hsrs.maplog.security.UserToken;
 import cz.hsrs.maplog.util.Mapper;
