@@ -31,6 +31,10 @@ INSERT INTO unit(
             id, description, is_mobile)
     VALUES ( 2, 'big unit', false);
 
+INSERT INTO unit(
+        id, description, is_mobile)
+    VALUES ( 3, 'third big unit', true);
+
 INSERT INTO unit_to_group(
             id, unit_id, user_group_id)
     VALUES (1, 1, 1);
@@ -38,6 +42,10 @@ INSERT INTO unit_to_group(
 INSERT INTO unit_to_group(
             id, unit_id, user_group_id)
     VALUES (2, 2, 1);
+
+INSERT INTO unit_to_group(
+            id, unit_id, user_group_id)
+    VALUES (3, 3, 1);
 
 INSERT INTO "position"(
             id, altitude, dop, speed, time_received, time_stamp, unit_id)

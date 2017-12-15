@@ -98,6 +98,17 @@ public class UserToken implements UserDetails {
     }
     
     /* --- Commons  --- */
+
+    @Override
+    public String toString() {
+        return "UserToken{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", group=" + group +
+                ", authorities=" + authorities +
+                ", userGroupEntity=" + userGroupEntity +
+                '}';
+    }
 }
 
 

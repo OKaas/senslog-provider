@@ -2,6 +2,7 @@ package cz.hsrs.maplog.rest.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 

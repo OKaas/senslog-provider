@@ -2,6 +2,7 @@ package cz.hsrs.maplog.db.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
 
 import java.io.Serializable;
@@ -64,6 +65,7 @@ public class UnitEntity extends EntityQueryable implements Serializable {
 		return this.isMobile;
 	}
 
+	@JsonProperty("mobile")
 	public void setIsMobile(Boolean isMobile) {
 		this.isMobile = isMobile;
 	}

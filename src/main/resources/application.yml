@@ -4,7 +4,7 @@
 # pattern.timestamp-time=yyyy-MM-dd HH:mm:ss
 
 # =============================================================
-# JPA
+# SPRING
 #
 spring:
   jpa:
@@ -22,12 +22,14 @@ spring:
     username: postgres
     password: postgres
 
+# =============================================================
+# SERVER
+#
 server:
     port: 8080
     session:
       cookie:
         name: UISESSION
-
 
 #spring.jpa.database=POSTGRESQL
 #spring.jpa.hibernate.ddl-auto=create-drop
