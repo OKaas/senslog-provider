@@ -1,17 +1,21 @@
 package cz.hsrs.maplog.rest.controller;
 
-import cz.hsrs.maplog.db.model.PositionEntity;
+import cz.hsrs.maplog.db.queryspecification.specification.PositionForUnitInUserGroup;
+import cz.hsrs.maplog.db.queryspecification.specification.UnitInUserGroup;
 import cz.hsrs.maplog.db.repository.PositionRepository;
+import cz.hsrs.maplog.rest.RestMapping;
 import cz.hsrs.maplog.rest.dto.Position;
-import cz.hsrs.maplog.rest.dto.receive.PositionReceive;
 //import cz.hsrs.maplog.security.UserToken;
+import cz.hsrs.maplog.security.UserToken;
 import cz.hsrs.maplog.util.Mapper;
+import cz.hsrs.maplog.util.QueryBuilder;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.jpa.domain.Specifications;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -32,28 +36,36 @@ public class PositionController {
     private PositionRepository positionRepository;
 
     @Autowired
+    private QueryBuilder queryBuilder;
+
+    @Autowired
     private Mapper modelMapper;
 
     /* --- GET calls --- */
 
     /***
-     * /position?positionId={positioId}&unitId={unitId}&sort={sort}
+     * /position?unitId=
      *
      * http://localhost:8080/position?unitId=1
      *
      * @return
      */
-//    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
-//    @ResponseBody
-//    public List<Position> getPositionByUnit(@AuthenticationPrincipal UserToken token,
-//                                            @RequestParam(value = RestMapping.UNIT_ID) Long unitId,
-//                                            @RequestParam(value = RestMapping.POSITION_ID, required = false) String positionId,
-//                                            @RequestParam(value = RestMapping.SEARCH, required = false) String sort){
-//
-//        LOGGER.info("> clientId {}, unitId {}, position {}, sort {}", unitId, positionId, sort);
-//
-//        return modelMapper.map(positionRepository.findAllByUnitIdAndUnitUnitToGroupsUserGroupIdIn(unitId, token.getGroup()), LIST_DTO);
-//    }
+    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Position> getPosition(@AuthenticationPrincipal UserToken token,
+                                      @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search){
+
+        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n============", token.toString(), search);
+
+        return modelMapper.map(
+                // get only position for unit in user group
+                positionRepository.findAll( Specifications.where(PositionForUnitInUserGroup.matchPositionForUnitInUserGroup(token.getGroup()))
+                        .and(queryBuilder.build(search))),
+                LIST_DTO
+        );
+
+        // return modelMapper.map(positionRepository.findAllByUnitIdAndUnitUnitToGroupsUserGroupIdIn(unitId, token.getGroup()), LIST_DTO);
+    }
 
     /* --- POST CALLS --- */
 
