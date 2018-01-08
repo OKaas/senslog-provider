@@ -105,8 +105,8 @@ public class UserToken implements UserDetails {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", group=" + group +
-                ", authorities=" + authorities +
-                ", userGroupEntity=" + userGroupEntity +
+                ", authorities=" + authorities.toString() +
+                ", userGroupEntity=" + userGroupEntity.toString() +
                 '}';
     }
 }

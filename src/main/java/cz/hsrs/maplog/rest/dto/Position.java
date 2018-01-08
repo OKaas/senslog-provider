@@ -1,5 +1,7 @@
 package cz.hsrs.maplog.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.sql.Timestamp;
 
 /**
@@ -13,6 +15,9 @@ public class Position {
     private double speed;
     private Timestamp timeReceived;
     private Timestamp timeStamp;
+
+    @JsonManagedReference
+    private Unit unit;
 
     /* --- Collaborates --- */
 
@@ -64,6 +69,14 @@ public class Position {
 
     public void setTimeStamp(Timestamp timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     /* --- Commons  --- */

@@ -30,6 +30,7 @@ public class QuerySpecificationBuilder {
         List<Specification<EntityQueryable>> specs = new ArrayList<>();
         for (SearchCriteria param : params) {
             specs.add(new QuerySpecification(param));
+
         }
 
         Specification<EntityQueryable> result = specs.get(0);

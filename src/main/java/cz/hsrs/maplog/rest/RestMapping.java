@@ -41,6 +41,7 @@ public class RestMapping {
     /* --- HTTP STATUS --- */
     public static final HttpStatus STATUS_CREATED = HttpStatus.CREATED;
     public static final HttpStatus STATUS_BAD_REQUEST = HttpStatus.BAD_REQUEST;
+    public static final HttpStatus STATUS_NOT_ACCETABLE = HttpStatus.NOT_ACCEPTABLE;
 
 
     /* --- Collaborates --- */

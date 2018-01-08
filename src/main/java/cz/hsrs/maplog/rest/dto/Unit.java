@@ -1,8 +1,7 @@
 package cz.hsrs.maplog.rest.dto;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -17,6 +16,9 @@ public class Unit {
 
     @JsonManagedReference
     private List<Sensor> sensors;
+
+    @JsonBackReference
+    private List<Position> positions;
 
     public Unit() {
     }
@@ -53,15 +55,20 @@ public class Unit {
         this.sensors = sensors;
     }
 
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
+    }
+
     /* --- Commons  --- */
 
     @Override
     public String toString() {
-        return "UnitReceive{" +
+        return "Unit{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", isMobile=" + isMobile +
                 ", sensors=" + sensors +
+                ", positions=" + positions +
                 '}';
     }
 }
