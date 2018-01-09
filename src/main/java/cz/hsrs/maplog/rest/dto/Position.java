@@ -16,8 +16,7 @@ public class Position {
     private Timestamp timeReceived;
     private Timestamp timeStamp;
 
-    @JsonManagedReference
-    private Unit unit;
+    private PositionUnit unit;
 
     /* --- Collaborates --- */
 
@@ -71,11 +70,11 @@ public class Position {
         this.timeStamp = timeStamp;
     }
 
-    public Unit getUnit() {
+    public PositionUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
+    public void setUnit(PositionUnit unit) {
         this.unit = unit;
     }
 

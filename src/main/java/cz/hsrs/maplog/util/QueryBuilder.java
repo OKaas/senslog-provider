@@ -6,6 +6,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +34,12 @@ public class QueryBuilder {
                 try {
                     value = Long.valueOf(matcher.group(3));
                 } catch (NumberFormatException e){
-                    // just string
-                    value = matcher.group(3);
+                    try {
+                        value = Timestamp.valueOf(matcher.group(3));
+                    } catch (IllegalArgumentException ee){
+                        // just string
+                        value = matcher.group(3);
+                    }
                 }
             }
 

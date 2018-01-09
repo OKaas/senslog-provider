@@ -22,7 +22,6 @@ import java.util.TimeZone;
 @EnableAutoConfiguration
 public class Application {
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone("Etc/UCT"));
         SpringApplication.run(Application.class, args);
     }
 }

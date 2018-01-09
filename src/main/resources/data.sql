@@ -55,6 +55,18 @@ INSERT INTO "position"(
             id, altitude, dop, speed, time_received, time_stamp, unit_id)
     VALUES (2, 1.6, 1.7, 1.8, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
 
+INSERT INTO "position"(
+            id, altitude, dop, speed, time_received, time_stamp, unit_id)
+    VALUES (3, 999, 999, 999, '2018-03-30T03:33:33', '2018-03-30T03:33:33', 1);
+
+INSERT INTO "position"(
+            id, altitude, dop, speed, time_received, time_stamp, unit_id)
+    VALUES (4, 999, 999, 999, '2018-01-11T01:11:11', '2018-01-11T01:11:11', 1);
+
+INSERT INTO "position"(
+            id, altitude, dop, speed, time_received, time_stamp, unit_id)
+    VALUES (5, 999, 999, 999, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 1);
+
 
 --INSERT INTO phenomenonReceive(id, username, unit_desc)
 --    VALUES ( 1, 'speed', 'm/s');

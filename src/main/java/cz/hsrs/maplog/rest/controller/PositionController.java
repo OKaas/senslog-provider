@@ -68,16 +68,17 @@ public class PositionController {
     @ResponseBody
     public List<Position> getPosition(@AuthenticationPrincipal UserToken token,
                                       @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search,
-                                      Sort sort){
+                                      Pageable pageable){
 
-        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > sort: {} \n============", token.toString(), search, sort);
+        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > pageable: {} \n============",
+                token.toString(), search, pageable);
 
         return modelMapper.map(
                 // get only position for unit in user group
                 positionRepository.findAll(
                         Specifications.where(PositionForUnitInUserGroup.matchPositionForUnitInUserGroup(token.getGroup()))
                                       .and(queryBuilder.build(search)),
-                        sort),
+                        pageable).getContent(),
                 LIST_DTO
         );
     }
