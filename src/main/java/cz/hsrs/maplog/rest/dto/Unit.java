@@ -14,7 +14,7 @@ public class Unit {
     private String description;
     private Boolean isMobile;
 
-    @JsonManagedReference
+    @JsonBackReference
     private List<Sensor> sensors;
 
     @JsonBackReference

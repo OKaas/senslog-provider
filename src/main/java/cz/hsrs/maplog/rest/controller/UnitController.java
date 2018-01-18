@@ -91,48 +91,49 @@ public class UnitController {
 
         LOGGER.info("> request {}, units {}", token.toString(), unit);
 
-        List<UnitEntity> toSave = modelMapper.map(unit, LIST_ENTITY);
+        List<UnitEntity> unitsToSave = modelMapper.map(unit, LIST_ENTITY);
 
-        for(UnitEntity update : toSave){
+        for(UnitEntity update : unitsToSave){
 
-            // dummy skip :/
-            if( update.getId() == null ){ continue; }
+            UnitEntity unit2Save = null;
+            UnitToGroupEntity unitToGroupEntity = null;
 
             // get JPA managed entity if exists
-            UnitEntity original = unitRepository.findOne( update.getId() );
+            if( update.getId() != null ){
+                unit2Save = unitRepository.findOne( update.getId() );
 
-            // TODO: dummy mapping between DTO and Entities :(
-            if( original != null ) {
+                // TODO: dummy mapping between DTO and Entities :(
                 // update entity
-                original.setIsMobile(update.getIsMobile());
-                original.setDescription(update.getDescription());
+                unit2Save.setIsMobile(update.getIsMobile());
+                unit2Save.setDescription(update.getDescription());
 
-                List<UnitToGroupEntity> originalUnitToGroup = original.getUnitToGroups();
+                List<UnitToGroupEntity> originalUnitToGroup = unit2Save.getUnitToGroups();
 
                 // hit unit2group entity to change user group
-                UnitToGroupEntity unitToGroupEntity = null;
                 for(UnitToGroupEntity unit2GroupEntity : originalUnitToGroup){
                     if(unit2GroupEntity.getUnit().getId().equals(update.getId())){
                         unitToGroupEntity = unit2GroupEntity;
                         break;
                     }
                 }
-
-                // this unit2group connection is not in DB
-                if( unitToGroupEntity == null ){
-                    unitToGroupEntity = new UnitToGroupEntity();
-                }
-
-                unitToGroupEntity.setUnit(update);
-                unitToGroupEntity.setUserGroup(token.getUserGroupEntity());
-
-                originalUnitToGroup.add(unitToGroupEntity);
-
-                update.addUnitToGroup(unitToGroupEntity);
+            } else {
+                unit2Save = update;
             }
+
+            // this unit2group connection is not in DB
+            if( unitToGroupEntity == null ){
+                unitToGroupEntity = new UnitToGroupEntity();
+            }
+
+            unitToGroupEntity.setUnit(update);
+            unitToGroupEntity.setUserGroup(token.getUserGroupEntity());
+
+            unit2Save.addUnitToGroup(unitToGroupEntity);
+
+            update.addUnitToGroup(unitToGroupEntity);
         }
 
-        unitRepository.save( toSave );
+        unitRepository.save( unitsToSave );
 
         return RestMapping.STATUS_CREATED;
     }

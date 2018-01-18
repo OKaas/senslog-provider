@@ -19,7 +19,8 @@ public class QueryBuilder {
     private static final Pattern pattern;
 
     static {
-        pattern = Pattern.compile("(\\w+?\\.?\\w+?)(:|<|>|~)(\\w+?),");
+        // pattern = Pattern.compile("(\\w+?\\.?\\w+?)(:|<|>|~)(\\w+?),");
+        pattern = Pattern.compile("([\\w\\.]+)(<|>|:)([\\w\\d- :]+)");
     }
 
     public static Specification<EntityQueryable> build(String search){

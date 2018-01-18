@@ -19,27 +19,6 @@ import java.util.Set;
 @RepositoryRestResource(collectionResourceRel = "unit", path = "unit")
 public interface UnitRepository extends JpaRepository<UnitEntity, Long>, JpaSpecificationExecutor {
 
-    /**
-     * Get all units which are attached to Groups
-     *
-     * @param id
-     * @return
-     */
-    List<UnitEntity> findAllByUnitToGroupsUserGroupIdIn(@Param("id") Set<Long> id);
-
-    List<UnitEntity> findAllByUnitToGroupsUserGroupId(Long userGroupId, Specification<EntityQueryable> spec);
-
-    List<UnitEntity> findAllByUnitToGroupsUserGroupId(Specification<EntityQueryable> spec);
-
-    List<UnitEntity> findAllByUnitToGroupsUserGroupId(Long userGroupId);
-
-    List<UnitEntity> findAllByUnitToGroupsUserGroupId(@Param("search") String search);
-
-    UnitEntity findAllUnitByIdAndUnitToGroupsUserGroupIdIn(@Param("unitId") Long unitId, @Param("id")Set<Long> id );
-
-    // List<UnitEntity> findAllUnitByUserName(@Param("username") String username);
-
-    // List<UnitEntity> findAllUnitByUserName(@Param("username") String username);
 }
 
 

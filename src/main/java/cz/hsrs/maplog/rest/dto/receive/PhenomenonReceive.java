@@ -9,9 +9,9 @@ import java.util.List;
 public class PhenomenonReceive {
 
     private Long id;
+    private String unitDesc;
     private String name;
-    private String unit;
-    private List<SensorReceive> sensorReceives;
+    private List<Long> sensors;
 
     public PhenomenonReceive() {
     }
@@ -27,6 +27,14 @@ public class PhenomenonReceive {
         this.id = id;
     }
 
+    public String getUnitDesc() {
+        return unitDesc;
+    }
+
+    public void setUnitDesc(String unitDesc) {
+        this.unitDesc = unitDesc;
+    }
+
     public String getName() {
         return name;
     }
@@ -35,20 +43,12 @@ public class PhenomenonReceive {
         this.name = name;
     }
 
-    public String getUnit() {
-        return unit;
+    public List<Long> getSensors() {
+        return sensors;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public List<SensorReceive> getSensorReceives() {
-        return sensorReceives;
-    }
-
-    public void setSensorReceives(List<SensorReceive> sensorReceives) {
-        this.sensorReceives = sensorReceives;
+    public void setSensors(List<Long> sensors) {
+        this.sensors = sensors;
     }
 
     /* --- Commons  --- */
@@ -57,9 +57,8 @@ public class PhenomenonReceive {
     public String toString() {
         return "PhenomenonReceive{" +
                 "id=" + id +
-                ", username='" + name + '\'' +
-                ", unit='" + unit + '\'' +
-                ", sensorReceives=" + sensorReceives +
+                ", username='" + unitDesc + '\'' +
+                ", sensors=" + sensors +
                 '}';
     }
 }

@@ -1,11 +1,6 @@
 package cz.hsrs.maplog.rest.dto;
 
-import cz.hsrs.maplog.db.model.PositionEntity;
-import cz.hsrs.maplog.db.model.SensorEntity;
-import cz.hsrs.maplog.db.model.UnitEntity;
-
 import java.sql.Timestamp;
-
 
 /**
  * Created by OK on 6/9/2017.
@@ -19,9 +14,9 @@ public class Observation {
     // TODO: should be defined in properties or system env
     private Timestamp timeReceived;
 
-    private SensorEntity sensor;
-    private UnitEntity unit;
-    private PositionEntity positionEntity;
+    private Sensor sensor;
+    private Unit unit;
+    private Position position;
 
     public Observation() {
     }

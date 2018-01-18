@@ -24,15 +24,10 @@ public class UnitEntity extends EntityQueryable implements Serializable {
 	private String description;
 	private Boolean isMobile;
 
-	@JsonBackReference
 	private AlertEventEntity alertEvent;
-	@JsonManagedReference
 	private List<AlertEventEntity> alertEvents;
-	@JsonManagedReference
 	private List<PositionEntity> positions;
-	@JsonManagedReference
 	private List<SensorEntity> sensors;
-	@JsonManagedReference
 	private List<UnitToGroupEntity> unitToGroups;
 
 	public UnitEntity() {

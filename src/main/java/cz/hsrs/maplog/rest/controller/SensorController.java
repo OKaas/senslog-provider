@@ -3,15 +3,22 @@ package cz.hsrs.maplog.rest.controller;
 import cz.hsrs.maplog.db.model.SensorEntity;
 import cz.hsrs.maplog.db.repository.SensorRepository;
 import cz.hsrs.maplog.rest.RestMapping;
+import cz.hsrs.maplog.rest.dto.Position;
+import cz.hsrs.maplog.rest.dto.Sensor;
 import cz.hsrs.maplog.rest.dto.receive.SensorReceive;
+import cz.hsrs.maplog.security.UserToken;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -23,6 +30,7 @@ public class SensorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SensorController.class);
 
     private static final String PREFIX_CONTROLLER = "/sensor";
+    private final static Type LIST_DTO = new TypeToken<List<Sensor>>() {}.getType();
 
     @Autowired
     private SensorRepository sensorRepository;
@@ -32,32 +40,18 @@ public class SensorController {
 
     /* --- REST calls --- */
     /***
-     * /{client-id}/sensor/all?unitId={unitId}
+     * /sensor
      *
-     * @param clientId
-     * @param unitId
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
+    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
-    public List<SensorReceive> getSensorsByUnit(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                                @RequestParam(value = RestMapping.UNIT_ID) String unitId){
+    public List<SensorReceive> getSensor(@AuthenticationPrincipal UserToken token,
+                                         @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search,
+                                         Pageable pageable){
 
-        LOGGER.info("> clientId {}, unitId {}", clientId, unitId);
-        return null;
-    }
-
-    /***
-     * /{client-id}/sensor/value?unitId={unitId}&sensorId={sensorId}&sort={last}&time={fromTime, toTime}
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_VALUE, method = RequestMethod.GET)
-    public String getSensorValue(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                 @RequestParam(value = RestMapping.UNIT_ID) String unitId,
-                                 @RequestParam(value = RestMapping.SENSOR_ID) String sensorId,
-                                 @RequestParam(value = RestMapping.SEARCH, required = false) String sort,
-                                 @RequestParam(value = RestMapping.TIME, required = false) String time){
-
-        LOGGER.info("> clientId {},  unitId {}, sensorId {}, sort {}, time {}", clientId, unitId, sensorId, sort, time);
+        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > pageable: {} \n============",
+                token.toString(), search, pageable);
         return null;
     }
 
@@ -84,24 +78,6 @@ public class SensorController {
             return RestMapping.STATUS_BAD_REQUEST;
         }
     }
-
-    /***
-     * /{client-id}/sensor?sensorId={sensorId}
-     *
-     * @param clientId
-     * @param sensorId
-     * @return
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
-    @ResponseBody
-    public SensorReceive getSensor(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                   @RequestParam(value = RestMapping.SENSOR_ID) String sensorId){
-
-        LOGGER.info("> clientId {},  sensorId {}", clientId, sensorId);
-        return null;
-    }
-
-
 
     /* --- Collaborates --- */
 

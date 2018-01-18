@@ -1,7 +1,5 @@
 package cz.hsrs.maplog.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.sql.Timestamp;
 
 /**

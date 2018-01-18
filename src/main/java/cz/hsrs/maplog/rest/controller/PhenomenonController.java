@@ -1,18 +1,32 @@
 package cz.hsrs.maplog.rest.controller;
 
 import cz.hsrs.maplog.db.model.PhenomenonEntity;
+import cz.hsrs.maplog.db.model.SensorEntity;
+import cz.hsrs.maplog.db.queryspecification.specification.PhenomenonForUnitInUserGroup;
 import cz.hsrs.maplog.db.repository.PhenomenonRepository;
+import cz.hsrs.maplog.db.repository.SensorRepository;
 import cz.hsrs.maplog.rest.RestMapping;
+import cz.hsrs.maplog.rest.dto.Phenomenon;
+import cz.hsrs.maplog.rest.dto.Position;
 import cz.hsrs.maplog.rest.dto.receive.PhenomenonReceive;
+import cz.hsrs.maplog.security.UserToken;
+import cz.hsrs.maplog.util.QueryBuilder;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by OK on 9/12/2017.
@@ -23,62 +37,61 @@ public class PhenomenonController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PhenomenonController.class);
 
     private static final String PREFIX_CONTROLLER = "/phenomenon";
+    private final static Type LIST_DTO = new TypeToken<List<Phenomenon>>() {}.getType();
 
     @Autowired
     private PhenomenonRepository phenomenonRepository;
 
     @Autowired
+    private SensorRepository sensorRepository;
+
+    @Autowired
+    private QueryBuilder queryBuilder;
+
+    @Autowired
     private ModelMapper modelMapper;
 
-    /***
-     * /{client-id}/phenomenon/all
-     *
-     * @return
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_ALL, method = RequestMethod.GET)
+    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
-    public List<PhenomenonReceive> getPhenomenonAll(@PathVariable(RestMapping.CLIENT_ID) String clientId){
+    public List<Position> getPhenomenon(@AuthenticationPrincipal UserToken token,
+                                        @RequestParam(value = RestMapping.FILTER_CALL, required = false) String filter,
+                                        Pageable pageable){
 
-        LOGGER.info("> clientId {} ", clientId);
-        return null;
+        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > pageable: {} \n============",
+                token.toString(), filter, pageable);
+
+        return modelMapper.map(
+                // get only position for unit in user group
+                phenomenonRepository.findAll(
+                        Specifications.where(PhenomenonForUnitInUserGroup.matchPhenomenonForUnitInUserGroup(token.getUserGroupEntity().getId()))
+                                .and(queryBuilder.build(filter)),
+                        pageable).getContent(),
+                LIST_DTO
+        );
     }
 
     /***
-     * /{client-id}/phenomenon?unitId={unitId}
-     * /{client-id}/phenomenon?phenomenonId={phenomenonId}&unitId={unitId}
-     * /{client-id}/phenomenon?phenomenonName={phenomenonName}&unitId={unitId}
-     * /{client-id}/phenomenon?sensortId={sensorId}
+     * /phenomenon/insert
      *
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
-    @ResponseBody
-    public List<PhenomenonReceive> getPhenomenon(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                                 @RequestParam( value = RestMapping.UNIT_ID) String unitId,
-                                                 @RequestParam(value = RestMapping.PHENOMENON_ID, required = false) String phenomenonId,
-                                                 @RequestParam(value = RestMapping.PHENOMENON_NAME, required = false) String phenomenonName,
-                                                 @RequestParam(value = RestMapping.SENSOR_ID, required = false) String sensorId){
-
-        LOGGER.info("> clientId {}, unitId {}, phenomenonId {}, phenomenonName {} ", clientId, unitId, phenomenonId, phenomenonName);
-
-        return null;
-    }
-
-    /***
-     * /{client-id}/phenomenonReceive/insert
-     *
-     * @return
-     */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
-    public HttpStatus insertPhenomenon(@PathVariable(RestMapping.CLIENT_ID) String clientId,
+    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
+    public HttpStatus insertPhenomenon(@AuthenticationPrincipal UserToken token,
                                        @RequestBody PhenomenonReceive phenomenonReceive){
 
-        LOGGER.info("> clientId {}, phenomenonId {} ", clientId, phenomenonReceive);
+        LOGGER.info("> client: {}, phenomenonId {} ", token, phenomenonReceive);
 
         // TODO here update sensor phenomenonId
-
         try {
-            phenomenonRepository.save(modelMapper.map(phenomenonReceive, PhenomenonEntity.class));
+            PhenomenonEntity entity = phenomenonRepository.save(modelMapper.map(phenomenonReceive, PhenomenonEntity.class));
+
+            List<SensorEntity> sensorEntity = sensorRepository.findAll(phenomenonReceive.getSensors());
+
+            sensorEntity.forEach( e -> {
+                e.setPhenomenon(entity);
+                sensorRepository.save(e);
+            });
+
             return RestMapping.STATUS_CREATED;
         } catch (MappingException e){
             return RestMapping.STATUS_BAD_REQUEST;

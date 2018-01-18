@@ -27,6 +27,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static cz.hsrs.maplog.db.queryspecification.specification.UnitInSet.matchUnitInSet;
@@ -76,7 +77,7 @@ public class PositionController {
         return modelMapper.map(
                 // get only position for unit in user group
                 positionRepository.findAll(
-                        Specifications.where(PositionForUnitInUserGroup.matchPositionForUnitInUserGroup(token.getGroup()))
+                        Specifications.where(PositionForUnitInUserGroup.matchPositionForUnitInUserGroup(token.getUserGroupEntity().getId()))
                                       .and(queryBuilder.build(search)),
                         pageable).getContent(),
                 LIST_DTO
@@ -94,7 +95,7 @@ public class PositionController {
     public HttpStatus insertPosition(@AuthenticationPrincipal UserToken token,
                                      @RequestBody PositionReceive unitPositionReceive){
 
-        LOGGER.info("> clientId {}, unitPositionReceive {}", unitPositionReceive);
+        LOGGER.info("> clientId {}, unitPositionReceive {}", token.getUsername(), unitPositionReceive);
 
         // Get all units in user group
         List<UnitEntity> unitEntities = unitRepository.findAll(
@@ -104,7 +105,9 @@ public class PositionController {
 
         // save only if unit is attached to UserToken's user group
         if( unitEntities.stream().anyMatch( e -> e.getId().equals(unitPositionReceive.getUnitId())) ){
-            positionRepository.save(modelMapper.map(unitPositionReceive, PositionEntity.class));
+            PositionEntity toSave = modelMapper.map(unitPositionReceive, PositionEntity.class);
+            toSave.setTimeReceived( new Timestamp(System.currentTimeMillis()) );
+            positionRepository.save(toSave);
             return RestMapping.STATUS_CREATED;
         } else {
             LOGGER.info("User does not have unit: {}", unitPositionReceive.getUnitId());

@@ -1,7 +1,6 @@
 # =============================================================
 # Application properties
 #
-# pattern.timestamp-time=yyyy-MM-dd HH:mm:ss
 
 # =============================================================
 # SPRING
@@ -32,7 +31,7 @@ server:
     port: 8080
     session:
       cookie:
-        name: UISESSION
+        unitDesc: UISESSION
 
 #spring.jpa.database=POSTGRESQL
 #spring.jpa.hibernate.ddl-auto=create-drop

@@ -65,14 +65,32 @@ INSERT INTO "position"(
 
 INSERT INTO "position"(
             id, altitude, dop, speed, time_received, time_stamp, unit_id)
-    VALUES (5, 999, 999, 999, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 1);
+    VALUES (5, 999, 999, 999, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 3);
 
 
---INSERT INTO phenomenonReceive(id, username, unit_desc)
---    VALUES ( 1, 'speed', 'm/s');
---
---INSERT INTO sensorReceive (id, username, type, phenomenon_id)
---    VALUES ( nextval('seq_sensor'), 'sensor1', 'test_sensor', 1);
+INSERT INTO phenomenon(id, name, unit_desc)
+    VALUES ( 1, 'first phenom', '1 m/s');
+
+INSERT INTO phenomenon(id, name, unit_desc)
+    VALUES ( 2, 'second phenom', '2 m/s');
+
+INSERT INTO phenomenon(id, name, unit_desc)
+    VALUES ( 3, 'third phenom', '3 m/s');
+
+INSERT INTO phenomenon(id, name, unit_desc)
+    VALUES ( 4, '4 phenom', '3 m/s');
+
+INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
+    VALUES ( nextval('seq_sensor'), 'sensor1', 'test_sensor for 1 unit', 1, 1);
+
+INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
+    VALUES ( nextval('seq_sensor'), 'sensor2', 'test_sensor for 2 unit', 2, 2);
+
+INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
+    VALUES ( nextval('seq_sensor'), 'sensor3', 'test_sensor for 3 unit', 3, 3);
+
+INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
+    VALUES ( nextval('seq_sensor'), 'sensor4', 'test_sensor for 3 unit', 4, 3);
 
 --INSERT INTO unit_holder(id, address, email, icon_id, username, phone, www)
 --    VALUES ( 1, 'test', 'test', 0, 'test', 'test', 'test');

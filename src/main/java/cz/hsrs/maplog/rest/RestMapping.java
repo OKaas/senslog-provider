@@ -5,7 +5,11 @@ import org.springframework.http.HttpStatus;
 /**
  * Created by OK on 9/11/2017.
  */
+// TODO this should be moved to application properties
 public class RestMapping {
+
+//    public static final String PATTERN_TIMESTAMP = "yyyy-MM-dd HH:mi:ss";
+    public static final String PATTERN_TIMESTAMP = "yyyy-MM-dd";
 
     public static final String PATH_INSERT = "/insert";
     public static final String PATH_ALL = "/all";
@@ -14,6 +18,7 @@ public class RestMapping {
     public static final String SEARCH = "search";
     public static final String MOBILE = "mobile";
     public static final String TIME = "time";
+    public static final String GROUP_BY = "group";
 
     public static final String CLIENT_ID = "clientId";
     public static final String PATH_CLIENT_ID = "/{"+CLIENT_ID+"}";
@@ -42,6 +47,8 @@ public class RestMapping {
     public static final HttpStatus STATUS_CREATED = HttpStatus.CREATED;
     public static final HttpStatus STATUS_BAD_REQUEST = HttpStatus.BAD_REQUEST;
     public static final HttpStatus STATUS_NOT_ACCETABLE = HttpStatus.NOT_ACCEPTABLE;
+
+
 
 
     /* --- Collaborates --- */
