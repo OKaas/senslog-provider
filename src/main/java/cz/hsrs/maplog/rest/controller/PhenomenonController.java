@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Created by OK on 9/12/2017.
  */
@@ -85,7 +83,7 @@ public class PhenomenonController {
         try {
             PhenomenonEntity entity = phenomenonRepository.save(modelMapper.map(phenomenonReceive, PhenomenonEntity.class));
 
-            List<SensorEntity> sensorEntity = sensorRepository.findAll(phenomenonReceive.getSensors());
+            List<SensorEntity> sensorEntity = (List<SensorEntity>) sensorRepository.findAll(phenomenonReceive.getSensors());
 
             sensorEntity.forEach( e -> {
                 e.setPhenomenon(entity);

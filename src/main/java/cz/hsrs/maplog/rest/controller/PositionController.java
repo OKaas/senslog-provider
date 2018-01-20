@@ -3,7 +3,7 @@ package cz.hsrs.maplog.rest.controller;
 import cz.hsrs.maplog.db.model.PositionEntity;
 import cz.hsrs.maplog.db.model.UnitEntity;
 import cz.hsrs.maplog.db.queryspecification.specification.PositionForUnitInUserGroup;
-import cz.hsrs.maplog.db.queryspecification.specification.UnitInSet;
+import cz.hsrs.maplog.db.queryspecification.specification.UnitById;
 import cz.hsrs.maplog.db.queryspecification.specification.UnitInUserGroup;
 import cz.hsrs.maplog.db.repository.PositionRepository;
 import cz.hsrs.maplog.db.repository.UnitRepository;
@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specifications;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.http.HttpStatus;
@@ -29,8 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static cz.hsrs.maplog.db.queryspecification.specification.UnitInSet.matchUnitInSet;
 
 /**
  * Created by OK on 9/12/2017.
@@ -68,17 +65,17 @@ public class PositionController {
     @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
     public List<Position> getPosition(@AuthenticationPrincipal UserToken token,
-                                      @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search,
+                                      @RequestParam(value = RestMapping.FILTER_CALL, required = false) String filter,
                                       Pageable pageable){
 
         LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > pageable: {} \n============",
-                token.toString(), search, pageable);
+                token.toString(), filter, pageable);
 
         return modelMapper.map(
                 // get only position for unit in user group
                 positionRepository.findAll(
                         Specifications.where(PositionForUnitInUserGroup.matchPositionForUnitInUserGroup(token.getUserGroupEntity().getId()))
-                                      .and(queryBuilder.build(search)),
+                                      .and(queryBuilder.build(filter)),
                         pageable).getContent(),
                 LIST_DTO
         );
@@ -100,7 +97,7 @@ public class PositionController {
         // Get all units in user group
         List<UnitEntity> unitEntities = unitRepository.findAll(
                         Specifications.where(UnitInUserGroup.matchUnitInUserGroup(token.getGroup()))
-                                .and( UnitInSet.matchUnitInSet(token.getUserGroupEntity().getId()))
+                                .and( UnitById.matchUnitById(token.getUserGroupEntity().getId()))
         );
 
         // save only if unit is attached to UserToken's user group

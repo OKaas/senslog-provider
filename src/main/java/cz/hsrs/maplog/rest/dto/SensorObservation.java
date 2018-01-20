@@ -3,31 +3,20 @@ package cz.hsrs.maplog.rest.dto;
 import java.sql.Timestamp;
 
 /**
- * Created by OK on 6/9/2017.
+ * Created by OK on 1/20/2018.
  */
-public class Observation {
+public class SensorObservation {
 
     private Long id;
-    private Double value;
-    private ObservationSensor sensor;
+    private Double observedValue;
     private Timestamp timeReceived;
     private Timestamp timeStamp;
 
-    public Observation() {
-    }
+    public SensorObservation() {}
 
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public Long getId() {
         return id;
     }
@@ -36,12 +25,12 @@ public class Observation {
         this.id = id;
     }
 
-    public ObservationSensor getSensor() {
-        return sensor;
+    public Double getObservedValue() {
+        return observedValue;
     }
 
-    public void setSensor(ObservationSensor sensor) {
-        this.sensor = sensor;
+    public void setObservedValue(Double observedValue) {
+        this.observedValue = observedValue;
     }
 
     public Timestamp getTimeReceived() {
@@ -64,10 +53,9 @@ public class Observation {
 
     @Override
     public String toString() {
-        return "Observation{" +
+        return "SensorObservation{" +
                 "id=" + id +
-                ", value=" + value +
-                ", sensor=" + sensor +
+                ", observedValue=" + observedValue +
                 ", timeReceived=" + timeReceived +
                 ", timeStamp=" + timeStamp +
                 '}';

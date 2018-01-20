@@ -1,6 +1,9 @@
 
 -- INPUT DUMMY DATA FOR DEVELOPMENT
 
+
+-- USER GROUP
+-----------------------------------------------------------------------
 INSERT INTO user_group (id, name, parent_group_id ) VALUES
 ( 1, 'testing_group', NULL);
 
@@ -13,6 +16,9 @@ INSERT INTO user_group (id, name, parent_group_id ) VALUES
 INSERT INTO user_group (id, name, parent_group_id ) VALUES
 ( 4, 'testing_group_child_third',  2);
 
+-- USER
+-----------------------------------------------------------------------
+
 INSERT INTO "user"(
             id, audio, lang, module_administrator, module_log_book, name,
             password, real_name, group_id)
@@ -22,6 +28,9 @@ INSERT INTO "user"(
             id, audio, lang, module_administrator, module_log_book, name,
             password, real_name, group_id)
     VALUES ( 2, false, 'CZ', true, true, 'test2', 'test', 'test real', 3);
+
+-- UNIT
+-----------------------------------------------------------------------
 
 INSERT INTO unit(
             id, description, is_mobile)
@@ -35,6 +44,9 @@ INSERT INTO unit(
         id, description, is_mobile)
     VALUES ( 3, 'third big unit', true);
 
+-- UNIT TO GROUP
+-----------------------------------------------------------------------
+
 INSERT INTO unit_to_group(
             id, unit_id, user_group_id)
     VALUES (1, 1, 1);
@@ -46,6 +58,9 @@ INSERT INTO unit_to_group(
 INSERT INTO unit_to_group(
             id, unit_id, user_group_id)
     VALUES (3, 3, 1);
+
+-- POSITION
+-----------------------------------------------------------------------
 
 INSERT INTO "position"(
             id, altitude, dop, speed, time_received, time_stamp, unit_id)
@@ -67,6 +82,8 @@ INSERT INTO "position"(
             id, altitude, dop, speed, time_received, time_stamp, unit_id)
     VALUES (5, 999, 999, 999, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 3);
 
+-- PHENOMENON
+-----------------------------------------------------------------------
 
 INSERT INTO phenomenon(id, name, unit_desc)
     VALUES ( 1, 'first phenom', '1 m/s');
@@ -80,27 +97,41 @@ INSERT INTO phenomenon(id, name, unit_desc)
 INSERT INTO phenomenon(id, name, unit_desc)
     VALUES ( 4, '4 phenom', '3 m/s');
 
-INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
-    VALUES ( nextval('seq_sensor'), 'sensor1', 'test_sensor for 1 unit', 1, 1);
+-- SENSOR
+-----------------------------------------------------------------------
 
 INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
-    VALUES ( nextval('seq_sensor'), 'sensor2', 'test_sensor for 2 unit', 2, 2);
+    VALUES ( 1, 'sensor1', 'test_sensor for 1 unit', 1, 1);
 
 INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
-    VALUES ( nextval('seq_sensor'), 'sensor3', 'test_sensor for 3 unit', 3, 3);
+    VALUES ( 2, 'sensor2', 'test_sensor for 2 unit', 2, 2);
 
 INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
-    VALUES ( nextval('seq_sensor'), 'sensor4', 'test_sensor for 3 unit', 4, 3);
+    VALUES ( 3, 'sensor3', 'test_sensor for 3 unit', 3, 3);
 
---INSERT INTO unit_holder(id, address, email, icon_id, username, phone, www)
---    VALUES ( 1, 'test', 'test', 0, 'test', 'test', 'test');
+INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
+    VALUES ( 4, 'sensor4', 'test_sensor for 3 unit', 4, 3);
 
---INSERT INTO unit (id, description, holder_id, is_mobile) values
---( 1, 'testing unit', 1, FALSE );
+-- OBSERVATION
+-----------------------------------------------------------------------
 
---INSERT INTO unit_position(id, altitude, dop, first_time_stamp, speed, time_received, time_stamp, unit_id)
---    VALUES (1, '1', '1', '2017-06-08 11:00:00', '1', '2017-06-08 11:00:00', '2017-06-08 11:00:00', 1);
---
---INSERT INTO unit_to_group(id, unit_id, group_id)
---    VALUES ( nextval('seq_unit_to_group'), 1, 1);
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 123, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 1);
 
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 145, '2018-03-03T03:33:33', '2018-03-03T03:33:33', 1);
+
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 167, '2018-04-04T04:44:44', '2018-04-04T04:44:44', 1);
+
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 189, '2018-05-05T05:55:55', '2018-05-05T05:55:55', 1);
+
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 212, '2018-01-01T01:01:01', '2018-01-01T01:01:01', 2);
+
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 213, '2018-02-02T02:02:02', '2018-02-02T02:02:02', 2);
+
+INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
+    VALUES ( nextval('seq_observation'), 214, '2018-03-03T03:03:03', '2018-02-03T03:03:03', 2);

@@ -1,6 +1,7 @@
 package cz.hsrs.maplog.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class Sensor {
     private String name;
     private String type;
 
-    @JsonBackReference
-    private List<Observation> observations;
+    @JsonManagedReference
+    private List<SensorObservation> observations;
 
     @JsonBackReference
     private Phenomenon phenomenon;
@@ -49,11 +50,11 @@ public class Sensor {
         this.type = type;
     }
 
-    public List<Observation> getObservations() {
+    public List<SensorObservation> getObservations() {
         return observations;
     }
 
-    public void setObservations(List<Observation> observations) {
+    public void setObservations(List<SensorObservation> observations) {
         this.observations = observations;
     }
 

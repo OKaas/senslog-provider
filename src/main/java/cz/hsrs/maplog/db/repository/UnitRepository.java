@@ -6,6 +6,7 @@ import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,7 @@ import java.util.Set;
  * Created by OK on 7/4/2017.
  */
 @RepositoryRestResource(collectionResourceRel = "unit", path = "unit")
-public interface UnitRepository extends JpaRepository<UnitEntity, Long>, JpaSpecificationExecutor {
+public interface UnitRepository extends PagingAndSortingRepository<UnitEntity, Long>, JpaSpecificationExecutor {
 
 }
 

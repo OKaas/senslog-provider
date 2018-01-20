@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 /**
  * Created by OK on 12/12/2017.
  */
+// TODO this class if fucked-up > reduce toPredicate method
 public class QuerySpecification<T> implements Specification<T> {
 
     private static final String DELIMITER = "\\.";
@@ -24,6 +25,8 @@ public class QuerySpecification<T> implements Specification<T> {
 
         String[] tok = criteria.getKey().split(DELIMITER);
 
+        Object obj = criteria.getValue();
+
         // filter on child object
         // child predicate (something.something.property)
         if(tok.length > 1){
@@ -35,6 +38,36 @@ public class QuerySpecification<T> implements Specification<T> {
                 joins = joins.join( tok[i] );
             }
             Path p = joins.get(tok[ tok.length - 1]);
+
+            // reduce this IF and following code
+            if( obj instanceof Timestamp ) {
+                if (criteria.getOperation().equalsIgnoreCase(">")) {
+                    return builder.greaterThanOrEqualTo(
+                            p,
+                            builder.function("TO_DATE",
+                                    Timestamp.class,
+                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
+                            )
+                    );
+                }
+                else if (criteria.getOperation().equalsIgnoreCase("<")) {
+                    return builder.lessThanOrEqualTo(
+                            p,
+                            builder.function("TO_DATE",
+                                    Timestamp.class,
+                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
+                            )
+                    );
+                }
+                else if (criteria.getOperation().equalsIgnoreCase(":")) {
+                    if (p.getJavaType() == String.class) {
+                        return builder.like(
+                                root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+                    } else {
+                        return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+                    }
+                }
+            }
 
             if (criteria.getOperation().equalsIgnoreCase(">")) {
                 return builder.greaterThanOrEqualTo(
@@ -55,8 +88,6 @@ public class QuerySpecification<T> implements Specification<T> {
 
         // filter on current object
         } else {
-            Object obj = criteria.getValue();
-
             if( obj instanceof Timestamp ){
                 if (criteria.getOperation().equalsIgnoreCase(">")) {
                     return builder.greaterThanOrEqualTo(
