@@ -1,12 +1,26 @@
 package cz.hsrs.maplog.rest.controller;
 
+import cz.hsrs.maplog.db.model.AlertEntity;
+import cz.hsrs.maplog.db.repository.AlertRepository;
 import cz.hsrs.maplog.rest.RestMapping;
+import cz.hsrs.maplog.rest.dto.Alert;
 import cz.hsrs.maplog.rest.dto.AlertEvent;
+import cz.hsrs.maplog.rest.dto.Phenomenon;
+import cz.hsrs.maplog.rest.dto.receive.AlertReceive;
+import cz.hsrs.maplog.rest.dto.receive.PhenomenonReceive;
+import cz.hsrs.maplog.security.UserToken;
+import cz.hsrs.maplog.util.QueryBuilder;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -18,33 +32,50 @@ public class AlertController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlertController.class);
 
     private static final String PREFIX_CONTROLLER = "/alert";
+    private final static Type LIST_DTO = new TypeToken<List<Alert>>() {}.getType();
+
+    @Autowired
+    private AlertRepository alertRepository;
+
+
+    @Autowired
+    private QueryBuilder queryBuilder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     /***
-     * /{client-id}/alert?alertId={alertId}&unitId={unitId}&time={fromTime, toTime}
+     * /alert
      *
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER, method = RequestMethod.GET)
+    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
-    public List<AlertEvent> getAlert(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                             @RequestParam ( value = RestMapping.UNIT_ID) String unitId,
-                                             @RequestParam (value = RestMapping.TIME, required = false) String time,
-                                             @RequestParam( value = RestMapping.ALERT_ID, required = false) String alertId){
+    public List<Alert> get(@AuthenticationPrincipal UserToken token,
+                                     @RequestParam(value = RestMapping.FILTER_CALL, required = false) String filter,
+                                     Pageable pageable){
 
-        LOGGER.info("> clientId {}, unitId {}, alertId {}, time {} ", clientId, unitId, alertId, time);
-        return null;
+        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > pageable: {} \n============",
+                token.toString(), filter, pageable);
+
+        return modelMapper.map(alertRepository.findAll(queryBuilder.build(filter), pageable).getContent(), LIST_DTO);
     }
 
     /***
-     * /{client-id}/alertEvent/insert?unitId={unitId}
+     * /alert/insert
      *
      * @return
      */
-    @RequestMapping(value = RestMapping.PATH_CLIENT_ID + PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.GET)
-    public HttpStatus insertAlertEvent(@PathVariable(RestMapping.CLIENT_ID) String clientId,
-                                       @RequestBody AlertEvent event){
+    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
+    public HttpStatus insert(@AuthenticationPrincipal UserToken token,
+                             @RequestBody List<AlertReceive> alerts){
 
-        LOGGER.info("> clientId {}, unitId {}, alertId {}, time {} ", clientId, event);
+        LOGGER.info("> client: {}, alertReceive {} ", token, alerts);
+
+        for(AlertReceive alertReceive : alerts){
+            alertRepository.save(modelMapper.map(alertReceive, AlertEntity.class));
+        }
+
         return RestMapping.STATUS_CREATED;
     }
 

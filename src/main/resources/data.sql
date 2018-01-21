@@ -135,3 +135,25 @@ INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id
 
 INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
     VALUES ( nextval('seq_observation'), 214, '2018-03-03T03:03:03', '2018-02-03T03:03:03', 2);
+
+-- Alert
+-----------------------------------------------------------------------
+INSERT INTO alert(id, description)
+    VALUES (1, '1 alert');
+
+INSERT INTO alert(id, description)
+    VALUES (2, '2 alert');
+
+INSERT INTO alert(id, description)
+    VALUES (3, '3 alert');
+
+-- Enum item
+-----------------------------------------------------------------------
+INSERT INTO enum_item(id, name)
+    VALUES (1, 'FIRST_ENUM');
+
+INSERT INTO enum_item(id, name)
+    VALUES (2, 'SECOND_ENUM');
+
+INSERT INTO enum_item(id, name)
+    VALUES (3, 'THIRD_ENUM');

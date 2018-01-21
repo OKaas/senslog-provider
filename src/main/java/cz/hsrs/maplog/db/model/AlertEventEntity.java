@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 public class AlertEventEntity extends EntityQueryable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Long alertId;
 	private Timestamp timeStamp;
 	private AlertEntity alert;
 	private EnumItemEntity enumItem;
@@ -37,17 +36,6 @@ public class AlertEventEntity extends EntityQueryable implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-	@Column(name="alert_id")
-	public Long getAlertId() {
-		return this.alertId;
-	}
-
-	public void setAlertId(Long alertId) {
-		this.alertId = alertId;
-	}
-
 
 	@Column(name="time_stamp")
 	public Timestamp getTimeStamp() {

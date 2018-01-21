@@ -8,20 +8,81 @@ import java.sql.Timestamp;
 public class AlertEvent {
 
     private Integer id;
-    private Integer alertId;
+
     private Integer gid;
-    private Boolean solved;
-    private Boolean solving;
     private Timestamp timeStamp;
-    private Long unitId;
-    private Alert alert;
-    private Unit unit;
+
+    private AlertEventAlert alertEventAlert;
+    private AlertEventUnit alertEventUnit;
+    private AlertEventEnumItem alertEventEnumItem;
+
+    public AlertEvent() {
+    }
 
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
-    
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getGid() {
+        return gid;
+    }
+
+    public void setGid(Integer gid) {
+        this.gid = gid;
+    }
+
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Timestamp timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public AlertEventAlert getAlertEventAlert() {
+        return alertEventAlert;
+    }
+
+    public void setAlertEventAlert(AlertEventAlert alertEventAlert) {
+        this.alertEventAlert = alertEventAlert;
+    }
+
+    public AlertEventUnit getAlertEventUnit() {
+        return alertEventUnit;
+    }
+
+    public void setAlertEventUnit(AlertEventUnit alertEventUnit) {
+        this.alertEventUnit = alertEventUnit;
+    }
+
+    public AlertEventEnumItem getAlertEventEnumItem() {
+        return alertEventEnumItem;
+    }
+
+    public void setAlertEventEnumItem(AlertEventEnumItem alertEventEnumItem) {
+        this.alertEventEnumItem = alertEventEnumItem;
+    }
     /* --- Commons  --- */
+
+    @Override
+    public String toString() {
+        return "AlertEvent{" +
+                "id=" + id +
+                ", gid=" + gid +
+                ", timeStamp=" + timeStamp +
+                ", alertEventAlert=" + alertEventAlert +
+                ", alertEventUnit=" + alertEventUnit +
+                ", alertEventEnumItem=" + alertEventEnumItem +
+                '}';
+    }
 }
 
 
