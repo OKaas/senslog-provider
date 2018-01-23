@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.hsrs.maplog</groupId>
-    <artifactId>senslog-processing</artifactId>
+    <artifactId>senslog-provider</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <name>SensLog - provider</name>
@@ -18,13 +18,16 @@
 
     <properties>
         <!-- Java -->
-        <version.java>1.8</version.java>
+        <java.version>1.8</java.version>
         <!-- Maven compiler -->
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
 
         <!-- Logging -->
         <version.slf4j>1.7.21</version.slf4j>
         <version.logback>1.1.7</version.logback>
+
+        <!-- SensLog - Data Model -->
+        <version.senslog.model>1.0.0-SNAPSHOT</version.senslog.model>
 
         <!-- Database -->
         <version.postgresql.jdbc>9.1-901-1.jdbc4</version.postgresql.jdbc>
@@ -34,12 +37,16 @@
         <version.spring-security-web>4.2.3.RELEASE</version.spring-security-web>
         <version.model.mapper>0.7.4</version.model.mapper>
 
+        <version.docker.plugin>1.0.0</version.docker.plugin>
+
         <!-- Commons -->
         <version.org.apache.commons-lang3>3.7</version.org.apache.commons-lang3>
 
         <!-- Auth0 -->
         <version.auth0>1.0.0</version.auth0>
         <version.auth0.api>1.0.0-rc.2</version.auth0.api>
+
+        <docker.image.prefix>ab1t</docker.image.prefix>
 
     </properties>
 
@@ -54,6 +61,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${version.logback}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.hsrs.maplog</groupId>
+            <artifactId>senslog-model</artifactId>
+            <version>${version.senslog.model}</version>
         </dependency>
 
         <!-- Spring -->
@@ -77,10 +90,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security.oauth</groupId>-->
-            <!--<artifactId>spring-security-oauth2</artifactId>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.modelmapper</groupId>
@@ -112,24 +121,23 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                 </plugin>
-                <!-- Compile -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${version.maven-compiler-plugin}</version>
-                    <configuration>
-                        <source>${version.java}</source>
-                        <target>${version.java}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        </plugins>
     </build>
 
 </project>

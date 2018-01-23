@@ -1,5 +1,6 @@
 package cz.hsrs.maplog.db.queryspecification;
 
+import cz.hsrs.maplog.db.model.EntityQueryable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 

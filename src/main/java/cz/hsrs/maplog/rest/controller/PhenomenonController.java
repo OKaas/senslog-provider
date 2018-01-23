@@ -68,34 +68,6 @@ public class PhenomenonController {
         );
     }
 
-    /***
-     * /phenomenon/insert
-     *
-     * @return
-     */
-    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
-    public HttpStatus insertPhenomenon(@AuthenticationPrincipal UserToken token,
-                                       @RequestBody PhenomenonReceive phenomenonReceive){
-
-        LOGGER.info("> client: {}, phenomenonId {} ", token, phenomenonReceive);
-
-        // TODO here update sensor phenomenonId
-        try {
-            PhenomenonEntity entity = phenomenonRepository.save(modelMapper.map(phenomenonReceive, PhenomenonEntity.class));
-
-            List<SensorEntity> sensorEntity = (List<SensorEntity>) sensorRepository.findAll(phenomenonReceive.getSensors());
-
-            sensorEntity.forEach( e -> {
-                e.setPhenomenon(entity);
-                sensorRepository.save(e);
-            });
-
-            return RestMapping.STATUS_CREATED;
-        } catch (MappingException e){
-            return RestMapping.STATUS_BAD_REQUEST;
-        }
-    }
-
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */

@@ -17,11 +17,7 @@ spring:
       hibernate:
         enable_lazy_load_no_trans: true
   datasource:
-    platform: postgres
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
@@ -30,7 +26,7 @@ spring:
 # SERVER
 #
 server:
-    port: 8080
+    port: 7778
     session:
       cookie:
         unitDesc: UISESSION

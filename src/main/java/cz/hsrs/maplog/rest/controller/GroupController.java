@@ -3,13 +3,11 @@ package cz.hsrs.maplog.rest.controller;
 import cz.hsrs.maplog.db.repository.UserGroupRepository;
 import cz.hsrs.maplog.rest.RestMapping;
 import cz.hsrs.maplog.rest.dto.UserGroup;
-//import cz.hsrs.maplog.security.UserToken;
 import cz.hsrs.maplog.util.Mapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;

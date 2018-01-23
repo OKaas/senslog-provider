@@ -12,10 +12,8 @@ import cz.hsrs.maplog.db.repository.AlertRepository;
 import cz.hsrs.maplog.db.repository.EnumItemRepository;
 import cz.hsrs.maplog.db.repository.UnitRepository;
 import cz.hsrs.maplog.rest.RestMapping;
-import cz.hsrs.maplog.rest.dto.Alert;
 import cz.hsrs.maplog.rest.dto.AlertEvent;
 import cz.hsrs.maplog.rest.dto.receive.AlertEventReceive;
-import cz.hsrs.maplog.rest.dto.receive.AlertReceive;
 import cz.hsrs.maplog.security.UserToken;
 import cz.hsrs.maplog.util.QueryBuilder;
 import org.modelmapper.ModelMapper;
@@ -91,40 +89,6 @@ public class AlertEventController implements InitializingBean {
                 token.toString(), filter, pageable);
 
         return modelMapper.map(alertEventRepository.findAll(queryBuilder.build(filter), pageable).getContent(), LIST_DTO);
-    }
-
-    /***
-     * /alertEvent/insert
-     *
-     * @return
-     */
-    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
-    public HttpStatus insert(@AuthenticationPrincipal UserToken token,
-                             @RequestBody List<AlertEventReceive> alerts){
-
-        LOGGER.info("> client: {}, alertReceive {} ", token, alerts);
-
-        for(AlertEventReceive alertEvent : alerts){
-
-            UnitEntity unitEntity = (UnitEntity) unitRepository.findOne(
-                                        Specifications.where(UnitById.matchUnitById(alertEvent.getUnit()))
-                                                      .and(UnitInUserGroup.matchUnitInUserGroup(token.getGroup()))
-            );
-
-            if( unitEntity == null ){ return RestMapping.STATUS_BAD_REQUEST; }
-
-            AlertEntity alertEntity = alertRepository.findOne(alertEvent.getAlert());
-            if( alertEntity == null ){ return RestMapping.STATUS_BAD_REQUEST; }
-
-            AlertEventEntity alertEventEntity = modelMapper.map(alertEvent, AlertEventEntity.class);
-            alertEventEntity.setUnit(unitEntity);
-            alertEventEntity.setAlert(alertEntity);
-            alertEventEntity.setEnumItem(DEFAULT_ALERT_EVENT);
-
-            alertEventRepository.save(alertEventEntity);
-        }
-
-        return RestMapping.STATUS_CREATED;
     }
 
     /* --- Collaborates --- */

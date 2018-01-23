@@ -1,6 +1,6 @@
 package cz.hsrs.maplog.util;
 
-import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
+import cz.hsrs.maplog.db.model.EntityQueryable;
 import cz.hsrs.maplog.db.queryspecification.QuerySpecificationBuilder;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.jpa.domain.Specification;

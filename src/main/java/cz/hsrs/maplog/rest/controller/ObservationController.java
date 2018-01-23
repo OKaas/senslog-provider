@@ -55,8 +55,8 @@ public class ObservationController {
     @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
     public List<Observation> get(@AuthenticationPrincipal UserToken token,
-                                            @RequestParam(value = RestMapping.FILTER_CALL, required = false) String filter,
-                                            Pageable pageable){
+                                 @RequestParam(value = RestMapping.FILTER_CALL, required = false) String filter,
+                                 Pageable pageable){
 
         LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n > pageable: {} \n============",
                 token.toString(), filter, pageable);
@@ -70,40 +70,6 @@ public class ObservationController {
                 LIST_DTO
         );
     }
-
-    /***
-     *
-     * @return
-     */
-    @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
-    public HttpStatus insert(@AuthenticationPrincipal UserToken token,
-                             @RequestBody List<ObservationReceive> observationReceive){
-
-        LOGGER.info("> client: {}, observation {} ", token, observationReceive);
-
-        // TODO: In ObservationReceive here should not  be unit id, because IoT dont care about unit, it want to just send data
-
-        for( ObservationReceive observationToSave : observationReceive){
-            SensorEntity sensorEntity = (SensorEntity) sensorRepository.findOne(
-                    Specifications.where(SensorById.matchUnitById(observationToSave.getSensor()))
-                            .and(SensorForUnitInUserGroup.matchSensorForUnitInUserGroup(token.getUserGroupEntity().getId())));
-
-            // Sensor by specified ID does not exists or is not attached to user Unit
-            if( sensorEntity == null ){
-                return RestMapping.STATUS_BAD_REQUEST;
-            }
-
-            ObservationEntity observationEntity = modelMapper.map(observationToSave, ObservationEntity.class);
-            observationEntity.setSensor(sensorEntity);
-            observationEntity.setTimeReceived(new Timestamp(System.currentTimeMillis()) );
-
-            observationRepository.save(observationEntity);
-        }
-
-        return RestMapping.STATUS_CREATED;
-    }
-
-    /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
     

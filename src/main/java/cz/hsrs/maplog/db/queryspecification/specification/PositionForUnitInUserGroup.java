@@ -1,11 +1,10 @@
 package cz.hsrs.maplog.db.queryspecification.specification;
 
+import cz.hsrs.maplog.db.model.EntityQueryable;
 import cz.hsrs.maplog.db.model.PositionEntity;
-import cz.hsrs.maplog.db.queryspecification.EntityQueryable;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Path;
-import java.util.Set;
 
 /**
  * Created by OK on 12/15/2017.
