@@ -16,6 +16,7 @@ import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.data.jpa.domain.Specifications;
@@ -66,13 +67,14 @@ public class UnitController {
     @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
     @ResponseBody
     public List<Unit> getUnit(@AuthenticationPrincipal UserToken token,
-                              @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search){
+                              @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search,
+                              Pageable pageable){
         LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n============", token.toString(), search);
 
         return modelMapper.map(
                 // get only user group unit and filter them afterwards
                 unitRepository.findAll( Specifications.where(UnitInUserGroup.matchUnitInUserGroup(token.getGroup()))
-                                        .and(queryBuilder.build(search))),
+                                        .and(queryBuilder.build(search)), pageable).getContent(),
                 LIST_DTO
         );
     }
