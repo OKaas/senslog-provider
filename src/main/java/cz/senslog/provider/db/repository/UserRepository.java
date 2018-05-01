@@ -1,6 +1,6 @@
 package cz.senslog.provider.db.repository;
 
-import cz.senslog.provider.db.model.UserEntity;
+import cz.senslog.model.db.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;

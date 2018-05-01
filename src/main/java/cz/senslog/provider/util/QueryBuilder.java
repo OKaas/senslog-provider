@@ -1,6 +1,6 @@
 package cz.senslog.provider.util;
 
-import cz.senslog.provider.db.model.EntityQueryable;
+import cz.senslog.model.db.EntityQueryable;
 import cz.senslog.provider.db.queryspecification.QuerySpecificationBuilder;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.jpa.domain.Specification;

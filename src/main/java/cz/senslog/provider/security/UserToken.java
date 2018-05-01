@@ -1,11 +1,9 @@
 package cz.senslog.provider.security;
 
-import cz.senslog.provider.db.model.UserGroupEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by OK on 11/17/2017.
@@ -15,18 +13,13 @@ public class UserToken implements UserDetails {
     public String username;
     public String password;
 
-    public Set<Long> group;
     public Collection<? extends GrantedAuthority> authorities;
-
-    public UserGroupEntity userGroupEntity;
 
     public UserToken() {}
 
-    public UserToken(String username, String password, UserGroupEntity userGroupEntity, Set<Long> group, Collection<? extends GrantedAuthority> authorities) {
+    public UserToken(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
-        this.group = group;
-        this.userGroupEntity = userGroupEntity;
         this.authorities = authorities;
     }
 
@@ -42,24 +35,8 @@ public class UserToken implements UserDetails {
         this.password = password;
     }
 
-    public Set<Long> getGroup() {
-        return group;
-    }
-
-    public void setGroup(Set<Long> group) {
-        this.group = group;
-    }
-
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
-    }
-
-    public UserGroupEntity getUserGroupEntity() {
-        return userGroupEntity;
-    }
-
-    public void setUserGroupEntity(UserGroupEntity userGroupEntity) {
-        this.userGroupEntity = userGroupEntity;
     }
 
     @Override
@@ -96,7 +73,7 @@ public class UserToken implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
+
     /* --- Commons  --- */
 
     @Override
@@ -104,9 +81,7 @@ public class UserToken implements UserDetails {
         return "UserToken{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", group=" + group +
                 ", authorities=" + authorities.toString() +
-                ", userGroupEntity=" + userGroupEntity.toString() +
                 '}';
     }
 }

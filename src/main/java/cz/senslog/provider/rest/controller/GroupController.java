@@ -2,16 +2,13 @@ package cz.senslog.provider.rest.controller;
 
 import cz.senslog.provider.db.repository.UserGroupRepository;
 import cz.senslog.provider.rest.RestMapping;
-import cz.hsrs.maplog.rest.dto.UserGroup;
 import cz.senslog.provider.util.Mapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 /**
  * Created by OK on 7/3/2017.
@@ -28,8 +25,6 @@ public class GroupController extends RestMapping {
 
     @Autowired
     private UserGroupRepository userGroupRepository;
-
-    private final static Type LIST_DTO = new TypeToken<List<UserGroup>>() {}.getType();
 
     /* --- REST calls --- */
 

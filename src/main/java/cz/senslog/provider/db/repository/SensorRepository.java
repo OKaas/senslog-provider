@@ -1,6 +1,6 @@
 package cz.senslog.provider.db.repository;
 
-import cz.senslog.provider.db.model.SensorEntity;
+import cz.senslog.model.db.SensorEntity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

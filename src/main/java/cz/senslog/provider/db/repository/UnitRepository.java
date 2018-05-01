@@ -1,7 +1,6 @@
 package cz.senslog.provider.db.repository;
 
-import cz.senslog.provider.db.model.UnitEntity;
-//import UserToken;
+import cz.senslog.model.db.UnitEntity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

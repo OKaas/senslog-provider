@@ -1,7 +1,7 @@
 package cz.senslog.provider.db.repository;
 
 
-import cz.senslog.provider.db.model.PositionEntity;
+import cz.senslog.model.db.PositionEntity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

@@ -1,10 +1,10 @@
 package cz.senslog.provider.rest.controller;
 
-import cz.senslog.provider.db.model.AlertEntity;
-import cz.senslog.provider.db.repository.AlertRepository;
+import cz.senslog.model.db.EventCodeEntity;
+import cz.senslog.model.dto.Alert;
+import cz.senslog.model.dto.create.EventCodeCreate;
+import cz.senslog.provider.db.repository.EventCodeRepository;
 import cz.senslog.provider.rest.RestMapping;
-import cz.hsrs.maplog.rest.dto.Alert;
-import cz.hsrs.maplog.rest.dto.receive.AlertReceive;
 import cz.senslog.provider.security.UserToken;
 import cz.senslog.provider.util.QueryBuilder;
 import org.modelmapper.ModelMapper;
@@ -24,16 +24,15 @@ import java.util.List;
  * Created by OK on 9/12/2017.
  */
 @RestController
-public class AlertController {
+public class EventCodeController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlertController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventCodeController.class);
 
     private static final String PREFIX_CONTROLLER = "/alert";
     private final static Type LIST_DTO = new TypeToken<List<Alert>>() {}.getType();
 
     @Autowired
-    private AlertRepository alertRepository;
-
+    private EventCodeRepository alertRepository;
 
     @Autowired
     private QueryBuilder queryBuilder;
@@ -65,12 +64,12 @@ public class AlertController {
      */
     @RequestMapping(value = PREFIX_CONTROLLER + RestMapping.PATH_INSERT, method = RequestMethod.POST)
     public HttpStatus insert(@AuthenticationPrincipal UserToken token,
-                             @RequestBody List<AlertReceive> alerts){
+                             @RequestBody List<EventCodeCreate> alerts){
 
         LOGGER.info("> client: {}, alertReceive {} ", token, alerts);
 
-        for(AlertReceive alertReceive : alerts){
-            alertRepository.save(modelMapper.map(alertReceive, AlertEntity.class));
+        for(EventCodeCreate alertReceive : alerts){
+            alertRepository.save(modelMapper.map(alertReceive, EventCodeEntity.class));
         }
 
         return RestMapping.STATUS_CREATED;

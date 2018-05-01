@@ -1,6 +1,6 @@
 package cz.senslog.provider.db.queryspecification;
 
-import cz.senslog.provider.db.model.EntityQueryable;
+import cz.senslog.model.db.EntityQueryable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 

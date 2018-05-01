@@ -1,7 +1,8 @@
 package cz.senslog.provider.db.queryspecification.specification;
 
-import cz.senslog.provider.db.model.EntityQueryable;
-import cz.senslog.provider.db.model.PhenomenonEntity;
+
+import cz.senslog.model.db.EntityQueryable;
+import cz.senslog.model.db.PhenomenonEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Path;

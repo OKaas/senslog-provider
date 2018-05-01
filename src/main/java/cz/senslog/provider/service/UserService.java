@@ -1,8 +1,6 @@
 package cz.senslog.provider.service;
 
-import cz.senslog.provider.db.model.UserEntity;
-import cz.senslog.provider.db.model.UserGroupEntity;
-import cz.senslog.provider.db.repository.UserGroupRepository;
+import cz.senslog.model.db.UserEntity;
 import cz.senslog.provider.db.repository.UserRepository;
 import cz.senslog.provider.security.UserToken;
 import org.slf4j.Logger;
@@ -18,7 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 
@@ -36,12 +36,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserGroupRepository userGroupRepository;
-
     @Override
-    public UserToken loadUserByUsername(String username) throws
-            UsernameNotFoundException {
+    public UserToken loadUserByUsername(String username) throws UsernameNotFoundException {
 
         LOGGER.info("Try login: {}", username);
 
@@ -65,12 +61,12 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Username " + username + " not found");
         }
 
-        userToken = new UserToken(user.getName(), user.getPassword(), user.getUserGroup(), getGroup(user), getGrantedAuthorities(username) );
+        userToken = new UserToken(user.getName(), user.getPassword(), getGrantedAuthorities(username) );
 
         // set to context
         final UsernamePasswordAuthenticationToken authentication =
-            new UsernamePasswordAuthenticationToken(user, null, userToken.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                new UsernamePasswordAuthenticationToken(user, null, userToken.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return userToken;
     }
@@ -90,21 +86,6 @@ public class UserService implements UserDetailsService {
         // TODO little dummy but for now works
 
         Set<Long> ret = new HashSet<>();
-        UserGroupEntity tmp = userEntity.getUserGroup();
-
-        // get all parents
-        while( tmp != null ){
-            ret.add(tmp.getId());
-
-            tmp = tmp.getUserGroup();
-        }
-
-        List<UserGroupEntity> children = userEntity.getUserGroup().getUserGroups();
-
-        // get all children
-        if( children != null ){
-            children.forEach( e -> ret.add(e.getId()) );
-        }
 
         return ret;
     }
