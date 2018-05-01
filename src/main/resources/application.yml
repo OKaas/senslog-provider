@@ -19,9 +19,9 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://ckan.ccss.cz:5432/senslog20
-    username: senslog
-    password: senslog
+    url: jdbc:postgresql://localhost:5432/
+    username: postgres
+    password: postgres
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
@@ -30,7 +30,7 @@ spring:
 # SERVER
 #
 server:
-    port: 7778
+    port: 8080
     session:
       cookie:
         unitDesc: UISESSION
