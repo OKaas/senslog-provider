@@ -61,7 +61,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Username " + username + " not found");
         }
 
-        userToken = new UserToken(user.getName(), user.getPassword(), getGrantedAuthorities(username) );
+        userToken = new UserToken(user.getName(), user.getPassword());
 
         // set to context
         final UsernamePasswordAuthenticationToken authentication =

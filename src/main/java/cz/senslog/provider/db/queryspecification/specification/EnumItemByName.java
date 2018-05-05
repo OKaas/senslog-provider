@@ -1,7 +1,7 @@
 package cz.senslog.provider.db.queryspecification.specification;
 
 import cz.senslog.model.db.EntityQueryable;
-import cz.senslog.model.db.EnumEntity;
+import cz.senslog.model.db.EnumItemEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Path;
@@ -13,7 +13,7 @@ public class EnumItemByName{
 
     public static Specification<EntityQueryable> matchEnumItemByName(final String enumName){
         return (root, query, builder) -> {
-            final Path<EnumEntity> group = root.get("name");
+            final Path<EnumItemEntity> group = root.get("name");
             return group.in(enumName);
         };
     }

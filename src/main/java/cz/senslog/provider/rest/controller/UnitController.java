@@ -62,20 +62,23 @@ public class UnitController {
      *
      * @return
      */
-//    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
-//    @ResponseBody
-//    public List<Unit> getUnit(@AuthenticationPrincipal UserToken token,
-//                              @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search,
-//                              Pageable pageable){
-//        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n============", token.toString(), search);
-//
+    @RequestMapping(value = PREFIX_CONTROLLER, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Unit> getUnit(@AuthenticationPrincipal UserToken token,
+                              @RequestParam(value = RestMapping.FILTER_CALL, required = false) String search,
+                              Pageable pageable){
+
+        LOGGER.info("\n============\n > userToken: {} \n > filter: {} \n============", token.toString(), search);
+
+        return null;
+
 //        return modelMapper.map(
 //                // get only user group unit and filter them afterwards
 //                unitRepository.findAll( Specifications.where(UnitInUserGroup.matchUnitInUserGroup(token.getGroup()))
 //                                        .and(queryBuilder.build(search)), pageable).getContent(),
 //                LIST_DTO
 //        );
-//    }
+    }
 
     /* --- POST CALLS --- */
 

@@ -1,6 +1,18 @@
 
 -- INPUT DUMMY DATA FOR DEVELOPMENT
 
+-- TESTING GET UNIT
+INSERT INTO "user" (id, email, name, password) VALUES (1, 'user.unit.test', 'user.unit.test', 'user.unit.test');
+INSERT INTO unit_group(id, description) VALUES (1, 'unit_group.unit.test');
+INSERT INTO unit(id, description, id_unit_group) VALUES (1, 'unit.unit.test', 1);
+
+INSERT INTO privilege_group(id, description, group_id) VALUES (1, 'privilege_group', 1);
+
+INSERT INTO user2unit_group(id, id_privilege_group, id_unit_group, id_user) VALUES (1, 1, 1, 1);
+
+
+-----------------------------------------------------------------------
+
 
 -- USER GROUP
 -----------------------------------------------------------------------
@@ -86,17 +98,17 @@
 -------------------------------------------------------------------------
 --
 
-INSERT INTO phenomenon(id, physical_unit, description)
-    VALUES ( 1, 'first phenom', '1 m/s');
-
-INSERT INTO phenomenon(id, physical_unit, description)
-    VALUES ( 2, 'second phenom', '2 m/s');
-
-INSERT INTO phenomenon(id, physical_unit, description)
-    VALUES ( 3, 'third phenom', '3 m/s');
-
-INSERT INTO phenomenon(id, physical_unit, description)
-    VALUES ( 4, '4 phenom', '3 m/s');
+--INSERT INTO phenomenon(id, physical_unit, description)
+--    VALUES ( 1, 'first phenom', '1 m/s');
+--
+--INSERT INTO phenomenon(id, physical_unit, description)
+--    VALUES ( 2, 'second phenom', '2 m/s');
+--
+--INSERT INTO phenomenon(id, physical_unit, description)
+--    VALUES ( 3, 'third phenom', '3 m/s');
+--
+--INSERT INTO phenomenon(id, physical_unit, description)
+--    VALUES ( 4, '4 phenom', '3 m/s');
 --
 ---- SENSOR
 -------------------------------------------------------------------------

@@ -1,9 +1,13 @@
 package cz.senslog.provider.security;
 
+import cz.senslog.model.db.PrivilegeGroupEntity;
+import cz.senslog.model.db.User2UnitGroupEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by OK on 11/17/2017.
@@ -13,14 +17,13 @@ public class UserToken implements UserDetails {
     public String username;
     public String password;
 
-    public Collection<? extends GrantedAuthority> authorities;
+    public Map<User2UnitGroupEntity, List<PrivilegeGroupEntity>> privileges;
 
     public UserToken() {}
 
-    public UserToken(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserToken(String username, String password) {
         this.username = username;
         this.password = password;
-        this.authorities = authorities;
     }
 
     /* --- Collaborates --- */
@@ -35,13 +38,9 @@ public class UserToken implements UserDetails {
         this.password = password;
     }
 
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return null;
     }
 
     @Override
@@ -81,7 +80,6 @@ public class UserToken implements UserDetails {
         return "UserToken{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", authorities=" + authorities.toString() +
                 '}';
     }
 }
