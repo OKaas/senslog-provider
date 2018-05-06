@@ -9,18 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.Arrays.asList;
 
 /**
  * Created by OK on 11/17/2017.
@@ -61,7 +55,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Username " + username + " not found");
         }
 
-        userToken = new UserToken(user.getName(), user.getPassword());
+        userToken = new UserToken(user.getName(), user.getPassword(), user.getUser2unitGroups());
 
         // set to context
         final UsernamePasswordAuthenticationToken authentication =
@@ -73,22 +67,22 @@ public class UserService implements UserDetailsService {
 
     /* --- Collaborates --- */
 
-    private Collection<? extends GrantedAuthority> getGrantedAuthorities(String username) {
-        Collection<? extends GrantedAuthority> authorities;
-        authorities = asList(() -> "ROLE_ADMIN", () -> "ROLE_BASIC");
+//    private Collection<? extends GrantedAuthority> getGrantedAuthorities(String username) {
+//        Collection<? extends GrantedAuthority> authorities;
+//        authorities = asList(() -> "ROLE_ADMIN", () -> "ROLE_BASIC");
+//
+//        LOGGER.info("Get authorities for: {}", username);
+//
+//        return authorities;
+//    }
 
-        LOGGER.info("Get authorities for: {}", username);
-
-        return authorities;
-    }
-
-    private Set<Long> getGroup(UserEntity userEntity){
-        // TODO little dummy but for now works
-
-        Set<Long> ret = new HashSet<>();
-
-        return ret;
-    }
+//    private Set<Long> getGroup(UserEntity userEntity){
+//        // TODO little dummy but for now works
+//
+//        Set<Long> ret = new HashSet<>();
+//
+//        return ret;
+//    }
 
     /* --- Getters / Setters --- */
 

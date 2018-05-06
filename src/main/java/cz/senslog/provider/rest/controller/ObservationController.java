@@ -1,20 +1,14 @@
 package cz.senslog.provider.rest.controller;
 
 import cz.senslog.model.dto.Observation;
-import cz.senslog.provider.db.queryspecification.specification.ObservationForUnitInUserGroup;
 import cz.senslog.provider.db.repository.ObservationRepository;
 import cz.senslog.provider.db.repository.SensorRepository;
-import cz.senslog.provider.rest.RestMapping;
-import cz.senslog.provider.security.UserToken;
 import cz.senslog.provider.util.QueryBuilder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specifications;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -57,7 +51,7 @@ public class ObservationController {
 //        return modelMapper.map(
 //                // get only position for unit in user group
 //                observationRepository.findAll(
-//                        Specifications.where(ObservationForUnitInUserGroup.matchObservationForUnitInUserGroup(token.getUserGroupEntity().getId()))
+//                        Specifications.where(ObservationSpecification.matchObservationForUnitInUserGroup(token.getUserGroupEntity().getId()))
 //                                .and(queryBuilder.build(filter)),
 //                        pageable).getContent(),
 //                LIST_DTO

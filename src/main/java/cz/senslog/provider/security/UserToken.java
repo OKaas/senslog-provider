@@ -1,41 +1,57 @@
 package cz.senslog.provider.security;
 
 import cz.senslog.model.db.PrivilegeGroupEntity;
+import cz.senslog.model.db.UnitEntity;
 import cz.senslog.model.db.User2UnitGroupEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 /**
  * Created by OK on 11/17/2017.
  */
 public class UserToken implements UserDetails {
 
-    public String username;
-    public String password;
+    private final String username;
+    private final String password;
 
+    /***
+     *
+     */
     public Map<User2UnitGroupEntity, List<PrivilegeGroupEntity>> privileges;
 
-    public UserToken() {}
+    /***
+     * TODO: It should be here but for PoC
+     */
+    public Set<Long> unitGroupId;
 
-    public UserToken(String username, String password) {
+    public UserToken(@NotNull String username, @NotNull String password, @NotNull  List<User2UnitGroupEntity> user2UnitGroupEntities) {
         this.username = username;
         this.password = password;
+
+        this.privileges = new HashMap<>();
+        this.unitGroupId = new HashSet<>();
+
+        // initialize internal Unit <-> privilege map
+        for( User2UnitGroupEntity value: user2UnitGroupEntities ){
+
+            privileges.put(value, value.getPrivilegeGroups());
+
+            // c'mon streams :/
+            for(UnitEntity entity : value.getUnitGroup().getUnits()){
+                unitGroupId.add(entity.getId());
+            }
+        }
     }
 
     /* --- Collaborates --- */
 
     /* --- Getters / Setters --- */
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public Set<Long> getUnitGroup(){
+        return unitGroupId;
     }
 
     @Override
@@ -80,6 +96,8 @@ public class UserToken implements UserDetails {
         return "UserToken{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", privileges=" + privileges +
+                ", unitGroupId=" + unitGroupId +
                 '}';
     }
 }

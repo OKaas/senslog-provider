@@ -1,21 +1,15 @@
 package cz.senslog.provider.rest.controller;
 
 import cz.senslog.model.dto.Sensor;
-import cz.senslog.provider.db.queryspecification.specification.SensorForUnitInUserGroup;
 import cz.senslog.provider.db.repository.PhenomenonRepository;
 import cz.senslog.provider.db.repository.SensorRepository;
 import cz.senslog.provider.db.repository.UnitRepository;
-import cz.senslog.provider.rest.RestMapping;
-import cz.senslog.provider.security.UserToken;
 import cz.senslog.provider.util.QueryBuilder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specifications;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -65,7 +59,7 @@ public class SensorController {
 //        return modelMapper.map(
 //                // get only position for unit in user group
 //                sensorRepository.findAll(
-//                        Specifications.where(SensorForUnitInUserGroup.matchSensorForUnitInUserGroup(token.getUserGroupEntity().getId()))
+//                        Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUserGroupEntity().getId()))
 //                                .and(queryBuilder.build(filter)),
 //                        pageable).getContent(),
 //                LIST_DTO
@@ -91,7 +85,7 @@ public class SensorController {
 //                                                Specifications.where(UnitById.matchUnitById(sensorReceive.getUnitId())).
 //                                                               and(UnitInUserGroup.matchUnitInUserGroup(token.getGroup())));
 //
-//            // unitId does not exists or does not belongs to user's user group
+//            // unitGroupId does not exists or does not belongs to user's user group
 //            if( entity == null ){
 //                return RestMapping.STATUS_NOT_ACCETABLE;
 //            }

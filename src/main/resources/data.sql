@@ -4,169 +4,91 @@
 -- TESTING GET UNIT
 INSERT INTO "user" (id, email, name, password) VALUES (1, 'user.unit.test', 'user.unit.test', 'user.unit.test');
 INSERT INTO unit_group(id, description) VALUES (1, 'unit_group.unit.test');
+
 INSERT INTO unit(id, description, id_unit_group) VALUES (1, 'unit.unit.test', 1);
+INSERT INTO unit(id, description, id_unit_group) VALUES (2, 'unit.unit.test2', 1);
 
-INSERT INTO privilege_group(id, description, group_id) VALUES (1, 'privilege_group', 1);
+INSERT INTO privilege_group(id, description) VALUES (1, 'privilege_group');
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (1, 1, 1);
 
-INSERT INTO user2unit_group(id, id_privilege_group, id_unit_group, id_user) VALUES (1, 1, 1, 1);
+--INSERT INTO enum_item(id, code, description) VALUES (1, 'enum_item.unit.test', 'enum_item.unit.test');
+--INSERT INTO enum_item(id, code, description) VALUES (2, 'enum_item.unit.test2', 'enum_item.unit.test2');
+--INSERT INTO privilege(id, id_enum_item) VALUES (1, 1);
+--INSERT INTO privilege(id, id_enum_item) VALUES (2, 2);
+--
+--
+---- connect privilege group to user2unit_group
+--INSERT INTO privilege_group2user2unit_group(id_user2unit_group, id_privilege_group) VALUES (1, 1);
+--
+---- connect privilege to privilege group
+--INSERT INTO privilege2privilege_group(id_privilege_group, id_privilege) VALUES (1, 1);
+--INSERT INTO privilege2privilege_group(id_privilege_group, id_privilege) VALUES (1, 2);
 
+-- create some "fake" units
+INSERT INTO unit_group(id, description) VALUES (2, 'unit_group.unit.test.FAIL');
+INSERT INTO unit(id, description, id_unit_group) VALUES (3, 'unit.unit.test.FAIL', 2);
+
+-- create another user
+INSERT INTO "user" (id, email, name, password) VALUES (2, 'user.unit.test2', 'user.unit.test2', 'user.unit.test2');
+INSERT INTO unit_group(id, description) VALUES (3, 'unit_group.unit.test2');
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (2, 3, 2);
 
 -----------------------------------------------------------------------
 
+-- TESTING POSITION
+INSERT INTO "user" (id, email, name, password) VALUES (10, 'user.position.test10', 'user.position.test10', 'user.position.test10');
+INSERT INTO unit_group(id, description) VALUES (10, 'unit_group.position.test10');
 
--- USER GROUP
+INSERT INTO unit(id, description, id_unit_group) VALUES (10, 'unit.position.test', 10);
+INSERT INTO unit(id, description, id_unit_group) VALUES (11, 'unit.position.test2', 10);
+
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (10, 10, 10);
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (11, 10, 10);
+
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (10, 10, 10.10, 10.10, current_timestamp, 10);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (11, 11, 11.11, 11.11, current_timestamp, 10);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (12, 12, 12.12, 12.12, current_timestamp, 10);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (13, 13, 13.13, 13.13, current_timestamp, 10);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (14, 14, 14.14, 14.14, current_timestamp, 10);
+
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (15, 15, 15.15, 15.15, current_timestamp, 11);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (16, 16, 16.16, 16.16, current_timestamp, 11);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (17, 17, 17.17, 17.17, current_timestamp, 11);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (18, 18, 18.18, 18.18, current_timestamp, 11);
+INSERT INTO "position" (id, altitude, dop, speed, "timestamp", id_unit) VALUES (19, 19, 19.19, 19.19, current_timestamp, 11);
+
 -----------------------------------------------------------------------
---INSERT INTO user_group (id, name, parent_group_id ) VALUES
---( 1, 'testing_group', NULL);
---
---INSERT INTO user_group (id, name, parent_group_id ) VALUES
---( 2, 'testing_group_child', 1);
---
---INSERT INTO user_group (id, name, parent_group_id ) VALUES
---( 3, 'testing_group_child_second', 1);
---
---INSERT INTO user_group (id, name, parent_group_id ) VALUES
---( 4, 'testing_group_child_third',  2);
---
----- USER
--------------------------------------------------------------------------
---
---INSERT INTO "user"(
---            id, audio, lang, module_administrator, module_log_book, name,
---            password, real_name, group_id)
---    VALUES ( 1, false, 'CZ', true, true, 'test', 'test', 'test real', 1);
---
---INSERT INTO "user"(
---            id, audio, lang, module_administrator, module_log_book, name,
---            password, real_name, group_id)
---    VALUES ( 2, false, 'CZ', true, true, 'test2', 'test', 'test real', 3);
---
----- UNIT
--------------------------------------------------------------------------
---
---INSERT INTO unit(
---            id, description, is_mobile)
---    VALUES ( 1, 'unit test', false);
---
---INSERT INTO unit(
---            id, description, is_mobile)
---    VALUES ( 2, 'big unit', false);
---
---INSERT INTO unit(
---        id, description, is_mobile)
---    VALUES ( 3, 'third big unit', true);
---
----- UNIT TO GROUP
--------------------------------------------------------------------------
---
---INSERT INTO unit_to_group(
---            id, unit_id, user_group_id)
---    VALUES (1, 1, 1);
---
---INSERT INTO unit_to_group(
---            id, unit_id, user_group_id)
---    VALUES (2, 2, 1);
---
---INSERT INTO unit_to_group(
---            id, unit_id, user_group_id)
---    VALUES (3, 3, 1);
---
----- POSITION
--------------------------------------------------------------------------
---
---INSERT INTO "position"(
---            id, altitude, dop, speed, time_received, time_stamp, unit_id)
---    VALUES (1, 1.1, 1.2, 1.3, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
---
---INSERT INTO "position"(
---            id, altitude, dop, speed, time_received, time_stamp, unit_id)
---    VALUES (2, 1.6, 1.7, 1.8, '2017-09-14T03:34:13', '2017-09-14T03:34:13', 1);
---
---INSERT INTO "position"(
---            id, altitude, dop, speed, time_received, time_stamp, unit_id)
---    VALUES (3, 999, 999, 999, '2018-03-30T03:33:33', '2018-03-30T03:33:33', 1);
---
---INSERT INTO "position"(
---            id, altitude, dop, speed, time_received, time_stamp, unit_id)
---    VALUES (4, 999, 999, 999, '2018-01-11T01:11:11', '2018-01-11T01:11:11', 1);
---
---INSERT INTO "position"(
---            id, altitude, dop, speed, time_received, time_stamp, unit_id)
---    VALUES (5, 999, 999, 999, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 3);
---
----- PHENOMENON
--------------------------------------------------------------------------
---
 
---INSERT INTO phenomenon(id, physical_unit, description)
---    VALUES ( 1, 'first phenom', '1 m/s');
---
---INSERT INTO phenomenon(id, physical_unit, description)
---    VALUES ( 2, 'second phenom', '2 m/s');
---
---INSERT INTO phenomenon(id, physical_unit, description)
---    VALUES ( 3, 'third phenom', '3 m/s');
---
---INSERT INTO phenomenon(id, physical_unit, description)
---    VALUES ( 4, '4 phenom', '3 m/s');
---
----- SENSOR
--------------------------------------------------------------------------
---
---INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
---    VALUES ( 1, 'sensor1', 'test_sensor for 1 unit', 1, 1);
---
---INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
---    VALUES ( 2, 'sensor2', 'test_sensor for 2 unit', 2, 2);
---
---INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
---    VALUES ( 3, 'sensor3', 'test_sensor for 3 unit', 3, 3);
---
---INSERT INTO sensor(id, name, type, phenomenon_id, unit_id)
---    VALUES ( 4, 'sensor4', 'test_sensor for 3 unit', 4, 3);
---
----- OBSERVATION
--------------------------------------------------------------------------
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 123, '2018-02-22T02:22:22', '2018-02-22T02:22:22', 1);
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 145, '2018-03-03T03:33:33', '2018-03-03T03:33:33', 1);
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 167, '2018-04-04T04:44:44', '2018-04-04T04:44:44', 1);
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 189, '2018-05-05T05:55:55', '2018-05-05T05:55:55', 1);
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 212, '2018-01-01T01:01:01', '2018-01-01T01:01:01', 2);
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 213, '2018-02-02T02:02:02', '2018-02-02T02:02:02', 2);
---
---INSERT INTO observation(id, observed_value, time_received, time_stamp, sensor_id)
---    VALUES ( nextval('seq_observation'), 214, '2018-03-03T03:03:03', '2018-02-03T03:03:03', 2);
---
----- Alert
--------------------------------------------------------------------------
---INSERT INTO alert(id, description)
---    VALUES (1, '1 alert');
---
---INSERT INTO alert(id, description)
---    VALUES (2, '2 alert');
---
---INSERT INTO alert(id, description)
---    VALUES (3, '3 alert');
---
----- Enum item
--------------------------------------------------------------------------
---INSERT INTO enum_item(id, name)
---    VALUES (1, 'FIRST_ENUM');
---
---INSERT INTO enum_item(id, name)
---    VALUES (2, 'SECOND_ENUM');
---
---INSERT INTO enum_item(id, name)
---    VALUES (3, 'THIRD_ENUM');
+-- TESTING PHENOMENON
+INSERT INTO "user" (id, email, name, password) VALUES (20, 'user.phenomenon.test20', 'user.phenomenon.test20', 'user.phenomenon.test20');
+INSERT INTO unit_group(id, description) VALUES (20, 'unit_group.phenomenon.test20');
+
+INSERT INTO unit(id, description, id_unit_group) VALUES (20, 'unit.phenomenon.test', 20);
+INSERT INTO unit(id, description, id_unit_group) VALUES (21, 'unit.phenomenon.test2', 20);
+
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (20, 20, 20);
+
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (20, 'phenomenon.test20', 'phenomenon.test20');
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (21, 'phenomenon.test21', 'phenomenon.test21');
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (22, 'phenomenon.test22', 'phenomenon.test22');
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (23, 'phenomenon.test23', 'phenomenon.test23');
+
+INSERT INTO metadata(id, code, description, value) VALUES (20, 'metadata.test20', 'metadata.test20', 20);
+
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (20, 'sensor.phenomenon.test20', 20, 20, 20);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (21, 'sensor.phenomenon.test21', 20, 21, 20);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (22, 'sensor.phenomenon.test22', 20, 22, 21);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (23, 'sensor.phenomenon.test23', 20, 23, 21);
+
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (24, 'sensor.phenomenon.test24', 20, 20, 21);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (26, 'sensor.phenomenon.test25', 20, 20, 20);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (27, 'sensor.phenomenon.test25', 20, 21, 20);
+
+-- ADD FAKE UNIT with fake phenomenon
+INSERT INTO unit_group(id, description) VALUES (21, 'unit_group.phenomenon.test21');
+INSERT INTO unit(id, description, id_unit_group) VALUES (22, 'unit.phenomenon.test22', 21);
+
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (24, 'phenomenon.test24', 'phenomenon.test24');
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (28, 'sensor.phenomenon.test28', 20, 24, 22);
+
+-----------------------------------------------------------------------
