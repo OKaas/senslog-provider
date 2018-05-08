@@ -23,7 +23,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * Created by OK on 9/12/2017.
@@ -85,50 +88,38 @@ public class PhenomenonController {
 
         List<PhenomenonEntity> phenomenonEntities = modelMapper.map(phenomenons, LIST_ENTITY);
 
+        // get all sensors of all units in user unit group -> for future
+        List<SensorEntity> sensorEntities = sensorRepository.findAll(
+                Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUnitGroup()))
+        );
+
         for(PhenomenonEntity phenomenon2Create : phenomenonEntities){
+            PhenomenonEntity toSave = phenomenon2Create.getId() != null ?
+                    phenomenonRepository.findOne(phenomenon2Create.getId()) : phenomenon2Create;
 
-            PhenomenonEntity toSave = null;
+            if( toSave == null ){
+                LOGGER.warn("Phenomenon id: \'{}\' does not exists!", phenomenon2Create.getId());
+                return RestMapping.STATUS_BAD_REQUEST;
+            }
 
-            if (phenomenon2Create.getId() != null) {
-                toSave = phenomenonRepository.findOne(phenomenon2Create.getId());
+            toSave.setDescription(phenomenon2Create.getDescription());
+            toSave.setPhysicalUnit(phenomenon2Create.getPhysicalUnit());
 
-                if( toSave == null ){
-                    LOGGER.warn("Phenomenon id: \'{}\' does not exists!", phenomenon2Create.getId());
-                    return RestMapping.STATUS_BAD_REQUEST;
-                }
+            if( phenomenon2Create.getSensors() != null ){
+                for(SensorEntity sensorEntity : phenomenon2Create.getSensors()){
 
-                toSave.setDescription(phenomenon2Create.getDescription());
-                toSave.setPhysicalUnit(phenomenon2Create.getPhysicalUnit());
+                    try {
+                        SensorEntity change = sensorEntities.stream()
+                                .filter(e -> e.getId().equals(sensorEntity.getId()))
+                                .findFirst()
+                                .get();
 
-                // get all sensors of all units in user unit group
-                List<SensorEntity> entities = sensorRepository.findAll(Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUnitGroup())));
-
-                for (PhenomenonCreate create : phenomenons) {
-                    boolean hit = false;
-
-                    for(Long sensorId : create.getSensors()){
-
-                        for(SensorEntity sensorEntity : entities){
-                            if(sensorEntity.getId().equals(sensorId)){
-                                hit = true;
-                                toSave.setSensors(phenomenon2Create.getSensors());
-                            }
-                        }
-
-                        if (entities.stream().anyMatch( e -> e.getId().equals(sensorId)) ){
-                            hit = true;
-                        }
-
-                        if( !hit ){
-                            LOGGER.warn("Sensor id: \'{}\' does not exists or it's in other UnitGroup!", sensorId);
-                            return RestMapping.STATUS_BAD_REQUEST;
-                        }
+                        change.setPhenomenon(phenomenon2Create);
+                    } catch (NoSuchElementException e){
+                        LOGGER.warn("Sensor id: \'{}\' does not exists or it's assigned to Unit in other UnitGroup!", sensorEntity.getId());
+                        return RestMapping.STATUS_BAD_REQUEST;
                     }
                 }
-
-
-            } else {
-                toSave = phenomenon2Create;
             }
 
             phenomenonRepository.save(toSave);
