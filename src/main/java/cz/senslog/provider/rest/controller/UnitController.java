@@ -4,7 +4,7 @@ import cz.senslog.model.db.UnitEntity;
 import cz.senslog.model.db.UnitGroupEntity;
 import cz.senslog.model.dto.Unit;
 import cz.senslog.model.dto.create.UnitCreate;
-import cz.senslog.provider.db.queryspecification.specification.UnitById;
+import cz.senslog.provider.db.queryspecification.specification.UnitSpecification;
 import cz.senslog.provider.db.repository.UnitGroupRepository;
 import cz.senslog.provider.db.repository.UnitRepository;
 import cz.senslog.provider.rest.RestMapping;
@@ -71,7 +71,7 @@ public class UnitController {
         return modelMapper.map(
                 // get only user group unit and filter them afterwards
                 unitRepository.findAll(
-                        Specifications.where(UnitById.matchUnitByIds(token.getUnitGroup()))
+                        Specifications.where(UnitSpecification.matchUnitByIds(token.getUnitGroup()))
                                       .and(queryBuilder.build(filter)), pageable).getContent(),
                 LIST_DTO
         );

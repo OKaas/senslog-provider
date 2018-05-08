@@ -92,3 +92,46 @@ INSERT INTO phenomenon(id, description, physical_unit) VALUES (24, 'phenomenon.t
 INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (28, 'sensor.phenomenon.test28', 20, 24, 22);
 
 -----------------------------------------------------------------------
+
+-- TESTING SENSORS
+INSERT INTO "user" (id, email, name, password) VALUES (30, 'user.sensor.test30', 'user.sensor.test30', 'user.sensor.test30');
+INSERT INTO unit_group(id, description) VALUES (30, 'unit_group.sensor.test30');
+
+    INSERT INTO unit(id, description, id_unit_group) VALUES (30, 'unit.sensor.test', 30);
+INSERT INTO unit(id, description, id_unit_group) VALUES (31, 'unit.sensor.test2', 30);
+
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (30, 30, 30);
+
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (30, 'sensor.test30', 'sensor.test30');
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (31, 'sensor.test31', 'sensor.test31');
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (32, 'sensor.test32', 'sensor.test32');
+INSERT INTO phenomenon(id, description, physical_unit) VALUES (33, 'sensor.test33', 'sensor.test33');
+
+INSERT INTO metadata(id, code, description, value) VALUES (30, 'sensor.metadata.test30', 'sensor.metadata.test30', 30);
+
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (30, 'sensor.test30', 30, 30, 30);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (31, 'sensor.test31', 30, 31, 30);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (32, 'sensor.test32', 30, 32, 30);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (33, 'sensor.test33', 30, 33, 31);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (34, 'sensor.test34', 30, 33, 31);
+
+-- ADD OBSERVATION
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (30, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (31, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (32, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (33, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (34, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (35, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (36, current_timestamp, 30, 30);
+INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (37, current_timestamp, 30, 30);
+
+-- ADD FAKE UNIT with fake sensor
+INSERT INTO unit_group(id, description) VALUES (31, 'unit_group.sensor.test31');
+INSERT INTO unit(id, description, id_unit_group) VALUES (32, 'unit.sensor.test32', 31);
+
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (35, 'sensor.test35', 30, 30, 32);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (36, 'sensor.test36', 30, 30, 32);
+INSERT INTO sensor(id, description, id_metadata, id_phenomenon, id_unit) VALUES (37, 'sensor.test37', 30, 31, 32);
+
+
+-----------------------------------------------------------------------
