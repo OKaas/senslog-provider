@@ -2,13 +2,11 @@ package cz.senslog.provider.rest.controller;
 
 import cz.senslog.provider.db.repository.UserGroupRepository;
 import cz.senslog.provider.rest.RestMapping;
-import cz.senslog.provider.util.Mapper;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by OK on 7/3/2017.
@@ -21,7 +19,7 @@ public class GroupController extends RestMapping {
     private static final String PREFIX_CONTROLLER = "/group";
 
     @Autowired
-    private Mapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
     private UserGroupRepository userGroupRepository;

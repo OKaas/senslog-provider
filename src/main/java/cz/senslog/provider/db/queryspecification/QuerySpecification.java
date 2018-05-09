@@ -4,6 +4,7 @@ import cz.senslog.provider.rest.RestMapping;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -40,32 +41,14 @@ public class QuerySpecification<T> implements Specification<T> {
             Path p = joins.get(tok[ tok.length - 1]);
 
             // reduce this IF and following code
-            if( obj instanceof Timestamp ) {
+            if( obj instanceof Timestamp){
                 if (criteria.getOperation().equalsIgnoreCase(">")) {
-                    return builder.greaterThanOrEqualTo(
-                            p,
-                            builder.function("TO_DATE",
-                                    Timestamp.class,
-                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
-                            )
-                    );
-                }
-                else if (criteria.getOperation().equalsIgnoreCase("<")) {
-                    return builder.lessThanOrEqualTo(
-                            p,
-                            builder.function("TO_DATE",
-                                    Timestamp.class,
-                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
-                            )
-                    );
+                    return builder.greaterThanOrEqualTo(p, (Date) obj);
+                }else if (criteria.getOperation().equalsIgnoreCase("<")) {
+                    return builder.lessThanOrEqualTo(p, (Date) obj);
                 }
                 else if (criteria.getOperation().equalsIgnoreCase(":")) {
-                    if (p.getJavaType() == String.class) {
-                        return builder.like(
-                                root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
-                    } else {
-                        return builder.equal(root.get(criteria.getKey()), criteria.getValue());
-                    }
+                    return builder.equal(p, obj);
                 }
             }
 
@@ -88,34 +71,46 @@ public class QuerySpecification<T> implements Specification<T> {
 
         // filter on current object
         } else {
-            if( obj instanceof Timestamp ){
+
+            if( obj instanceof Timestamp){
                 if (criteria.getOperation().equalsIgnoreCase(">")) {
-                    return builder.greaterThanOrEqualTo(
-                            root.get(criteria.getKey()),
-                            builder.function("TO_DATE",
-                                    Timestamp.class,
-                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
-                            )
-                    );
-                }
-                else if (criteria.getOperation().equalsIgnoreCase("<")) {
-                    return builder.lessThanOrEqualTo(
-                            root.get(criteria.getKey()),
-                            builder.function("TO_DATE",
-                                    Timestamp.class,
-                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
-                            )
-                    );
+                    return builder.greaterThanOrEqualTo(root.get(criteria.getKey()), (Date) obj);
+                }else if (criteria.getOperation().equalsIgnoreCase("<")) {
+                    return builder.lessThanOrEqualTo(root.get(criteria.getKey()), (Date) obj);
                 }
                 else if (criteria.getOperation().equalsIgnoreCase(":")) {
-                    if (root.get(criteria.getKey()).getJavaType() == String.class) {
-                        return builder.like(
-                                root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
-                    } else {
-                        return builder.equal(root.get(criteria.getKey()), criteria.getValue());
-                    }
+                    return builder.equal(root.get(criteria.getKey()), obj);
                 }
             }
+//
+//            if( obj instanceof Timestamp ){
+//                if (criteria.getOperation().equalsIgnoreCase(">")) {
+//                    return builder.greaterThanOrEqualTo(
+//                            root.get(criteria.getKey()),
+//                            builder.function("TO_DATE",
+//                                    Timestamp.class,
+//                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
+//                            )
+//                    );
+//                }
+//                else if (criteria.getOperation().equalsIgnoreCase("<")) {
+//                    return builder.lessThanOrEqualTo(
+//                            root.get(criteria.getKey()),
+//                            builder.function("TO_DATE",
+//                                    Timestamp.class,
+//                                    builder.literal(criteria.getValue().toString()), builder.literal(RestMapping.PATTERN_TIMESTAMP)
+//                            )
+//                    );
+//                }
+//                else if (criteria.getOperation().equalsIgnoreCase(":")) {
+//                    if (root.get(criteria.getKey()).getJavaType() == String.class) {
+//                        return builder.like(
+//                                root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+//                    } else {
+//                        return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+//                    }
+//                }
+//            }
 
             if (criteria.getOperation().equalsIgnoreCase(">")) {
                 return builder.greaterThanOrEqualTo(

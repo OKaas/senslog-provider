@@ -6,8 +6,8 @@ import cz.senslog.provider.db.repository.PositionRepository;
 import cz.senslog.provider.db.repository.UnitRepository;
 import cz.senslog.provider.rest.RestMapping;
 import cz.senslog.provider.security.UserToken;
-import cz.senslog.provider.util.Mapper;
 import cz.senslog.provider.util.QueryBuilder;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class PositionController {
     private QueryBuilder queryBuilder;
 
     @Autowired
-    private Mapper modelMapper;
+    private ModelMapper modelMapper;
 
     /* --- GET calls --- */
 

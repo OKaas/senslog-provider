@@ -9,8 +9,8 @@ import cz.senslog.provider.db.repository.UnitGroupRepository;
 import cz.senslog.provider.db.repository.UnitRepository;
 import cz.senslog.provider.rest.RestMapping;
 import cz.senslog.provider.security.UserToken;
-import cz.senslog.provider.util.Mapper;
 import cz.senslog.provider.util.QueryBuilder;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class UnitController {
     private static final String PREFIX_CONTROLLER = "/unit";
 
     @Autowired
-    private Mapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
     private UnitRepository unitRepository;
