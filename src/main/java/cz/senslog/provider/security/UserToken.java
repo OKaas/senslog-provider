@@ -25,6 +25,8 @@ public class UserToken implements UserDetails {
     /***
      * TODO: It should be here but for PoC
      */
+    public Set<Long> unitId;
+
     public Set<Long> unitGroupId;
 
     public UserToken(@NotNull String username, @NotNull String password, @NotNull  List<User2UnitGroupEntity> user2UnitGroupEntities) {
@@ -32,6 +34,7 @@ public class UserToken implements UserDetails {
         this.password = password;
 
         this.privileges = new HashMap<>();
+        this.unitId = new HashSet<>();
         this.unitGroupId = new HashSet<>();
 
         // initialize internal Unit <-> privilege map
@@ -39,9 +42,11 @@ public class UserToken implements UserDetails {
 
             privileges.put(value, value.getPrivilegeGroups());
 
+            unitGroupId.add(value.getUnitGroup().getId());
+
             // c'mon streams :/
             for(UnitEntity entity : value.getUnitGroup().getUnits()){
-                unitGroupId.add(entity.getId());
+                unitId.add(entity.getId());
             }
         }
     }
@@ -50,8 +55,8 @@ public class UserToken implements UserDetails {
 
     /* --- Getters / Setters --- */
 
-    public Set<Long> getUnitGroup(){
-        return unitGroupId;
+    public Set<Long> getUnitIds(){
+        return unitId;
     }
 
     @Override
@@ -89,6 +94,14 @@ public class UserToken implements UserDetails {
         return true;
     }
 
+    public Set<Long> getUnitGroupId() {
+        return unitGroupId;
+    }
+
+    public void setUnitGroupId(Set<Long> unitGroupId) {
+        this.unitGroupId = unitGroupId;
+    }
+
     /* --- Commons  --- */
 
     @Override
@@ -97,7 +110,7 @@ public class UserToken implements UserDetails {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", privileges=" + privileges +
-                ", unitGroupId=" + unitGroupId +
+                ", unitId=" + unitId +
                 '}';
     }
 }

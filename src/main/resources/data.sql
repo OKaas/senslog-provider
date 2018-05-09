@@ -161,3 +161,91 @@ INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (47, '2018-08-
 INSERT INTO observation(id, "timestamp", value, id_sensor) VALUES (48, '2018-08-08T08:08:08+2', 40, 41);
 
 -----------------------------------------------------------------------
+
+-- TESTING EVENT
+INSERT INTO "user" (id, email, name, password) VALUES (50, 'user.event.test50', 'user.event.test50', 'user.event.test50');
+INSERT INTO "user" (id, email, name, password) VALUES (51, 'user.event.test51', 'user.event.test51', 'user.event.test51');
+
+INSERT INTO unit_group(id, description) VALUES (50, 'unit_group.event.test50');
+INSERT INTO unit_group(id, description) VALUES (51, 'unit_group.event.test51');
+
+INSERT INTO unit(id, description, id_unit_group) VALUES (50, 'unit.event.test', 50);
+INSERT INTO unit(id, description, id_unit_group) VALUES (51, 'unit.event.test2', 50);
+
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (50, 50, 50);
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (51, 51, 51);
+
+INSERT INTO enum_item(id, code, description) VALUES (50, 'event.status.unprocessed', 'event.status.unprocessed');
+
+INSERT INTO event_code(id, code, description) VALUES (50, 'event.running', 'event of heartbeat');
+
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (50, '2010-01-01T00:00:00', 50, 50, 50);
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (51, '2011-01-01T01:01:01', 50, 50, 50);
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (52, '2012-02-02T00:00:00', 50, 50, 50);
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (53, '2013-03-03T00:00:00', 50, 50, 50);
+
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (54, '2014-04-04T00:00:00', 50, 50, 51);
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (55, '2015-05-05T00:00:00', 50, 50, 51);
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (56, '2016-06-06T00:00:00', 50, 50, 51);
+INSERT INTO event(id, "timestamp", id_enum_item, id_event_code, id_unit) VALUES (57, '2017-07-07T00:00:00', 50, 50, 51);
+
+-----------------------------------------------------------------------
+
+-- TESTING ENUM ITEM
+INSERT INTO "user" (id, email, name, password) VALUES (60, 'user.event.test60', 'user.event.test60', 'user.event.test60');
+
+INSERT INTO enum_item(id, code, description)VALUES (60, 'enum.test60', 'enum.test60');
+INSERT INTO enum_item(id, code, description)VALUES (61, 'enum.test61', 'enum.test61');
+INSERT INTO enum_item(id, code, description)VALUES (62, 'enum.test62', 'enum.test62');
+INSERT INTO enum_item(id, code, description)VALUES (63, 'enum.test63', 'enum.test63');
+
+
+-----------------------------------------------------------------------
+
+-- TESTING EVENT CODE
+INSERT INTO "user" (id, email, name, password) VALUES (70, 'user.event.test70', 'user.event.test70', 'user.event.test70');
+
+INSERT INTO enum_item(id, code, description)VALUES (70, 'enum.test70', 'enum.test70');
+INSERT INTO enum_item(id, code, description)VALUES (71, 'enum.test71', 'enum.test71');
+INSERT INTO enum_item(id, code, description)VALUES (72, 'enum.test72', 'enum.test72');
+INSERT INTO enum_item(id, code, description)VALUES (73, 'enum.test73', 'enum.test73');
+-----------------------------------------------------------------------
+
+-- TESTING UNIT GROUP
+INSERT INTO "user" (id, email, name, password) VALUES (80, 'user.unit_group.test80', 'user.unit_group.test80', 'user.unit_group.test80');
+INSERT INTO "user" (id, email, name, password) VALUES (81, 'user.unit_group.test81', 'user.unit_group.test81', 'user.unit_group.test81');
+
+INSERT INTO unit_group(id, description) VALUES (80, 'user.unit_group.test80');
+INSERT INTO unit_group(id, description) VALUES (81, 'user.unit_group.test81');
+INSERT INTO unit_group(id, description) VALUES (82, 'user.unit_group.test82');
+INSERT INTO unit_group(id, description) VALUES (83, 'user.unit_group.test83');
+
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (80, 80, 80);
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (81, 81, 81);
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (82, 82, 80);
+INSERT INTO user2unit_group(id, id_unit_group, id_user) VALUES (83, 83, 80);
+
+INSERT INTO unit(id, description, id_unit_group) VALUES (80, 'user.event.test80', 80);
+INSERT INTO unit(id, description, id_unit_group) VALUES (81, 'user.event.test81', 80);
+INSERT INTO unit(id, description, id_unit_group) VALUES (82, 'user.event.test82', 80);
+INSERT INTO unit(id, description, id_unit_group) VALUES (83, 'user.event.test83', 80);
+
+INSERT INTO unit(id, description, id_unit_group) VALUES (84, 'user.event.test84', 81);
+INSERT INTO unit(id, description, id_unit_group) VALUES (85, 'user.event.test85', 81);
+
+INSERT INTO unit(id, description, id_unit_group) VALUES (86, 'user.event.test86', 82);
+
+INSERT INTO unit(id, description, id_unit_group) VALUES (87, 'user.event.test87', 83);
+
+-----------------------------------------------------------------------
+
+-- TESTING METADATA
+INSERT INTO "user" (id, email, name, password) VALUES (90, 'user.metadata.test90', 'user.metadata.test90', 'user.metadata.test90');
+
+INSERT INTO metadata(id, code, description, value) VALUES (90, 'metadata.test90', 'metadata.test90', 90);
+INSERT INTO metadata(id, code, description, value) VALUES (91, 'metadata.test91', 'metadata.test91', 91);
+INSERT INTO metadata(id, code, description, value) VALUES (92, 'metadata.test92', 'metadata.test92', 92);
+INSERT INTO metadata(id, code, description, value) VALUES (93, 'metadata.test93', 'metadata.test93', 93);
+
+
+-----------------------------------------------------------------------

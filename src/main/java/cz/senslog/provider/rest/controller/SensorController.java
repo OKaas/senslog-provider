@@ -79,7 +79,7 @@ public class SensorController {
         return modelMapper.map(
                 // get only position for unit in user group
                 sensorRepository.findAll(
-                        Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUnitGroup()))
+                        Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUnitIds()))
                                 .and(queryBuilder.build(filter)),
                         pageable).getContent(),
                 LIST_DTO
@@ -100,7 +100,7 @@ public class SensorController {
 
         List<SensorEntity> sensorEntities = modelMapper.map(sensorCreate, LIST_ENTITY);
 
-        List<UnitEntity> unitEntities = unitRepository.findAll(UnitSpecification.matchUnitInUserGroup(token.getUnitGroup()));
+        List<UnitEntity> unitEntities = unitRepository.findAll(UnitSpecification.matchUnitInUnitGroup(token.getUnitIds()));
 
         for(SensorEntity sensorEntity : sensorEntities){
             SensorEntity toSave = sensorEntity.getId() != null ? sensorRepository.findOne(sensorEntity.getId()) : sensorEntity;

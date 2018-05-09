@@ -23,10 +23,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * Created by OK on 9/12/2017.
@@ -66,7 +64,7 @@ public class PhenomenonController {
         return modelMapper.map(
                 // get only position for unit in user group
                 phenomenonRepository.findAll(
-                        Specifications.where(PhenomenonSpecification.matchPhenomenonForUnitInGroup(token.getUnitGroup()))
+                        Specifications.where(PhenomenonSpecification.matchPhenomenonForUnitInGroup(token.getUnitIds()))
                                       .and(queryBuilder.build(filter)),
                         pageable).getContent(),
                 LIST_DTO
@@ -90,7 +88,7 @@ public class PhenomenonController {
 
         // get all sensors of all units in user unit group -> for future
         List<SensorEntity> sensorEntities = sensorRepository.findAll(
-                Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUnitGroup()))
+                Specifications.where(SensorSpecification.matchSensorForUnitInGroup(token.getUnitIds()))
         );
 
         for(PhenomenonEntity phenomenon2Create : phenomenonEntities){

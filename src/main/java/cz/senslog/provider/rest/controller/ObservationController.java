@@ -57,7 +57,7 @@ public class ObservationController {
         return modelMapper.map(
                 // get only position for unit in user group
                 observationRepository.findAll(
-                        Specifications.where(ObservationSpecification.matchObservationForUnitInUserGroup(token.getUnitGroup()))
+                        Specifications.where(ObservationSpecification.matchObservationForUnitInUserGroup(token.getUnitIds()))
                                       .and(queryBuilder.build(filter)),
                         pageable).getContent(),
                 LIST_DTO

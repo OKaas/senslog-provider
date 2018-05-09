@@ -21,7 +21,7 @@ public class UnitSpecification {
         return (root, query, builder) -> root.get("id").in(unitId);
     }
 
-    public static Specification<EntityQueryable> matchUnitInUserGroup(final Set<Long> groupIds){
+    public static Specification<EntityQueryable> matchUnitInUnitGroup(final Set<Long> groupIds){
         return (root, query, builder) -> {
             final Path<UnitEntity> group = root
                     .join("unitGroup")

@@ -23,7 +23,7 @@ public class RestMapping {
     public static final String CLIENT_ID = "clientId";
     public static final String PATH_CLIENT_ID = "/{"+CLIENT_ID+"}";
 
-    public static final String UNIT_ID = "unitGroupId";
+    public static final String UNIT_ID = "unitId";
     public static final String PATH_UNIT_ID = "/{"+UNIT_ID+"}";
 
     public static final String SENSOR_ID = "sensorId";

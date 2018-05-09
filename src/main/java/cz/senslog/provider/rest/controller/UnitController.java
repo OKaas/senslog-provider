@@ -71,7 +71,7 @@ public class UnitController {
         return modelMapper.map(
                 // get only user group unit and filter them afterwards
                 unitRepository.findAll(
-                        Specifications.where(UnitSpecification.matchUnitByIds(token.getUnitGroup()))
+                        Specifications.where(UnitSpecification.matchUnitByIds(token.getUnitIds()))
                                       .and(queryBuilder.build(filter)), pageable).getContent(),
                 LIST_DTO
         );
@@ -117,7 +117,7 @@ public class UnitController {
             }
 
             // user try to assign unit to another unit group where it has not permission
-            if( !token.getUnitGroup().contains(unitGroupEntity.getId()) ){
+            if( !token.getUnitIds().contains(unitGroupEntity.getId()) ){
                 LOGGER.warn("Current user  \'{}\' does not have permission to unit group \'{}\'!", token, unitGroupEntity.getId());
                 return RestMapping.STATUS_BAD_REQUEST;
             }
